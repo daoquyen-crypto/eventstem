@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   unit:
-    name: Luật Engage, Achieve, ADC (node)
+    name: Luật Engage, Achieve, ADC, ADC Pro (node)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,6 +60,7 @@ jobs:
           node tests/e2e_manage.js
           node tests/e2e_achieve.js
           node tests/e2e_adc.js
+          node tests/e2e_adc_pro.js
           node tests/e2e_show.js
           node tests/e2e_rehearsal.js
           node tests/e2e_home.js

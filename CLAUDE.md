@@ -28,7 +28,8 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 | `index.html` | Trang chủ, 1 file chứa cả CSS và JS: lịch giải RECF và xếp hạng toàn cầu. Lịch giải: dải "Gần bạn" (giải sắp tới ở nước người xem, rồi nước lân cận trong `NEAR_KM`; giải đã qua chỉ là link "đã diễn ra"), danh sách **nhóm theo tháng** (`<details class="mon">`, chỉ dựng khi mở; "Đang diễn ra" cho league đã bắt đầu; mặc định mở tháng đầu, tìm kiếm / lọc ≤ 40 giải thì mở hết), lọc "Chỉ giải đang mở đăng ký". Bảng xếp hạng gộp `results.json` với các giải đã được SEPA xác minh từ Supabase (`toolResults()`, `mergeTool()`) |
 | `manage.html` + `js/manage.js` | Công cụ ban tổ chức: đăng nhập, tạo giải, đội, lịch, chấm điểm, Solo, xếp hạng, chung kết / loại trực tiếp, giải thưởng, xuất CSV; SEPA duyệt tài khoản |
 | `event.html` + `js/event.js` | Trang xem trực tiếp, tự kiểm tra cập nhật mỗi 20 giây |
-| `show.html` + `js/show.js` | Màn hình trình chiếu tại sân, tự cập nhật mỗi 15 giây. Các slide: `next`, `sched` (lịch các trận còn lại), `rank`, `solo`, `elim`, `awards`, `events` (giải RECF sắp tới trong nước + lân cận, từ `events.json`), `sponsors`. Chọn màn bằng `&screen=`: `all` (luân phiên các slide bật trong `event.config.show`), `matches`, `standings`, `events`, `sponsors`, hoặc `overlay` (lớp phủ livestream cho OBS: nền trong suốt, `&bg=green` / `&bg=dark`, `&field=2`). Đổi màn được ngay trên thanh điều khiển. Ghi đè khác: `&s=10`, `&only=rank,solo` |
+| `show.html` + `js/show.js` | Màn hình trình chiếu tại sân, tự cập nhật mỗi 15 giây. Các slide: `next`, `sched` (lịch các trận còn lại), `rank`, `solo`, `elim`, `awards`, `events` (giải RECF sắp tới trong nước + lân cận, từ `events.json`), `sponsors`. Chọn màn bằng `&screen=`: `all` (luân phiên các slide bật trong `event.config.show`), `matches`, `standings`, `events`, `sponsors`, hoặc `overlay` (lớp phủ livestream cho OBS: nền trong suốt, `&bg=green` / `&bg=dark`, `&field=2`). Đổi màn được ngay trên thanh điều khiển. Ghi đè khác: `&s=10`, `&only=rank,solo`, `&spot=seq` / `rand` / `nasa,google`. Chân màn hình luôn có dải logo **Spotlight Partners** chạy liên tục (`paintSpot()`; chỉ dựng lại khi cài đặt đổi) |
+| `js/partners.js` | Danh sách Spotlight Partners (ảnh ở `assets/partners/<id>.png`) và bộ phát logo kế tiếp. Ban tổ chức chọn trong tab Logo & trình chiếu, lưu ở `event.config.show.spotlight = {mode, pick}`: `seq` lần lượt, `rand` ngẫu nhiên (mỗi vòng đủ mặt, không lặp liền nhau), `pick` tuỳ chọn (chỉ các đối tác đã tích, theo thứ tự đã xếp) |
 | `js/engage.js` | Luật **RECF Engage: Tier Takeover** (Game Manual v2.0) |
 | `js/achieve.js` | Luật **RECF Achieve: Pinnacle** (Game Manual v2.0): 2 đấu 2, ranking points, chọn liên minh, nhánh loại trực tiếp |
 | `js/adc.js` | Luật **RECF ADC Mission 2027: Fast Track** (Game Manual v1.1): Alliance hợp tác như Engage, Solo 3 Piloting + 3 Autonomous, chọn liên minh, loại trực tiếp theo vòng (tứ kết → bán kết → chung kết, `eliminations: 'rounds'`) |
@@ -65,7 +66,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 ## Kiểm thử (chạy trước mỗi PR)
 
 ```bash
-node --test tests/*.test.js                       # luật Engage + Achieve + ADC + ADC Pro
+node --test tests/*.test.js                       # luật Engage + Achieve + ADC + ADC Pro, Spotlight Partners
 PGHOST=... PGPORT=... bash tests/schema_test.sh   # schema + RLS trên Postgres thường (giả lập Supabase bằng tests/supabase_stub.sql)
 python3 -m http.server 8767 &                     # rồi:
 node tests/e2e_manage.js                          # E2E luồng Engage (chế độ demo)

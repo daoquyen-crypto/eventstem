@@ -7,7 +7,8 @@
      events          Các giải RECF sắp tới ở nước này và lân cận (từ events.json)
      sponsors        Cảm ơn nhà tài trợ
      overlay         Lớp phủ livestream: nền trong suốt (&bg=green nền xanh để tách nền, &bg=dark), logo + trận đang đánh; &field=2 chọn sân
-   Ghi đè khác: &s=10 (giây mỗi màn), &only=rank,solo (chỉ hiện các màn này). */
+   Ghi đè khác: &s=10 (giây mỗi màn), &only=rank,solo (chỉ hiện các màn này),
+   &spot=seq / rand / amazon,nasa (cách chạy dải logo Spotlight Partners ở chân màn hình). */
 (function () {
   'use strict';
   var S = window.Store, E = window.Engage;
@@ -171,6 +172,47 @@
     paintSp(); if (sp.length > 1) spTimer = setInterval(paintSp, 8000);
   }
 
+  /* ---------- Spotlight Partners (js/partners.js): dải logo chạy liên tục ở chân màn hình ----------
+     Cài đặt: event.config.show.spotlight; ghi đè bằng &spot=seq / &spot=rand / &spot=amazon,nasa (tuỳ chọn, theo thứ tự này).
+     Logo đầu chạy hết khỏi khung thì bị bỏ đi và nạp logo kế tiếp vào cuối, nên chế độ ngẫu nhiên đổi thứ tự liên tục. */
+  var SPOT_SPEED = 0.06;   // khung hình / giây tính theo bề ngang màn hình (≈ 115 px/giây trên 1920)
+  var spot = { key: null, x: 0, next: null, raf: 0, tick: 0, t0: 0 };
+  function spotCfg() {
+    var c = ((B.event.config || {}).show || {}).spotlight || {}, u = P.get('spot');
+    if (u === 'seq' || u === 'rand') c = { mode: u, pick: c.pick };
+    else if (u) c = { mode: 'pick', pick: u.split(',') };
+    return Partners.cfg(c);
+  }
+  function spotImg(p) { var i = document.createElement('img'); i.src = Partners.src(p); i.alt = p.name; i.title = p.name; i.dataset.p = p.id; return i; }
+  function spotFill() {
+    var tr = $id('shSpotTrack'), w = tr.parentNode.clientWidth;
+    for (var n = 0; tr.scrollWidth + spot.x < w * 1.3 && n < 60; n++) tr.appendChild(spotImg(spot.next()));
+  }
+  function spotStep(t) {
+    var tr = $id('shSpotTrack'), dt = spot.t0 ? Math.min(0.1, (t - spot.t0) / 1000) : 0;
+    spot.t0 = t;
+    if (!document.hidden) {
+      spot.x -= SPOT_SPEED * innerWidth * dt;
+      var f = tr.firstElementChild, gap = parseFloat(getComputedStyle(tr).columnGap) || 0;
+      if (f && -spot.x >= f.offsetWidth + gap) { spot.x += f.offsetWidth + gap; tr.removeChild(f); spotFill(); }
+      tr.style.transform = 'translateX(' + spot.x.toFixed(1) + 'px)';
+    }
+    spot.raf = requestAnimationFrame(spotStep);
+  }
+  /* Chỉ dựng lại khi cài đặt đổi, để dải logo không giật mỗi lần dữ liệu giải tự cập nhật */
+  function paintSpot() {
+    var c = spotCfg(), key = JSON.stringify(c);
+    if (key === spot.key) return;
+    spot.key = key; spot.x = 0; spot.t0 = 0; spot.next = Partners.feeder(c);
+    cancelAnimationFrame(spot.raf); clearInterval(spot.tick);
+    var tr = $id('shSpotTrack'); tr.innerHTML = ''; tr.style.transform = '';
+    spotFill();
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // giảm chuyển động: đổi từng logo mỗi 4 giây thay vì trượt
+      spot.tick = setInterval(function () { var f = tr.firstElementChild; if (f) { tr.removeChild(f); spotFill(); } }, 4000);
+    } else spot.raf = requestAnimationFrame(spotStep);
+  }
+
   /* ---------- khung trang ---------- */
   function paintFrame() {
     var e = B.event, a = B.assets || {};
@@ -179,6 +221,7 @@
     $id('shSub').textContent = [fmtDate(e.date), e.location, e.organizer_name].filter(Boolean).join(' · ');
     $id('shOrg').innerHTML = a.organizer ? '<img src="' + esc(a.organizer) + '" alt="' + esc(e.organizer_name || '') + '">' : '';
     $id('shSpons').innerHTML = (a.sponsors || []).map(function (x) { return '<img src="' + esc(x.src) + '" alt="' + esc(x.name || '') + '" title="' + esc(x.name || '') + '">'; }).join('');
+    paintSpot();
   }
   function show(i) {
     if (!slides.length) return;
@@ -205,7 +248,7 @@
     document.body.classList.toggle('overlay', ov);
     document.body.dataset.bg = P.get('bg') || '';
     $id('shOverlay').hidden = !ov;
-    if (ov) { clearTimeout(timer); overlay(); return; }
+    if (ov) { clearTimeout(timer); cancelAnimationFrame(spot.raf); clearInterval(spot.tick); spot.key = null; overlay(); return; }
     clearInterval(spTimer);
     var key = slides[cur] && slides[cur].key;
     slides = build(); paintFrame();
@@ -260,5 +303,6 @@
   clock(); setInterval(clock, 10000);
   if (!id) $id('shMain').innerHTML = '<p class="empty">' + tr('Open this page from the organizer tool (Logo & show tab).', 'Mở trang này từ công cụ tổ chức giải (tab Logo & trình chiếu).') + '</p>';
   else { load(false).catch(function (e) { $id('shMain').innerHTML = '<div class="banner err">' + esc(errText(e)) + '</div>'; }); setInterval(poll, POLL_MS); }
-  window.EventSTEMShow = { slides: function () { return slides.map(function (s) { return s.key; }); }, go: show, ready: function () { return !!EVJ; } };   // cho kiểm thử
+  window.EventSTEMShow = { slides: function () { return slides.map(function (s) { return s.key; }); }, go: show, ready: function () { return !!EVJ; },
+    spot: function () { return [].map.call($id('shSpotTrack').children, function (i) { return i.dataset.p; }); } };   // cho kiểm thử
 })();

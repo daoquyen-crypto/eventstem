@@ -170,8 +170,15 @@ body.show{--bg:#0b1626;--surface:#13233a;--ink:#f1f5fb;--mut:#9fb0c6;--line:#243
 .show-welcome{text-align:center;padding-top:8vh}
 .show-welcome img{max-height:30vh;max-width:60vw;background:#fff;border-radius:.6em;padding:.6em}
 .show-welcome h2{font-family:var(--f-disp);font-size:3em;margin:.4em 0 .2em}
-.show-foot{font-size:1em;max-width:none;margin:0;color:inherit;display:flex;align-items:center;gap:1em;padding:.4em 1.4em;background:#0f1d31;border-top:1px solid var(--line)}
-.show-spons{flex:1;display:flex;gap:1em;align-items:center;overflow:hidden;min-width:0}
+.show-foot{font-size:1em;max-width:none;min-width:0;margin:0;color:inherit;display:flex;align-items:center;gap:1em;padding:.4em 1.4em;background:#0f1d31;border-top:1px solid var(--line)}
+.show-spons{display:flex;gap:1em;align-items:center;overflow:hidden;min-width:0;max-width:45%;flex:0 1 auto}
+.show-spons:empty{display:none}
+/* Spotlight Partners: dải logo chạy liên tục ở chân màn hình (show.js, spot*) */
+.show-spot{flex:1;min-width:0;display:flex;align-items:center;gap:.8em}
+.show-spot>small{flex:none;font-size:.6em;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:600;line-height:1.15;max-width:6em}
+.show-spot-view{flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.show-spot-track{display:flex;gap:.8em;width:max-content;will-change:transform}
+.show-spot-track img{flex:none;width:7em;height:2.4em;object-fit:contain;background:#fff;border-radius:.3em;padding:.2em .5em;box-sizing:border-box}
 .show-spons img{height:2.4em;max-width:8em;object-fit:contain;background:#fff;border-radius:.3em;padding:.15em .4em}
 .show-brand{display:flex;align-items:center;gap:.4em;color:var(--mut);font-size:.8em}
 .show-ctl{position:fixed;right:1em;bottom:3.6em;display:flex;gap:.4em;align-items:center;background:rgba(0,0,0,.55);padding:.3em .5em;border-radius:.5em;transition:opacity .3s;font-size:14px}

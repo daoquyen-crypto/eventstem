@@ -233,18 +233,28 @@ create table if not exists public.solo_runs (
 );
 create index if not exists solo_runs_event_idx on public.solo_runs (event_id, team);
 
--- Tối đa N lượt solo mỗi đội (mặc định 5, đổi được trong config.soloAttempts)
+-- Tối đa N lượt solo mỗi đội (mặc định 5, đổi được trong config.soloAttempts).
+-- ADC (ruleset adc-2027): N lượt cho mỗi loại, mặc định 3 Piloting + 3 Autonomous (ADC 7.4.1).
 create or replace function public.solo_limit() returns trigger
 language plpgsql security definer set search_path = public as $$
-declare lim int; n int;
+declare lim int; n int; per_kind boolean;
 begin
-  select coalesce((config ->> 'soloAttempts')::int, 5) into lim from events where id = new.event_id;
-  select count(*) into n from solo_runs where event_id = new.event_id and team = new.team;
-  if n >= lim then raise exception 'Đội % đã dùng hết % lượt solo', new.team, lim using errcode = '23514'; end if;
+  select ruleset = 'adc-2027', coalesce((config ->> 'soloAttempts')::int, case when ruleset = 'adc-2027' then 3 else 5 end)
+    into per_kind, lim from events where id = new.event_id;
+  select count(*) into n from solo_runs where event_id = new.event_id and team = new.team and (not per_kind or kind = new.kind);
+  if n >= lim then raise exception 'Đội % đã dùng hết % lượt solo%', new.team, lim, case when per_kind then ' ' || new.kind else '' end using errcode = '23514'; end if;
   return new;
 end $$;
 drop trigger if exists solo_limit on public.solo_runs;
 create trigger solo_limit before insert on public.solo_runs for each row execute function public.solo_limit();
+
+-- ---------- ADC (Fast Track) ----------
+--   detail = điểm thành phần (số bóng mỗi goal, phase, cổng…) khi ban tổ chức chọn nhập chi tiết; score vẫn là điểm tổng
+--   stop_time của trận Alliance ADC tới 90 giây (trận 90 giây, 5.3.1)
+alter table public.matches   add column if not exists detail jsonb;
+alter table public.solo_runs add column if not exists detail jsonb;
+alter table public.matches drop constraint if exists matches_stop_time_check;
+alter table public.matches add constraint matches_stop_time_check check (stop_time between 0 and 90);
 
 -- ---------- Giải thưởng (6.3, 7.2.7) ----------
 create table if not exists public.awards (

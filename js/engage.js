@@ -147,7 +147,7 @@
     rows.sort(function (a, b) {
       if ((b.played > 0) !== (a.played > 0)) return b.played > 0 ? 1 : -1;
       if (b.avg !== a.avg) return b.avg - a.avg;
-      for (var i = 1; i <= 3; i++) { var x = a.sorted[i] || 0, y = b.sorted[i] || 0; if (x !== y) return y - x; }
+      for (var i = 1; i <= (+o.tiebreakDepth || 3); i++) { var x = a.sorted[i] || 0, y = b.sorted[i] || 0; if (x !== y) return y - x; }
       return a.draw - b.draw;
     });
     rows.forEach(function (r, i) { r.rank = i + 1; });

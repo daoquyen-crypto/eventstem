@@ -9,12 +9,12 @@
   var EVENT_COLS = ['name', 'program', 'ruleset', 'config', 'date', 'end_date', 'location', 'country', 'organizer_name', 'recf_code', 'grades', 'status', 'verified'];
   var TEAM_COLS = ['number', 'name', 'org', 'country', 'grade', 'checked_in', 'inspected', 'excluded'];
   var MATCH_COLS = ['round', 'num', 'label', 'field', 'time', 'red', 'red2', 'blue', 'blue2', 'red_counts', 'red2_counts', 'blue_counts', 'blue2_counts',
-    'seed', 'seed_blue', 'score', 'score_blue', 'red_status', 'red2_status', 'blue_status', 'blue2_status', 'auto_red', 'auto_blue', 'end_red', 'end_blue', 'stop_time'];
+    'seed', 'seed_blue', 'score', 'score_blue', 'red_status', 'red2_status', 'blue_status', 'blue2_status', 'auto_red', 'auto_blue', 'end_red', 'end_blue', 'stop_time', 'detail'];
   var SLOTS = ['red', 'red2', 'blue', 'blue2'];
   /* Giá trị mặc định của 1 trận (giống schema.sql) */
   var MATCH_DEFAULTS = { label: null, field: '1', time: null, red2: null, blue2: null, red_counts: true, red2_counts: true, blue_counts: true, blue2_counts: true,
     seed: null, seed_blue: null, score: null, score_blue: null, red_status: 'ok', red2_status: 'ok', blue_status: 'ok', blue2_status: 'ok',
-    auto_red: false, auto_blue: false, end_red: false, end_blue: false, stop_time: null };
+    auto_red: false, auto_blue: false, end_red: false, end_blue: false, stop_time: null, detail: null };
   function inMatch(m, n) { return SLOTS.some(function (s) { return m[s] === n; }); }
 
   function pick(o, cols) { var r = {}; cols.forEach(function (k) { if (o && o[k] !== undefined) r[k] = o[k]; }); return r; }
@@ -114,7 +114,7 @@
       updateMatch: function (id, f) { return q(sb.from('matches').update(pick(f, MATCH_COLS)).eq('id', id)); },
       deleteMatch: function (id) { return q(sb.from('matches').delete().eq('id', id)); },
 
-      addSolo: function (eid, r) { return q(sb.from('solo_runs').insert({ event_id: eid, team: r.team, kind: r.kind, score: r.score, stop_time: r.stop_time }).select().single()); },
+      addSolo: function (eid, r) { return q(sb.from('solo_runs').insert({ event_id: eid, team: r.team, kind: r.kind, score: r.score, stop_time: r.stop_time, detail: r.detail || null }).select().single()); },
       deleteSolo: function (id) { return q(sb.from('solo_runs').delete().eq('id', id)); },
       addAward: function (eid, a) { return q(sb.from('awards').insert({ event_id: eid, team: a.team, name: a.name, judged: !!a.judged }).select().single()); },
       deleteAward: function (id) { return q(sb.from('awards').delete().eq('id', id)); }
@@ -299,10 +299,11 @@
       },
       addSolo: function (eid, r) {
         return run(function () {
-          need(eid); var d = load(), lim = +((ev(eid).config || {}).soloAttempts || 5);
+          var perKind = ev(eid) && ev(eid).ruleset === 'adc-2027';   // giống trigger solo_limit trong schema.sql
+          need(eid); var d = load(), lim = +((ev(eid).config || {}).soloAttempts || (perKind ? 3 : 5));
           if (!hasTeam(eid, r.team)) fail('team_in_use');
-          if (d.solo_runs.filter(function (x) { return x.event_id === eid && x.team === r.team; }).length >= lim) fail('solo_limit');
-          var x = { id: uid(), event_id: eid, team: r.team, kind: r.kind, score: +r.score, stop_time: r.stop_time == null ? null : +r.stop_time, created_at: now() };
+          if (d.solo_runs.filter(function (x) { return x.event_id === eid && x.team === r.team && (!perKind || x.kind === r.kind); }).length >= lim) fail('solo_limit');
+          var x = { id: uid(), event_id: eid, team: r.team, kind: r.kind, score: +r.score, stop_time: r.stop_time == null ? null : +r.stop_time, detail: r.detail || null, created_at: now() };
           d.solo_runs.push(x); touch(eid); return x;
         });
       },

@@ -4,7 +4,7 @@ Trang tĩnh tại **[eventstem.com](https://eventstem.com)**. Trang tổng hợp
 
 - Dữ liệu giải được tự động lấy từ recfevents.org mỗi 6 tiếng.
 - Trang chạy bằng GitHub Pages, từ nhánh `main`, thư mục gốc.
-- **Công cụ tổ chức giải** (`manage.html`): nhà trường và Event Partner đăng ký tài khoản, SEPA duyệt, rồi tự tạo giải, nhập đội, tạo lịch trận, chấm điểm, đánh chung kết và trao giải theo luật **RECF Engage** (Tier Takeover) hoặc **RECF Achieve** (Pinnacle). Người xem theo dõi trực tiếp ở `event.html`. Cài đặt: [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md).
+- **Công cụ tổ chức giải** (`manage.html`): nhà trường và Event Partner đăng ký tài khoản, SEPA duyệt, rồi tự tạo giải, nhập đội, tạo lịch trận, chấm điểm, đánh chung kết và trao giải theo luật **RECF Engage** (Tier Takeover), **RECF Achieve** (Pinnacle) hoặc **RECF Aerial Drone Competition** (Fast Track). Người xem theo dõi trực tiếp ở `event.html`. Cài đặt: [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md).
 - Trang có 2 ngôn ngữ: **tiếng Anh (mặc định)** và tiếng Việt. Người xem chuyển bằng nút **EN / VI** ở đầu trang, lựa chọn được nhớ trong trình duyệt. Có thể gửi link thẳng bản tiếng Việt: `https://eventstem.com/?lang=vi`.
 
 ## Cấu trúc thư mục
@@ -16,6 +16,7 @@ Trang tĩnh tại **[eventstem.com](https://eventstem.com)**. Trang tổng hợp
 | `event.html` | Trang xem trực tiếp: lịch trận, điểm, xếp hạng của từng giải |
 | `js/engage.js` | Luật Engage: tạo lịch, xếp hạng Alliance/Solo, chung kết, giải thưởng, xuất CSV |
 | `js/achieve.js` | Luật Achieve: lịch 2 đấu 2, ranking points, chọn liên minh, nhánh loại trực tiếp |
+| `js/adc.js` | Luật ADC Fast Track: Solo Piloting/Autonomous, chọn liên minh, loại trực tiếp theo vòng |
 | `js/rules.js` | Chọn bộ luật theo từng giải |
 | `js/store.js` | Lưu dữ liệu: Supabase, hoặc chế độ demo trong trình duyệt |
 | `js/config.js` | Địa chỉ và khoá công khai của Supabase (để trống = chế độ demo) |
@@ -66,6 +67,11 @@ Lưu ý: `results/mau_2026-2027.csv` là dữ liệu mẫu, nên trang đang hi�
 - **Chấm điểm**: nhập điểm của cả 2 liên minh và tick *Auto RP* / *Endgame RP*.
 - **Xếp hạng**: tính theo ranking points (thắng 2, hoà 1, cộng điểm Autonomous và Endgame).
 - **Loại trực tiếp** (thay cho Chung kết): đội hạng cao lần lượt mời đội khác vào liên minh, ban tổ chức bấm *Đồng ý* / *Từ chối* theo câu trả lời. Chọn xong thì tạo nhánh đấu. Trận tiếp theo, kể cả trận đánh lại khi hoà, được tạo tự động.
+
+**Giải ADC (drone)** khác Engage ở 2 bước:
+- **Solo**: mỗi đội tối đa 3 lượt Piloting và 3 lượt Autonomous; xếp theo Piloting cao nhất + Autonomous cao nhất (3.5).
+- **Loại trực tiếp**: chọn liên minh như Achieve (20+ đội: 10 liên minh, 8–19: 4, ≤7: 2), rồi đánh theo vòng; mỗi liên minh 1 trận mỗi vòng, điểm cao nhất đi tiếp (tứ kết lấy 4, bán kết lấy 2). Chung kết hoà thì trận tiebreak được tạo tự động.
+- **Tuỳ chọn** (ở form giải, cho chỗ Game Manual chưa nói rõ): chỉ nhập điểm tổng hoặc nhập điểm thành phần (nút 🧮, phần mềm tự cộng theo bảng 3.1, 4.2, 5.1); số goal trên sân; có xét stop time ở lần tiebreak thứ 2 không; chung kết vẫn hoà thì đánh thêm hay hạt giống cao hơn thắng.
 
 Nhà trường cũng có thể tổ chức giải riêng, không thuộc RECF: chọn **Giải tự tổ chức** theo thể thức Engage (2 đội hợp tác) hoặc Achieve (2 đấu 2), rồi đổi số trận, số lượt solo và cách tính theo ý.
 

@@ -63,6 +63,12 @@ check "nhập điểm trận" '^$' "$(as $ORG "update matches set score=85, blue
 check "điểm âm bị chặn" 'violates check' "$(as $ORG "update matches set score=-1 where event_id='$EV' and num=2")"
 as $ORG "insert into solo_runs(event_id,team,kind,score) values ('$EV','VN1A','driving',90),('$EV','VN1A','coding',40)" >/dev/null
 check "quá số lượt solo (config=2) bị chặn" 'hết 2 lượt' "$(as $ORG "insert into solo_runs(event_id,team,kind,score) values ('$EV','VN1A','driving',95)")"
+EVA=$(as $ORG "insert into events(name,date,ruleset,program) values ('Giải ADC','2026-12-01','adc-2027','ADC') returning id")
+as $ORG "insert into teams(event_id,number) values ('$EVA','DR1'),('$EVA','DR2')" >/dev/null
+as $ORG "insert into solo_runs(event_id,team,kind,score) values ('$EVA','DR1','driving',10),('$EVA','DR1','driving',20),('$EVA','DR1','driving',30),('$EVA','DR1','coding',40)" >/dev/null
+check "ADC: lượt Autonomous tính riêng với Piloting (7.4.1)" '^$' "$(as $ORG "insert into solo_runs(event_id,team,kind,score) values ('$EVA','DR1','coding',50)")"
+check "ADC: lưu điểm thành phần trận" '^5\|90$' "$(as $ORG "insert into matches(event_id,round,num,red,blue) values ('$EVA','qual',1,'DR1','DR2')" >/dev/null; as $ORG "update matches set score=5, stop_time=90, detail='{\"zone\":5}' where event_id='$EVA' returning (detail->>'zone')||'|'||stop_time")"
+check "ADC: lượt Piloting thứ 4 bị chặn" 'hết 3 lượt solo driving' "$(as $ORG "insert into solo_runs(event_id,team,kind,score) values ('$EVA','DR1','driving',95)")"
 as $ORG "insert into awards(event_id,team,name,judged) values ('$EV','VN1A','Think Award',true),('$EV','VN1A','Tournament Champions',false)" >/dev/null
 check "1 đội tối đa 1 giải giám khảo" 'duplicate key' "$(as $ORG "insert into awards(event_id,team,name,judged) values ('$EV','VN1A','Design Award',true)")"
 check "tài khoản khác không sửa được giải" '^0$' "$(as $DOM "with u as (update teams set name='hack' where event_id='$EV' returning 1) select count(*) from u")"
@@ -85,6 +91,6 @@ check "Achieve: vòng loại trực tiếp có nhãn nhánh" '^elim\|R1-1$' "$(a
 check "Achieve: điểm xanh âm bị chặn" 'violates check' "$(as $ORG "update matches set score_blue=-1 where event_id='$EV' and num=10")"
 check "Achieve: khách xem được trận 2v2" '^2$' "$(as anon "select count(*) from matches where red2 is not null")"
 check "tài khoản bị từ chối mất quyền sửa" '^0$' "$(as $SEPA "select admin_set_user('$ORG','rejected')" >/dev/null; as $ORG "with u as (update teams set name='x' where event_id='$EV' returning 1) select count(*) from u")"
-check "xoá giải xoá cả dữ liệu con" '^0\|0$' "$(as $SEPA "delete from events where id='$EV'" >/dev/null; su "select (select count(*) from teams)||'|'||(select count(*) from matches)")"
+check "xoá giải xoá cả dữ liệu con" '^0\|0$' "$(as $SEPA "delete from events where id in ('$EV','$EVA')" >/dev/null; su "select (select count(*) from teams)||'|'||(select count(*) from matches)")"
 
 echo "pass=$pass fail=$fail"; [ $fail -eq 0 ]

@@ -71,6 +71,7 @@ Lưu ý: `results/mau_2026-2027.csv` là dữ liệu mẫu, nên trang đang hi�
 **Giải ADC (drone)** khác Engage ở 2 bước:
 - **Solo**: mỗi đội tối đa 3 lượt Piloting và 3 lượt Autonomous; xếp theo Piloting cao nhất + Autonomous cao nhất (3.5).
 - **Loại trực tiếp**: chọn liên minh như Achieve (20+ đội: 10 liên minh, 8–19: 4, ≤7: 2), rồi đánh theo vòng; mỗi liên minh 1 trận mỗi vòng, điểm cao nhất đi tiếp (tứ kết lấy 4, bán kết lấy 2). Chung kết hoà thì trận tiebreak được tạo tự động.
+- **Tuỳ chọn** (ở form giải, cho chỗ Game Manual chưa nói rõ): chỉ nhập điểm tổng hoặc nhập điểm thành phần (nút 🧮, phần mềm tự cộng theo bảng 3.1, 4.2, 5.1); số goal trên sân; có xét stop time ở lần tiebreak thứ 2 không; chung kết vẫn hoà thì đánh thêm hay hạt giống cao hơn thắng.
 
 Nhà trường cũng có thể tổ chức giải riêng, không thuộc RECF: chọn **Giải tự tổ chức** theo thể thức Engage (2 đội hợp tác) hoặc Achieve (2 đấu 2), rồi đổi số trận, số lượt solo và cách tính theo ý.
 

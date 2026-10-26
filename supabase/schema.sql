@@ -248,6 +248,14 @@ end $$;
 drop trigger if exists solo_limit on public.solo_runs;
 create trigger solo_limit before insert on public.solo_runs for each row execute function public.solo_limit();
 
+-- ---------- ADC (Fast Track) ----------
+--   detail = điểm thành phần (số bóng mỗi goal, phase, cổng…) khi ban tổ chức chọn nhập chi tiết; score vẫn là điểm tổng
+--   stop_time của trận Alliance ADC tới 90 giây (trận 90 giây, 5.3.1)
+alter table public.matches   add column if not exists detail jsonb;
+alter table public.solo_runs add column if not exists detail jsonb;
+alter table public.matches drop constraint if exists matches_stop_time_check;
+alter table public.matches add constraint matches_stop_time_check check (stop_time between 0 and 90);
+
 -- ---------- Giải thưởng (6.3, 7.2.7) ----------
 create table if not exists public.awards (
   id        uuid primary key default gen_random_uuid(),

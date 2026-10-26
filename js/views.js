@@ -38,7 +38,7 @@
     return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Time', 'Giờ') + '</th><th>' + tr('Field', 'Sân') + '</th><th>' + tr('Red', 'Đỏ') + '</th><th>' + tr('Blue', 'Xanh') + '</th><th class="n">' + tr('Score', 'Điểm') + '</th></tr></thead><tbody>' +
       list.map(function (m) {
         return '<tr' + (m.score != null ? ' class="done"' : '') + ' data-hl="' + esc(m.red + ' ' + m.blue) + '"><td class="code">' + matchCode(m, list) + '</td><td>' + esc(m.time || '') + '</td><td>' + esc(m.field || '') + '</td>' +
-          '<td>' + teamCell(m.red, 'red', m.red_counts) + stTag(m.red_status) + '</td><td>' + teamCell(m.blue, 'blue', m.blue_counts) + stTag(m.blue_status) + '</td><td class="n big">' + (m.score == null ? '' : m.score) + '</td></tr>';
+          '<td>' + teamCell(m.red, 'red', m.red_counts) + stTag(m.red_status) + '</td><td>' + teamCell(m.blue, 'blue', m.blue_counts) + stTag(m.blue_status) + '</td><td class="n big"' + (m.detail && window.ADC ? ' title="' + esc(ADC.describe('alliance', m.detail, I18N.lang !== 'vi')) + '"' : '') + '>' + (m.score == null ? '' : m.score) + '</td></tr>';
       }).join('') + '</tbody></table></div>';
   }
   function stTag(s) { return s === 'absent' ? ' <span class="tag">' + tr('absent', 'vắng') + '</span>' : s === 'red' ? ' <span class="tag" style="background:var(--bad);color:#fff">' + tr('red card', 'thẻ đỏ') + '</span>' : ''; }

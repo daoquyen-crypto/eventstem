@@ -184,7 +184,20 @@
       '<label class="ck" style="grid-column:1/-1" data-fmt="coop" id="cDropWrap"><input type="checkbox" id="cDrop"' + (c.dropLowest !== false ? ' checked' : '') + '> ' + tr('Drop each team\'s lowest alliance score (7.4.2)', 'Bỏ trận Alliance thấp nhất của mỗi đội (7.4.2)') + '</label>' +
       '<label class="f" data-fmt="versus"><span>' + tr('Finals format (Achieve 7.4.6)', 'Thể thức chung kết (Achieve 7.4.6)') + '</span><select id="cFinals">' +
         '<option value="bo1"' + (c.finals !== 'bo3' ? ' selected' : '') + '>' + tr('Single finals match', '1 trận chung kết') + '</option>' +
-        '<option value="bo3"' + (c.finals === 'bo3' ? ' selected' : '') + '>' + tr('Best of 3 (World Championship qualifying events)', 'Thắng 2 trong 3 (giải lấy vé World Championship)') + '</option></select></label></div>';
+        '<option value="bo3"' + (c.finals === 'bo3' ? ' selected' : '') + '>' + tr('Best of 3 (World Championship qualifying events)', 'Thắng 2 trong 3 (giải lấy vé World Championship)') + '</option></select></label>' +
+      /* ADC: các điểm luật chưa nói rõ, để ban tổ chức chọn */
+      '<label class="f" data-rs="adc-2027"><span>' + tr('Score entry', 'Cách nhập điểm') + '</span><select id="cEntry">' +
+        '<option value="total"' + (c.scoreEntry !== 'detail' ? ' selected' : '') + '>' + tr('Total score only', 'Chỉ nhập điểm tổng') + '</option>' +
+        '<option value="detail"' + (c.scoreEntry === 'detail' ? ' selected' : '') + '>' + tr('Score components (balls, phases, gates…); total is calculated', 'Nhập điểm thành phần (bóng, phase, cổng…); tự cộng điểm tổng') + '</option></select>' +
+        '<small>' + tr('Components follow the scoring tables 3.1, 4.2 and 5.1.', 'Điểm thành phần theo bảng điểm 3.1, 4.2 và 5.1.') + '</small></label>' +
+      '<label class="f" data-rs="adc-2027"><span>' + tr('Goals on the alliance field', 'Số goal trên sân Alliance') + '</span><input type="number" id="cGoals" min="1" max="8" value="' + (c.goals || 4) + '">' +
+        '<small>' + tr('Used for the goal bonus (5.1.2). Figure 1.3.1 shows 4.', 'Dùng tính goal bonus (5.1.2). Hình 1.3.1 có 4 goal.') + '</small></label>' +
+      '<label class="ck" style="grid-column:1/-1" data-rs="adc-2027"><input type="checkbox" id="cStopTb"' + (c.stopTimeTiebreak ? ' checked' : '') + '> ' +
+        tr('Finals: use early stop time in the 2nd tiebreaker (7.4.5 says it "may be considered")', 'Chung kết: xét stop time sớm ở lần tiebreak thứ 2 (7.4.5 ghi "có thể xét")') + '</label>' +
+      '<label class="f" data-rs="adc-2027"><span>' + tr('Finals still tied after comparing earlier rounds', 'Chung kết vẫn hoà sau khi so điểm các vòng trước') + '</span><select id="cFinalTie">' +
+        '<option value="replay"' + (c.finalTie !== 'seed' ? ' selected' : '') + '>' + tr('Play another tiebreaker', 'Đánh thêm tiebreak') + '</option>' +
+        '<option value="seed"' + (c.finalTie === 'seed' ? ' selected' : '') + '>' + tr('Higher seed wins', 'Hạt giống cao hơn thắng') + '</option></select>' +
+        '<small>' + tr('The game manual does not cover this case.', 'Game Manual không nói trường hợp này.') + '</small></label></div>';
   }
   function soloHint(RR) {
     return RR.soloPerKind ? tr('RECF ADC: per type, i.e. 3 piloting + 3 autonomous (7.4.1)', 'RECF ADC: cho mỗi loại, tức 3 lượt piloting + 3 lượt autonomous (7.4.1)')
@@ -197,6 +210,7 @@
       var ch = Rules.CHOICES.find(function (x) { return x.key === sel.value; }), RR = Rules.byId[ch.ruleset];
       document.querySelectorAll('[data-fmt]').forEach(function (el) { el.hidden = el.dataset.fmt !== RR.format; });
       $id('cDropWrap').hidden = RR.format !== 'coop' || ch.program === 'ADC';   // ADC 7.4.2: luôn bỏ trận thấp nhất
+      document.querySelectorAll('[data-rs]').forEach(function (el) { el.hidden = el.dataset.rs !== RR.id; });
       $id('cSoloHint').innerHTML = soloHint(RR);
       if (isNew && changed) {
         $id('cSolo').value = RR.cfg({}).soloAttempts;
@@ -214,7 +228,8 @@
       name: val('evName'), program: ch.program, ruleset: ch.ruleset, recf_code: val('evCode').toUpperCase(), date: val('evDate') || null, end_date: val('evEnd') || null,
       location: val('evLoc'), country: val('evCountry'), organizer_name: val('evOrg'), grades: grades.length ? grades : Rules.byId[ch.ruleset].grades,
       config: { matchesPerTeam: num('cMpt', 6), soloAttempts: num('cSolo', d.soloAttempts), fields: num('cFields', 1), start: val('cStart') || '09:00', cycleMin: num('cCycle', d.cycleMin), minGap: num('cGap', 1),
-        dropLowest: ch.program === 'ADC' ? true : $id('cDrop').checked, finals: val('cFinals') || 'bo1' }
+        dropLowest: ch.program === 'ADC' ? true : $id('cDrop').checked, finals: val('cFinals') || 'bo1',
+        scoreEntry: val('cEntry') || 'total', goals: num('cGoals', 4), stopTimeTiebreak: $id('cStopTb').checked, finalTie: val('cFinalTie') || 'replay' }
     };
   }
   function renderNew() {
@@ -441,8 +456,42 @@
       }).join('') + '</tbody></table></div>';
   }
   /* Dòng nhập điểm dùng chung cho vòng loại và chung kết */
+  /* Bảng nhập điểm thành phần ADC (3.1, 4.2, 5.1). kind: 'alliance' | 'driving' | 'coding' */
+  function openCalc(kind, detail, title, onApply) {
+    var c = cfgOf(B.event), sh = ADC.SHEETS[kind], d = detail || {}, en = I18N.lang !== 'vi';
+    var dlg = $id('calcDlg'); if (!dlg) { dlg = document.createElement('dialog'); dlg.id = 'calcDlg'; dlg.className = 'card'; dlg.style.cssText = 'max-width:min(560px,94vw);width:100%;padding:16px'; document.body.appendChild(dlg); }
+    var field = function (k, label, v, max) {
+      return '<label class="f"><span>' + esc(label) + '</span><input type="number" inputmode="numeric" min="0"' + (max ? ' max="' + max + '"' : '') + ' data-k="' + k + '" value="' + (v || 0) + '"></label>';
+    };
+    var goals = '';
+    if (kind === 'alliance') for (var i = 0; i < (+c.goals || 4); i++) goals += field('g' + i, tr('Balls in goal ', 'Bóng trong goal ') + (i + 1), (d.goals || [])[i]);
+    var land = sh.multiLanding
+      ? sh.landing.map(function (l) { return '<label class="ck"><input type="checkbox" data-k="' + l[0] + '"' + (d[l[0]] ? ' checked' : '') + '> ' + esc(en ? l[2] : l[3]) + ' (' + l[1] + ')</label>'; }).join(' ')
+      : '<select data-k="landing" style="width:auto"><option value="">' + tr('No landing', 'Không hạ cánh') + '</option>' + sh.landing.map(function (l) { return '<option value="' + l[0] + '"' + (d.landing === l[0] ? ' selected' : '') + '>' + esc(en ? l[2] : l[3]) + ' (' + l[1] + ')</option>'; }).join('') + '</select>';
+    var head = kind === 'alliance' ? tr('Alliance match (5.1)', 'Trận Alliance (5.1)') : kind === 'coding' ? tr('Autonomous flight (4.2)', 'Autonomous (4.2)') : tr('Piloting (3.1)', 'Piloting (3.1)');
+    dlg.innerHTML = '<form method="dialog"><h3 style="margin-top:0">' + esc(head) + (title ? ' · ' + esc(title) : '') + '</h3><div class="grid2">' + goals +
+      sh.items.map(function (it) { return field(it[0], (en ? it[3] : it[4]) + ' (' + it[1] + (it[2] ? ', ' + tr('max ', 'tối đa ') + it[2] : '') + ')', d[it[0]], it[2]); }).join('') + '</div>' +
+      '<div class="f" style="margin-top:8px"><span>' + tr('Landing', 'Hạ cánh') + (kind === 'alliance' ? ' (5.1.6)' : ' (3.1.12–3.1.15)') + '</span><div class="row">' + land + '</div></div>' +
+      '<div class="spread" style="margin:12px -16px -16px;padding:10px 16px;position:sticky;bottom:-16px;background:var(--surface);border-top:1px solid var(--line)"><b>' + tr('Total', 'Tổng') + ': <span id="calcTot" class="big">0</span></b><div class="row">' +
+      '<button class="btn" value="cancel" type="submit">' + tr('Cancel', 'Huỷ') + '</button><button class="btn pri" id="calcOk" type="button">' + tr('Use this score', 'Dùng điểm này') + '</button></div></div></form>';
+    var read = function () {
+      var o = { goals: [] };
+      dlg.querySelectorAll('[data-k]').forEach(function (el) {
+        var k = el.dataset.k;
+        if (/^g\d+$/.test(k)) o.goals[+k.slice(1)] = +el.value || 0;
+        else o[k] = el.type === 'checkbox' ? el.checked : el.tagName === 'SELECT' ? el.value : +el.value || 0;
+      });
+      return ADC.calc(kind, o, c);
+    };
+    var upd = function () { $id('calcTot').textContent = read().score; };
+    dlg.oninput = dlg.onchange = upd; upd();
+    $id('calcOk').onclick = function () { var r = read(); dlg.close(); onApply(r); };
+    dlg.showModal();
+    var first = dlg.querySelector('input'); if (first) first.select();
+  }
+  function detailMode() { return rounds() && cfgOf(B.event).scoreEntry === 'detail'; }
   function scoreRows(list, isFinal, noStop) {
-    var stop = isFinal && !noStop;
+    var stop = isFinal && !noStop, dm = detailMode(), maxStop = rounds() ? 90 : 60;
     var opt = function (v) {
       return '<option value="ok"' + (v === 'ok' ? ' selected' : '') + '>✓</option><option value="red"' + (v === 'red' ? ' selected' : '') + '>' + tr('Red card', 'Thẻ đỏ') + '</option>' +
         (isFinal ? '' : '<option value="absent"' + (v === 'absent' ? ' selected' : '') + '>' + tr('Absent', 'Vắng') + '</option>');
@@ -453,9 +502,10 @@
         return '<tr data-id="' + esc(m.id) + '" data-hl="' + esc(m.red + ' ' + m.blue) + '"' + (m.score != null ? ' class="done"' : '') + '><td class="code">' + Views.matchCode(m, list) + '</td><td class="hide-sm small">' + [m.time ? esc(m.time) : '', m.field ? tr('Field ', 'Sân ') + esc(m.field) : ''].filter(Boolean).join(' · ') + '</td>' +
           '<td>' + teamCell(m.red, 'red', m.red_counts) + '<br><select class="st" data-f="red_status" aria-label="' + esc(tr('Red team status', 'Trạng thái đội đỏ')) + '">' + opt(m.red_status) + '</select></td>' +
           '<td>' + teamCell(m.blue, 'blue', m.blue_counts) + '<br><select class="st" data-f="blue_status" aria-label="' + esc(tr('Blue team status', 'Trạng thái đội xanh')) + '">' + opt(m.blue_status) + '</select></td>' +
-          '<td class="n"><div class="sc"><input type="number" inputmode="numeric" min="0" class="score-in" data-f="score" value="' + (m.score == null ? '' : m.score) + '" aria-label="' + esc(tr('Score', 'Điểm')) + '">' +
+          '<td class="n"><div class="sc">' + (dm ? '<button class="btn sm" data-calc type="button" title="' + esc(tr('Enter score components', 'Nhập điểm thành phần')) + '">🧮</button><input type="hidden" data-f="detail" value="' + esc(m.detail ? JSON.stringify(m.detail) : '') + '">' : '') +
+          '<input type="number" inputmode="numeric" min="0" class="score-in" data-f="score" value="' + (m.score == null ? '' : m.score) + '" aria-label="' + esc(tr('Score', 'Điểm')) + '"' + (dm ? ' readonly' : '') + '>' +
           (stop ? '' : '<button class="btn sm pri" data-save type="button">' + tr('Save', 'Lưu') + '</button>') + '</div></td>' +
-          (stop ? '<td class="n"><div class="sc"><input type="number" inputmode="numeric" min="0" max="60" class="stop-in" data-f="stop_time" value="' + (m.stop_time == null ? '' : m.stop_time) + '" aria-label="Stop time"><button class="btn sm pri" data-save type="button">' + tr('Save', 'Lưu') + '</button></div></td>' : '') +
+          (stop ? '<td class="n"><div class="sc"><input type="number" inputmode="numeric" min="0" max="' + maxStop + '" class="stop-in" data-f="stop_time" value="' + (m.stop_time == null ? '' : m.stop_time) + '" aria-label="Stop time"><button class="btn sm pri" data-save type="button">' + tr('Save', 'Lưu') + '</button></div></td>' : '') +
           '</tr>';
       }).join('') + '</tbody></table></div>';
   }
@@ -467,8 +517,10 @@
         if (el.type === 'checkbox') patch[f] = el.checked;
         else if (el.tagName === 'SELECT') patch[f] = el.value;
         else {
-          var v = el.value.trim(); if (v !== '' && !/^\d+$/.test(v)) bad = true;
-          patch[f] = v === '' ? null : f === 'stop_time' ? Math.max(0, Math.min(60, +v)) : +v;
+          var v = el.value.trim();
+          if (f === 'detail') { patch[f] = v ? JSON.parse(v) : null; return; }   // điểm thành phần ADC
+          if (v !== '' && !/^\d+$/.test(v)) bad = true;
+          patch[f] = v === '' ? null : f === 'stop_time' ? Math.max(0, Math.min(+el.max || 60, +v)) : +v;
         }
       });
       if (bad) return toast(errText({ code: 'bad_score' }), true);
@@ -483,7 +535,16 @@
         if (after) after();
       }).catch(fail).then(function () { busy(b, false); });
     }
-    root.addEventListener('click', function (ev) { var b = ev.target.closest('[data-save]'); if (b) saveRow(b.closest('tr')); });
+    root.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-save]'); if (b) saveRow(b.closest('tr'));
+      var c = ev.target.closest('[data-calc]');
+      if (c) {
+        var row = c.closest('tr'), h = row.querySelector('[data-f=detail]');
+        openCalc('alliance', h.value ? JSON.parse(h.value) : null, row.cells[0].textContent, function (r) {
+          h.value = JSON.stringify(r.detail); row.querySelector('.score-in').value = r.score; saveRow(row);
+        });
+      }
+    });
     root.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' && ev.target.matches('input')) { ev.preventDefault(); saveRow(ev.target.closest('tr')); } });
   }
 
@@ -511,26 +572,35 @@
     var e = B.event, lim = cfgOf(e).soloAttempts, rk = R().solo(B.solo), L = R().solo2, per = R().soloPerKind;
     var used = {}; B.solo.forEach(function (r) { var k = per ? r.team + '|' + (r.kind === 'coding' ? 'coding' : 'driving') : r.team; used[k] = (used[k] || 0) + 1; });
     var left = function (t) { return per ? lim - (used[t + '|' + val('soKind')] || 0) : lim - (used[t] || 0); };
+    var dm = detailMode(), soloDetail = null;
     pane('<div class="card no-print"><h3 style="margin-top:0">' + tr('Record a solo match', 'Ghi điểm trận Solo') + '</h3>' +
       '<p class="small mut" style="margin-top:0">' + (per ? tr('Solo matches are not scheduled. Each team has up to ', 'Trận Solo không xếp lịch. Mỗi đội có tối đa ') + lim + tr(' piloting matches (60 s) and ', ' trận piloting (60 giây) và ') + lim + tr(' autonomous flight matches (3 min) (7.4.1).', ' trận autonomous (3 phút) (7.4.1).')
         : tr('Solo matches are not scheduled. Each team has ', 'Trận Solo không xếp lịch. Mỗi đội có ') + lim + tr(' attempts in total, split between driving and coding as they like (7.4.1).', ' lượt, tự chia giữa driving và coding (7.4.1).')) + '</p>' +
       '<form id="fSolo" class="row"><input type="text" id="soTeam" list="teamList" placeholder="' + esc(tr('Team #', 'Mã đội')) + '" style="width:140px" required autocomplete="off">' +
       '<datalist id="teamList">' + B.teams.map(function (t) { return '<option value="' + esc(t.number) + '">' + esc(t.name) + '</option>'; }).join('') + '</datalist>' +
       '<select id="soKind" style="width:auto"><option value="driving">' + (per ? tr('Piloting', 'Piloting (lái tay)') : tr('Driving', 'Driving (lái)')) + '</option><option value="coding">' + (per ? tr('Autonomous', 'Autonomous (tự hành)') : tr('Coding', 'Coding (lập trình)')) + '</option></select>' +
-      '<input type="number" id="soScore" min="0" inputmode="numeric" placeholder="' + esc(tr('Score', 'Điểm')) + '" style="width:100px" required>' +
+      (dm ? '<button class="btn" id="soCalc" type="button">🧮 ' + tr('Score components', 'Điểm thành phần') + '</button>' : '') +
+      '<input type="number" id="soScore" min="0" inputmode="numeric" placeholder="' + esc(tr('Score', 'Điểm')) + '" style="width:100px" required' + (dm ? ' readonly' : '') + '>' +
       (per ? '' : '<input type="number" id="soStop" min="0" max="60" inputmode="numeric" placeholder="' + esc(tr('Stop time (s)', 'Stop time (giây)')) + '" style="width:140px" title="3.3.6">') +
       '<button class="btn acc" type="submit">' + tr('Add', 'Thêm') + '</button><span id="soLeft" class="small mut"></span></form></div>' +
       '<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start"><div><h3 class="t">' + tr('Solo rankings (3.5)', 'Xếp hạng Solo (3.5)') + '</h3>' + soloTable(rk, per ? 2 * lim : lim) + '</div>' +
       '<div><h3 class="t">' + tr('All solo runs', 'Tất cả lượt Solo') + ' (' + B.solo.length + ')</h3>' + (B.solo.length ? '<div class="tbl"><table><thead><tr><th>' + tr('Team', 'Đội') + '</th><th>' + tr('Type', 'Loại') + '</th><th class="n">' + tr('Score', 'Điểm') + '</th><th class="n">Stop</th><th></th></tr></thead><tbody>' +
-        B.solo.slice().reverse().map(function (r) { return '<tr><td class="code">' + esc(r.team) + '</td><td>' + (r.kind === 'coding' ? L[1] : L[0]) + '</td><td class="n">' + r.score + '</td><td class="n">' + (r.stop_time == null ? '' : r.stop_time) + '</td><td><button class="btn sm danger" data-del="' + esc(r.id) + '" type="button">✕</button></td></tr>'; }).join('') +
+        B.solo.slice().reverse().map(function (r) { return '<tr><td class="code">' + esc(r.team) + '</td><td>' + (r.kind === 'coding' ? L[1] : L[0]) + '</td><td class="n"' + (r.detail ? ' title="' + esc(ADC.describe(r.kind, r.detail, I18N.lang !== 'vi')) + '"' : '') + '>' + r.score + '</td><td class="n">' + (r.stop_time == null ? '' : r.stop_time) + '</td><td><button class="btn sm danger" data-del="' + esc(r.id) + '" type="button">✕</button></td></tr>'; }).join('') +
         '</tbody></table></div>' : '<p class="empty">' + tr('No solo runs yet.', 'Chưa có lượt Solo nào.') + '</p>') + '</div></div>');
+    if (dm) {
+      $id('soCalc').onclick = function () {
+        openCalc(val('soKind'), soloDetail, val('soTeam').toUpperCase(), function (r) { soloDetail = r.detail; $id('soScore').value = r.score; });
+      };
+      $id('soKind').addEventListener('change', function () { soloDetail = null; $id('soScore').value = ''; });
+    }
     $id('soTeam').oninput = $id('soKind').onchange = function () { var t = val('soTeam').toUpperCase(); $id('soLeft').textContent = B.teams.some(function (x) { return x.number === t; }) ? tr('Attempts left: ', 'Còn ') + left(t) + tr('', ' lượt') : ''; };
     $id('fSolo').onsubmit = function (ev) {
       ev.preventDefault(); var t = val('soTeam').toUpperCase();
       if (!B.teams.some(function (x) { return x.number === t; })) return toast(tr('Unknown team ', 'Không có đội ') + t, true);
       if (per && left(t) <= 0 && !confirm(tr('This team has used all its attempts of this type (7.4.1). Record anyway?', 'Đội này đã hết lượt loại này (7.4.1). Vẫn ghi?'))) return;
+      if (dm && !soloDetail) return toast(tr('Enter the score components first (🧮).', 'Hãy nhập điểm thành phần trước (🧮).'), true);
       var st = per ? '' : val('soStop');
-      S.addSolo(e.id, { team: t, kind: val('soKind'), score: num('soScore', 0), stop_time: st === '' ? null : +st }).then(function () {
+      S.addSolo(e.id, { team: t, kind: val('soKind'), score: num('soScore', 0), stop_time: st === '' ? null : +st, detail: dm ? soloDetail : null }).then(function () {
         toast(tr('Saved', 'Đã lưu')); return refresh();
       }).then(function () { $id('soTeam').focus(); }).catch(fail);
     };
@@ -590,7 +660,7 @@
   function selOf(e) { var x = (e.config || {}).selection || {}; return { n: +x.n || 0, picks: (x.picks || []).slice(), declined: (x.declined || []).slice(), log: (x.log || []).slice() }; }
   function saveSel(sel) { return S.updateEvent(B.event.id, { config: Object.assign({}, B.event.config, { selection: sel }) }).then(refresh); }
   /* Tạo các trận nhánh đấu còn thiếu (trận đầu, trận đánh lại khi hoà, vòng sau khi đã có đội thắng) */
-  function bracketOf(al) { return rounds() ? ADC.eliminations(al, B.matches) : Achieve.bracket(al, B.matches, cfgOf(B.event)); }
+  function bracketOf(al) { return rounds() ? ADC.eliminations(al, B.matches, cfgOf(B.event)) : Achieve.bracket(al, B.matches, cfgOf(B.event)); }
   function syncBracket() {
     var e = B.event, st = Achieve.selection([], selOf(e)), br = bracketOf(st.alliances);
     if (!br.toCreate.length) return Promise.resolve(0);
@@ -633,11 +703,11 @@
           : tr('Created after alliance selection. Higher seeds get byes when the bracket is not full.', 'Tạo sau khi chọn liên minh. Thiếu đội thì hạt giống cao được đi thẳng (bye).')) + '</p>') + '</div></div>';
     if (em.length) {
       out += '<h3 class="t">' + tr('Elimination matches', 'Các trận loại trực tiếp') + '</h3><div class="banner info small">' + (rd ?
-        tr('Matches are played one at a time, starting with the lowest-ranked alliance. After the quarterfinals the top 4 alliances advance, after the semifinals the top 2; alliances tied at the cut-off also advance. A red card gives the whole alliance 0 (1.6.3). A tie for first in the finals is broken by tiebreaker rounds, then by scores from earlier rounds (7.4.5). Next matches are created automatically.',
-          'Đánh lần lượt từng trận, bắt đầu từ liên minh xếp thấp nhất. Sau tứ kết, 4 liên minh điểm cao nhất đi tiếp; sau bán kết, 2 liên minh; liên minh bằng điểm ở ngưỡng cũng đi tiếp. Thẻ đỏ: cả liên minh 0 điểm (1.6.3). Chung kết hoà hạng nhất thì đánh vòng tiebreak, rồi xét điểm các vòng trước (7.4.5). Trận tiếp theo được tạo tự động.') :
+        tr('Matches are played one at a time, starting with the lowest-ranked alliance. After the quarterfinals the top 4 alliances advance, after the semifinals the top 2; alliances tied at the cut-off also advance. A red card gives the whole alliance 0 (1.6.3). A tie for first in the finals is broken by tiebreaker rounds, then by scores from earlier rounds (7.4.5). Next matches are created automatically.' + (c.stopTimeTiebreak ? ' Stop time (seconds left when the alliance stopped) is used in the 2nd tiebreaker.' : ''),
+          'Đánh lần lượt từng trận, bắt đầu từ liên minh xếp thấp nhất. Sau tứ kết, 4 liên minh điểm cao nhất đi tiếp; sau bán kết, 2 liên minh; liên minh bằng điểm ở ngưỡng cũng đi tiếp. Thẻ đỏ: cả liên minh 0 điểm (1.6.3). Chung kết hoà hạng nhất thì đánh vòng tiebreak, rồi xét điểm các vòng trước (7.4.5). Trận tiếp theo được tạo tự động.' + (c.stopTimeTiebreak ? ' Lần tiebreak thứ 2 xét stop time (số giây còn lại khi liên minh dừng).' : '')) :
         tr('A red card in an elimination match gives the whole alliance 0 (1.6.3). A tie is replayed up to 2 times; if the 3rd match also ties, the higher seed advances (7.4.5). ', 'Thẻ đỏ ở vòng loại trực tiếp: cả liên minh 0 điểm (1.6.3). Hoà thì đánh lại tối đa 2 trận; trận thứ 3 vẫn hoà thì hạt giống cao hơn đi tiếp (7.4.5). ') +
         (c.finals === 'bo3' ? tr('Finals: best of 3.', 'Chung kết: thắng 2 trong 3.') : tr('Finals: a single match.', 'Chung kết: 1 trận.')) + ' ' + tr('Next matches are created automatically.', 'Trận tiếp theo được tạo tự động.')) + '</div>' +
-        '<div id="eRows">' + (rd ? scoreRows(em, true, true) : versusRows(em, true)) + '</div><div class="row" style="margin-top:10px"><button class="btn sm danger" id="clrBracket" type="button">' + tr('Delete bracket', 'Xoá nhánh đấu') + '</button></div>';
+        '<div id="eRows">' + (rd ? scoreRows(em, true, !c.stopTimeTiebreak) : versusRows(em, true)) + '</div><div class="row" style="margin-top:10px"><button class="btn sm danger" id="clrBracket" type="button">' + tr('Delete bracket', 'Xoá nhánh đấu') + '</button></div>';
     }
     pane(out);
     var inv = function () { return $id('invitee').value; };

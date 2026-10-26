@@ -114,7 +114,7 @@
     },
     finals: function () {
       if (R().eliminations === 'rounds') {
-        var sa = Achieve.selection([], (B.event.config || {}).selection), res = ADC.eliminations(sa.alliances, B.matches);
+        var sa = Achieve.selection([], (B.event.config || {}).selection), res = ADC.eliminations(sa.alliances, B.matches, cfg());
         var am = B.matches.filter(function (m) { return m.round === 'elim' || m.round === 'final'; }).sort(function (a, b) { return (a.round === 'final') - (b.round === 'final') || a.num - b.num; });
         return pane((res.champion ? '<div class="champ">🏆 ' + tr('Teamwork Champions', 'Vô địch Teamwork') + ': <b>' + esc(res.champion.captain) + ' + ' + esc(res.champion.partner) + '</b></div>' : '') +
           (res.tied.length ? '<div class="banner info">' + tr('Tie for first place: tiebreaker round coming up (7.4.5).', 'Hoà hạng nhất: sắp đánh vòng tiebreak (7.4.5).') + '</div>' : '') +

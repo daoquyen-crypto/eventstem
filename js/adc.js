@@ -9,7 +9,8 @@
      solo.kind 'driving' = Piloting, 'coding' = Autonomous
      trận loại trực tiếp: round 'elim' (label 'QF' / 'SF') hoặc 'final' (label 'F', 'TB1', 'TB2'…),
        red = đội trưởng, blue = đồng đội, seed = hạt giống liên minh
-     chọn liên minh: event.config.selection, giống Achieve */
+     chọn liên minh: event.config.selection, giống Achieve
+     điểm thành phần (nếu ban tổ chức chọn nhập chi tiết): cột detail (jsonb) của matches và solo_runs */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(require('./engage.js'), require('./achieve.js'));
   else root.ADC = factory(root.Engage, root.Achieve);
@@ -25,9 +26,63 @@
     dropLowest: true,    // 7.4.2: luôn bỏ trận thấp nhất, kể cả trận 0 do vắng hoặc thẻ đỏ
     tiebreakDepth: 2,    // 7.4.2: so điểm cao thứ 2, thứ 3, rồi bốc thăm
     soloAttempts: 3,     // 7.4.1: mỗi loại 3 lượt (3 Piloting + 3 Autonomous)
-    maxRedCards: 3       // 1.6.4
+    maxRedCards: 3,      // 1.6.4
+    /* Các điểm luật chưa nói rõ: để ban tổ chức chọn */
+    scoreEntry: 'total',       // 'total' = chỉ nhập điểm tổng; 'detail' = nhập điểm thành phần, phần mềm tự cộng (3.1, 4.2, 5.1)
+    goals: 4,                  // số goal trên sân Alliance, dùng tính goal bonus (5.1.2, hình 1.3.1)
+    stopTimeTiebreak: false,   // 7.4.5: lần tiebreak thứ 2 "có thể" xét stop time sớm
+    finalTie: 'replay'         // vẫn hoà sau khi so điểm các vòng trước: 'replay' = đánh thêm tiebreak, 'seed' = hạt giống cao hơn thắng
   };
   function cfg(c) { var o = {}, k; for (k in DEFAULTS) o[k] = DEFAULTS[k]; for (k in (c || {})) if (c[k] != null && c[k] !== '') o[k] = c[k]; return o; }
+
+  /* ---------- Bảng điểm thành phần (3.1, 4.2, 5.1) ----------
+     Mỗi mục: [khoá, điểm mỗi lần, số lần tối đa (0 = không giới hạn), tên EN, tên VI]. Hạ cánh là 1 lựa chọn duy nhất. */
+  var SHEETS = {
+    alliance: {
+      items: [['zone', 1, 0, 'Balls in a scoring zone', 'Bóng trong vùng ghi điểm'], ['bags', 10, 2, 'Bean bags cleared', 'Túi đậu đã gạt'],
+        ['paths', 10, 2, 'Completed flight paths (1 per drone)', 'Đường bay hoàn thành (1 mỗi drone)']],
+      landing: [['large', 15, 'Drone on the large cube', 'Drone trên khối lớn'], ['small', 20, 'Drone on the small cube', 'Drone trên khối nhỏ']], multiLanding: true
+    },
+    driving: {
+      items: [['takeoff', 5, 1, 'Take off', 'Cất cánh'], ['p1', 5, 0, 'Phase 1 completed', 'Hoàn thành phase 1'], ['p2', 10, 0, 'Phase 2 completed', 'Hoàn thành phase 2'],
+        ['p3', 15, 0, 'Phase 3 completed', 'Hoàn thành phase 3'], ['p4', 10, 0, 'Phase 4 completed', 'Hoàn thành phase 4']],
+      landing: [['pad', 5, 'Landing pad', 'Bãi đáp'], ['cube', 10, 'Any cube', 'Trên khối'], ['bull', 15, 'Bullseye', 'Hồng tâm']]
+    },
+    coding: {
+      items: [['takeoff', 5, 1, 'Take off', 'Cất cánh'], ['red', 5, 2, 'Under the red arch gate', 'Qua cổng vòm đỏ'], ['blue', 5, 2, 'Under the blue arch gate', 'Qua cổng vòm xanh'],
+        ['green', 10, 2, 'Through the green keyhole', 'Qua vòng xanh lá'], ['yellow', 20, 2, 'Through the yellow keyhole', 'Qua vòng vàng'],
+        ['cube', 25, 2, 'Through the large cube', 'Xuyên khối lớn'], ['m1', 15, 2, 'Mini keyhole #1 (lowest)', 'Vòng nhỏ #1 (thấp nhất)'],
+        ['m2', 15, 2, 'Mini keyhole #2 (middle)', 'Vòng nhỏ #2 (giữa)'], ['m3', 15, 2, 'Mini keyhole #3 (top)', 'Vòng nhỏ #3 (cao nhất)'],
+        ['spiral', 10, 2, 'Spiral bonus (1 → 2 → 3)', 'Thưởng xoắn ốc (1 → 2 → 3)'], ['tunnel', 15, 2, 'Through the tunnel', 'Qua đường hầm']],
+      landing: [['pad', 5, 'Landing pad', 'Bãi đáp'], ['cube', 10, 'Any cube', 'Trên khối'], ['bull', 15, 'Bullseye', 'Hồng tâm']]
+    }
+  };
+  function nonNeg(v) { v = Math.floor(+v || 0); return v > 0 ? v : 0; }
+  /* Chuẩn hoá điểm thành phần: cắt theo số lần tối đa; trả về {detail, score}.
+     Alliance: d.goals = [số bóng mỗi goal]; mỗi bóng 2 điểm + goal bonus 5 × số bóng của goal ít nhất (5.1.1, 5.1.2). */
+  function calc(kind, d, opts) {
+    var sh = SHEETS[kind === 'alliance' ? 'alliance' : kind === 'coding' ? 'coding' : 'driving'], o = cfg(opts), out = {}, score = 0;
+    d = d || {};
+    if (kind === 'alliance') {
+      var n = Math.max(1, +o.goals || 4), g = [];
+      for (var i = 0; i < n; i++) g.push(nonNeg((d.goals || [])[i]));
+      out.goals = g;
+      score += 2 * g.reduce(function (a, b) { return a + b; }, 0) + 5 * Math.min.apply(null, g);
+    }
+    sh.items.forEach(function (it) { var v = nonNeg(d[it[0]]); if (it[2]) v = Math.min(v, it[2]); out[it[0]] = v; score += v * it[1]; });
+    if (sh.multiLanding) sh.landing.forEach(function (l) { var v = d[l[0]] ? 1 : 0; out[l[0]] = v; score += v * l[1]; });   // tối đa 1 drone mỗi khối (5.1.6)
+    else { var L = sh.landing.find(function (l) { return l[0] === d.landing; }); out.landing = L ? L[0] : ''; score += L ? L[1] : 0; }
+    return { detail: out, score: score };
+  }
+  /* Mô tả ngắn điểm thành phần để hiện khi rê chuột vào điểm */
+  function describe(kind, d, en) {
+    if (!d) return '';
+    var sh = SHEETS[kind === 'alliance' ? 'alliance' : kind === 'coding' ? 'coding' : 'driving'], k = en ? 3 : 4, parts = [];
+    if (d.goals) parts.push((en ? 'Goals ' : 'Goal ') + d.goals.join('/'));
+    sh.items.forEach(function (it) { if (d[it[0]]) parts.push(it[k] + ': ' + d[it[0]]); });
+    sh.landing.forEach(function (l) { if (sh.multiLanding ? d[l[0]] : d.landing === l[0]) parts.push(l[k - 1]); });
+    return parts.join(' · ');
+  }
 
   /* ---------- Vòng loại (7.4.2) ---------- */
   function schedule(teamNumbers, opts) { return E.schedule(teamNumbers, cfg(opts)); }
@@ -83,8 +138,8 @@
   var ADVANCE = { QF: 4, SF: 2 };
   function stagesFor(n) { return n > 4 ? ['QF', 'SF', 'F'] : n > 2 ? ['SF', 'F'] : n === 2 ? ['F'] : []; }
   function allianceScore(m) { return m.red_status === 'red' || m.blue_status === 'red' ? 0 : +m.score || 0; }
-  function eliminations(alliances, matches) {
-    var al = (alliances || []).slice().sort(function (a, b) { return a.seed - b.seed; }), AL = {};
+  function eliminations(alliances, matches, opts) {
+    var o = cfg(opts), al = (alliances || []).slice().sort(function (a, b) { return a.seed - b.seed; }), AL = {};
     al.forEach(function (a) { AL[a.seed] = a; });
     var em = (matches || []).filter(function (m) { return m.round === 'elim' || m.round === 'final'; });
     var out = { stages: [], tiebreaks: [], champion: null, tied: [], toCreate: [], done: false };
@@ -135,11 +190,17 @@
       if (!tb.done) { out.tied = lead.map(function (sd) { return AL[sd]; }); return out; }
       var mx = tb.rows[0].score;
       lead = tb.rows.filter(function (r) { return r.score === mx; }).map(function (r) { return r.seed; });
+      if (k === 2 && lead.length > 1 && o.stopTimeTiebreak) {   // tuỳ chọn: lần tiebreak thứ 2 xét stop time sớm (7.4.5)
+        var stopOf = function (sd) { var r = tb.rows.find(function (x) { return x.seed === sd; }); return r && r.match ? +r.match.stop_time || 0 : 0; };
+        var ms = Math.max.apply(null, lead.map(stopOf));
+        if (ms > 0) lead = lead.filter(function (sd) { return stopOf(sd) === ms; });
+      }
       if (k === 2 && lead.length > 1) {   // lần tiebreak thứ 3: so điểm các vòng trước, vòng gần nhất trước (7.4.5)
         for (var j = stages.length - 2; j >= 0 && lead.length > 1; j--) {
           var best = Math.max.apply(null, lead.map(function (sd) { return hist[sd][j]; }));
           lead = lead.filter(function (sd) { return hist[sd][j] === best; });
         }
+        if (lead.length > 1 && o.finalTie === 'seed') lead = [Math.min.apply(null, lead)];   // tuỳ chọn của ban tổ chức
       }
     }
     out.champion = AL[lead[0]]; out.done = true;
@@ -150,7 +211,7 @@
   /* Giải thành tích: Teamwork Champions (7.4.5), Skills Mission Champion (7.4.1) */
   function performanceAwards(matches, runs, ev) {
     var out = [], sel = (ev && ev.config && ev.config.selection) || {}, sr = soloRanking(runs);
-    var res = eliminations(selection([], sel).alliances, matches);
+    var res = eliminations(selection([], sel).alliances, matches, ev && ev.config);
     if (res.champion) [res.champion.captain, res.champion.partner].forEach(function (t) { out.push({ team: t, name: 'Teamwork Champions', judged: false, auto: true }); });
     if (sr.length && sr[0].total > 0) out.push({ team: sr[0].team, name: 'Skills Mission Champion', judged: false, auto: true });
     return out;
@@ -169,7 +230,7 @@
   return {
     DEFAULTS: DEFAULTS, cfg: cfg, schedule: schedule, ranking: ranking, soloRanking: soloRanking, soloLeft: soloLeft,
     redCards: E.redCards, eligible: eligible, recommendedAlliances: recommendedAlliances, selection: selection,
-    stagesFor: stagesFor, allianceScore: allianceScore, eliminations: eliminations,
+    stagesFor: stagesFor, allianceScore: allianceScore, eliminations: eliminations, SHEETS: SHEETS, calc: calc, describe: describe,
     performanceAwards: performanceAwards, resultRows: resultRows
   };
 });

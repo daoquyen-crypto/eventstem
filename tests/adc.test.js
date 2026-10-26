@@ -178,3 +178,38 @@ test('giải thưởng thành tích và CSV', () => {
   assert.deepEqual(rows.filter(r => r[13] === 'solo2').map(r => r[14]), [30, 70]);
   assert.equal(rows.filter(r => r[13] === 'award').length, 3);
 });
+
+test('5.1: điểm Alliance từ thành phần (bóng, goal bonus, túi đậu, đường bay, hạ cánh)', () => {
+  // 4 goal: 3,1,2,4 bóng → 2×10 + 5×1 = 25; vùng 3 → 3; túi 2 → 20; đường bay 1 → 10; khối nhỏ → 20
+  const r = D.calc('alliance', { goals: [3, 1, 2, 4], zone: 3, bags: 2, paths: 1, small: true });
+  assert.equal(r.score, 25 + 3 + 20 + 10 + 20);
+  assert.deepEqual(r.detail.goals, [3, 1, 2, 4]);
+  // cắt theo tối đa: túi đậu 2, đường bay 2; goal trống → không có bonus
+  assert.equal(D.calc('alliance', { goals: [5, 0, 5, 5], bags: 9, paths: 3, large: 1 }).score, 30 + 0 + 20 + 20 + 15);
+  // đổi số goal
+  assert.equal(D.calc('alliance', { goals: [2, 2, 9] }, { goals: 2 }).score, 8 + 10);
+});
+
+test('3.1 / 4.2: điểm Solo từ thành phần', () => {
+  // Piloting: cất cánh 5 + phase1×2 10 + phase2 10 + phase3 15 + phase4 10 + hồng tâm 15
+  assert.equal(D.calc('driving', { takeoff: 1, p1: 2, p2: 1, p3: 1, p4: 1, landing: 'bull' }).score, 65);
+  // Autonomous: tối đa 2 lần mỗi mục, cất cánh 1 lần
+  const a = D.calc('coding', { takeoff: 3, cube: 5, m1: 1, m2: 1, m3: 1, spiral: 1, landing: 'cube' });
+  assert.equal(a.score, 5 + 50 + 45 + 10 + 10);
+  assert.equal(a.detail.takeoff, 1); assert.equal(a.detail.cube, 2);
+  assert.match(D.describe('coding', a.detail, true), /Through the large cube: 2/);
+});
+
+test('tuỳ chọn: stop time ở tiebreak thứ 2, và hạt giống cao hơn thắng khi vẫn hoà', () => {
+  const run = (opts, stops) => {
+    const al = alliances(2), ms = [];
+    addAll(ms, D.eliminations(al, ms, opts).toCreate, () => 50);                          // chung kết hoà
+    addAll(ms, D.eliminations(al, ms, opts).toCreate, () => 40);                          // TB1 hoà
+    D.eliminations(al, ms, opts).toCreate.forEach(m => ms.push(Object.assign({}, m, { score: 30, stop_time: stops[m.seed] })));   // TB2 hoà
+    return D.eliminations(al, ms, opts);
+  };
+  assert.equal(run({}, { 1: 5, 2: 20 }).champion, null);                                    // mặc định: không xét stop time, đánh TB3
+  assert.equal(run({}, { 1: 5, 2: 20 }).toCreate[0].label, 'TB3');
+  assert.equal(run({ stopTimeTiebreak: true }, { 1: 5, 2: 20 }).champion.seed, 2);          // dừng sớm hơn (còn 20 giây) thắng
+  assert.equal(run({ finalTie: 'seed' }, { 1: 5, 2: 20 }).champion.seed, 1);                // hạt giống cao hơn thắng
+});

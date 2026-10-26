@@ -121,6 +121,32 @@ const assert = (c, m) => { if (!c) throw new Error('ASSERT: ' + m); console.log(
   await p.click('#rkProg button[data-v="ADC"]'); await p.waitForSelector('#rkTable table');
   assert(await p.locator('#rkTable tr[data-team="DR100"]').count() === 1, 'ADC tool event in global rankings');
 
+  // 12. Giải ADC thứ 2: nhập điểm thành phần (tuỳ chọn của ban tổ chức)
+  await p.goto(BASE + '/manage.html#new'); await p.waitForSelector('#evProg');
+  await p.selectOption('#evProg', 'ADC');
+  assert(await p.locator('#cEntry').isVisible() && await p.locator('#cStopTb').isVisible() && await p.locator('#cFinalTie').isVisible(), 'ADC options visible on the event form');
+  await p.selectOption('#cEntry', 'detail'); await p.fill('#evName', 'Fast Track chi tiết'); await p.fill('#cMpt', '2');
+  await p.click('#fNew button[type=submit]'); await p.waitForSelector('#tmPaste');
+  await p.fill('#tmPaste', 'DX1\nDX2\nDX3\nDX4'); await p.click('#tmAdd'); await p.waitForSelector('text=4 teams');
+  await tab('Schedule', '#genSch'); await p.click('#genSch'); await p.waitForSelector('text=4 qualification matches');
+  await tab('Scoring', '#scRows tbody tr');
+  const r0 = p.locator('#scRows tbody tr').first();
+  assert(await r0.locator('.score-in').getAttribute('readonly') !== null, 'score is calculated, not typed, in component mode');
+  await r0.locator('[data-calc]').click(); await p.waitForSelector('#calcDlg[open]');
+  await p.fill('#calcDlg [data-k=g0]', '3'); await p.fill('#calcDlg [data-k=g1]', '1'); await p.fill('#calcDlg [data-k=g2]', '2'); await p.fill('#calcDlg [data-k=g3]', '4');
+  await p.fill('#calcDlg [data-k=zone]', '3'); await p.fill('#calcDlg [data-k=bags]', '2'); await p.fill('#calcDlg [data-k=paths]', '1'); await p.check('#calcDlg [data-k=small]');
+  assert(await p.locator('#calcTot').innerText() === '78', 'calculator total 25 + 3 + 20 + 10 + 20 = 78 (5.1)');
+  await p.click('#calcOk');
+  await p.waitForFunction(() => document.querySelector('#scRows tbody tr').classList.contains('done'));
+  assert(await r0.locator('.score-in').inputValue() === '78', 'calculated score saved to the match');
+  await tab('Solo', '#fSolo');
+  await p.fill('#soTeam', 'DX1'); await p.selectOption('#soKind', 'driving'); await p.click('#soCalc'); await p.waitForSelector('#calcDlg[open]');
+  await p.fill('#calcDlg [data-k=takeoff]', '1'); await p.fill('#calcDlg [data-k=p1]', '2'); await p.selectOption('#calcDlg [data-k=landing]', 'bull');
+  await p.click('#calcOk'); assert(await p.inputValue('#soScore') === '30', 'piloting calculator 5 + 10 + 15 = 30 (3.1)');
+  await p.click('#fSolo button[type=submit]'); await p.waitForSelector('text=All solo runs (1)');
+  assert(/Phase 1 completed: 2/.test(await p.locator('#pane td[title]').first().getAttribute('title')), 'solo run keeps its score components');
+  await shot('adc-detail');
+
   console.log('PAGE ERRORS', JSON.stringify(errs));
   if (errs.length) process.exitCode = 1;
   await b.close();

@@ -81,7 +81,8 @@ node tests/e2e_adc.js                             # E2E luồng ADC (chế độ
 - SEPA chưa cài **SMTP** riêng cho email xác nhận của Supabase. Email mặc định bị giới hạn vài thư mỗi giờ.
 - Chưa chạy một giải thật đầy đủ trên Supabase thật. Lần đầu dùng nên theo dõi lỗi.
 - Chưa có luật **Inspire** và **ADC Pro**. Nếu cần, xin SEPA file Game Manual PDF.
-- ADC: chưa có bảng tính điểm chi tiết (bóng trong goal, goal bonus, phase solo…), hiện nhập tổng điểm. Danh sách giải giám khảo vẫn là của Engage (chưa có ADC Guide to Judging). Chưa dùng stop time cho tiebreak chung kết ADC (luật ghi "may be considered"; cột `stop_time` đang giới hạn 60 giây).
+- ADC: chỗ nào Game Manual chưa rõ thì để thành **tuỳ chọn của ban tổ chức** trong `event.config` (xem `ADC.DEFAULTS`): `scoreEntry` (điểm tổng / điểm thành phần), `goals` (số goal, mặc định 4), `stopTimeTiebreak`, `finalTie` (`replay` / `seed`). Danh sách gợi ý giải giám khảo vẫn là của Engage (chưa có ADC Guide to Judging); ô tên giải nhập tự do.
+- `tests/e2e_manage.js` đôi khi hỏng chập chờn ở bước `#pendBadge .pill` (có từ trước khi có ADC; chạy lại thì qua).
 - Giải Achieve 8 đội: lịch vẫn có vài trận một đội phải đánh 2 lượt liền nhau. Không tránh được khi vừa muốn không gặp lại đồng đội vừa có ít đội.
 - `docs/HUONG_DAN_TRIEN_KHAI.md` vẫn viết theo Cloudflare Pages, trong khi trang đang chạy GitHub Pages.
 - Chưa có: nhiều trọng tài cùng chấm một giải (hiện chỉ tài khoản tạo giải và SEPA được sửa), giải nhiều buổi (league, 7.4.5 / 7.4.7), màn hình chiếu tại sân.

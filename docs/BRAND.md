@@ -60,3 +60,7 @@ Phông chữ trên trang: **Barlow Condensed** (tiêu đề), **IBM Plex Sans** 
 ## Lưu ý thương hiệu
 
 "RECF", "VEX", "Engage", "Achieve" là thương hiệu của chủ sở hữu tương ứng. Khi giới thiệu EventSTEM, ghi rõ đây là dự án của SEPA, không phải trang chính thức của RECF. Không ghép logo RECF/VEX vào logo EventSTEM.
+
+Câu dùng trên trang:
+- Dưới logo trang chủ: **"Supporting RECF robotics & drone events" / "Đồng hành cùng các giải robot & drone RECF"** (chỉ chữ, không dùng logo RECF).
+- Chân trang: **"Developed by the STEM Education Promotion Alliance (SEPA). EventSTEM supports RECF events but is not an official RECF site."** / "Phát triển bởi STEM Education Promotion Alliance (SEPA). EventSTEM hỗ trợ các giải RECF nhưng không phải trang chính thức của RECF." 

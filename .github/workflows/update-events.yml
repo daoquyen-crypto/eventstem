@@ -36,6 +36,17 @@ jobs:
       - name: Dựng results.json từ results/*.csv
         run: python scripts/build_results.py results.json
 
+      - name: Giữ Supabase hoạt động (gói miễn phí tạm dừng sau 7 ngày không truy cập)
+        continue-on-error: true
+        run: |
+          URL=$(grep -oP "supabaseUrl:\s*'\K[^']+" js/config.js || true)
+          KEY=$(grep -oP "supabaseAnonKey:\s*'\K[^']+" js/config.js || true)
+          if [ -n "$URL" ] && [ -n "$KEY" ]; then
+            curl -fsS -o /dev/null -w "Supabase: HTTP %{http_code}\n" "$URL/rest/v1/events?select=id&limit=1" -H "apikey: $KEY"
+          else
+            echo "Chưa cấu hình Supabase trong js/config.js, bỏ qua."
+          fi
+
       - name: Commit và push nếu có thay đổi
         run: |
           git config user.name "eventstem-bot"

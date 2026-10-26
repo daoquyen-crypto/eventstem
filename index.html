@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EventSTEM</title>
-<meta name="description" content="Lịch thi đấu, đội đăng ký và bảng xếp hạng toàn cầu các giải robotics và drone RECF: Engage, Achieve, Inspire, Aerial Drone.">
+<meta name="description" content="Schedules, registered teams and global rankings for RECF robotics and drone events: Engage, Achieve, Inspire, Aerial Drone.">
 <link rel="canonical" href="https://eventstem.com/">
 <meta property="og:url" content="https://eventstem.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="EventSTEM">
-<meta property="og:description" content="Lịch thi đấu, đội đăng ký và bảng xếp hạng các giải RECF trên toàn thế giới.">
+<meta property="og:description" content="Schedules, registered teams and rankings for RECF events worldwide.">
 <meta name="color-scheme" content="light dark">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,6 +136,10 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 .views a{color:var(--navy-ink);opacity:.72;text-decoration:none;font-weight:600;padding:10px 14px 12px;border-bottom:3px solid transparent;font-size:15px}
 .views a[aria-current="page"]{opacity:1;border-bottom-color:var(--signal)}
 .views a:hover{opacity:1}
+.navrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.lang{display:inline-flex;border:1px solid rgba(255,255,255,.35);border-radius:8px;overflow:hidden}
+.lang button{border:0;background:transparent;color:var(--navy-ink);opacity:.75;padding:5px 10px;font-size:12.5px;font-weight:600;letter-spacing:.6px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--navy-ink);color:var(--navy);opacity:1}
 /* rankings */
 .rk-wrap{padding-block:18px 40px}
 .sample{background:color-mix(in srgb,var(--warn) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);border-radius:8px;padding:12px 14px;font-size:14px;margin-bottom:14px}
@@ -171,63 +175,64 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 </head>
 <body>
 <header class="band"><div class="wrap">
-  <div class="brand"><h1>Event<span>STEM</span></h1><p>Lịch thi đấu, đội đăng ký và bảng xếp hạng toàn cầu các giải RECF Engage · Achieve · Inspire · Aerial Drone.</p></div>
+  <div class="brand"><h1>Event<span>STEM</span></h1><p data-vi="Lịch thi đấu, đội đăng ký và bảng xếp hạng toàn cầu các giải RECF Engage · Achieve · Inspire · Aerial Drone.">Schedules, registered teams and global rankings for RECF Engage · Achieve · Inspire · Aerial Drone events.</p></div>
   <div class="tally" id="tally"></div>
 </div>
-<div class="wrap"><nav class="views" aria-label="Mục chính"><a href="#giai" id="navEvents" aria-current="page">Giải đấu</a><a href="#xephang" id="navRank">Xếp hạng toàn cầu</a></nav></div>
+<div class="wrap navrow"><nav class="views" aria-label="Main" data-vi-aria="Mục chính"><a href="#giai" id="navEvents" aria-current="page" data-vi="Giải đấu">Events</a><a href="#xephang" id="navRank" data-vi="Xếp hạng toàn cầu">Global rankings</a></nav>
+  <div class="lang" id="lang" role="group" aria-label="Language / Ngôn ngữ"><button type="button" data-l="en" lang="en" aria-pressed="true">EN</button><button type="button" data-l="vi" lang="vi" aria-pressed="false">VI</button></div></div>
 </header>
 
 <div id="viewEvents">
 <section class="wrap vn" id="vnSec" hidden>
-  <div class="sec-h"><h2>Giải tại Việt Nam</h2><button class="linkbtn" id="vnAll" type="button">Xem tất cả</button></div>
+  <div class="sec-h"><h2 data-vi="Giải tại Việt Nam">Events in Vietnam</h2><button class="linkbtn" id="vnAll" type="button" data-vi="Xem tất cả">See all</button></div>
   <div class="strip" id="vnStrip"></div>
 </section>
 
 <div class="filters"><div class="wrap">
   <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    <input id="q" type="search" placeholder="Tìm giải, thành phố, mã giải hoặc mã đội…" aria-label="Tìm kiếm"></label>
+    <input id="q" type="search" placeholder="Search events, cities, event codes or team numbers…" data-vi-ph="Tìm giải, thành phố, mã giải hoặc mã đội…" aria-label="Search" data-vi-aria="Tìm kiếm"></label>
   <div class="chips" id="progChips"></div>
-  <select id="country" aria-label="Quốc gia"></select>
-  <div class="seg" id="when"><button type="button" data-v="up" aria-pressed="true">Sắp tới</button><button type="button" data-v="past" aria-pressed="false">Đã kết thúc</button></div>
+  <select id="country" aria-label="Country" data-vi-aria="Quốc gia"></select>
+  <div class="seg" id="when"><button type="button" data-v="up" aria-pressed="true" data-vi="Sắp tới">Upcoming</button><button type="button" data-v="past" aria-pressed="false" data-vi="Đã kết thúc">Past</button></div>
 </div></div>
 
 <main class="wrap list">
   <p class="count" id="count"></p>
   <div id="list"></div>
-  <button class="more" id="more" type="button" hidden>Xem thêm</button>
+  <button class="more" id="more" type="button" hidden></button>
 </main>
 </div>
 
 <div id="viewRank" hidden>
   <div class="wrap rk-wrap">
-    <div class="sample" id="rkSample" hidden><b>Dữ liệu mẫu.</b> Các đội, giải và điểm dưới đây là ví dụ để xem thử cách bảng xếp hạng hoạt động, không phải kết quả thật. Bảng sẽ dùng kết quả thật khi Event Partner gửi điểm.</div>
+    <div class="sample" id="rkSample" hidden data-vi="&lt;b&gt;Dữ liệu mẫu.&lt;/b&gt; Các đội, giải và điểm dưới đây là ví dụ để xem thử cách bảng xếp hạng hoạt động, không phải kết quả thật. Bảng sẽ dùng kết quả thật khi Event Partner gửi điểm."><b>Sample data.</b> The teams, events and scores below are examples showing how the rankings work, not real results. Real results will replace them once Event Partners submit scores.</div>
     <div class="rk-ctl">
-      <div class="seg" id="rkProg" role="group" aria-label="Chương trình"></div>
-      <div class="seg" id="rkGrade" role="group" aria-label="Cấp học"></div>
-      <select id="rkCountry" aria-label="Quốc gia"></select>
-      <select id="rkSeason" aria-label="Mùa giải"></select>
+      <div class="seg" id="rkProg" role="group" aria-label="Program" data-vi-aria="Chương trình"></div>
+      <div class="seg" id="rkGrade" role="group" aria-label="Grade level" data-vi-aria="Cấp học"></div>
+      <select id="rkCountry" aria-label="Country" data-vi-aria="Quốc gia"></select>
+      <select id="rkSeason" aria-label="Season" data-vi-aria="Mùa giải"></select>
       <label class="search rk-search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="rkQ" type="search" placeholder="Tìm mã hoặc tên đội…" aria-label="Tìm đội"></label>
+        <input id="rkQ" type="search" placeholder="Search team number or name…" data-vi-ph="Tìm mã hoặc tên đội…" aria-label="Search teams" data-vi-aria="Tìm đội"></label>
     </div>
     <div class="boards" role="tablist" id="rkBoards">
-      <button role="tab" type="button" data-b="solo" aria-selected="true">Solo<small>Kỹ năng cá nhân</small></button>
-      <button role="tab" type="button" data-b="ally" aria-selected="false">Alliance<small>Thi đấu liên minh</small></button>
-      <button role="tab" type="button" data-b="award" aria-selected="false">Thành tích<small>Giải thưởng cả mùa</small></button>
+      <button role="tab" type="button" data-b="solo" aria-selected="true">Solo<small></small></button>
+      <button role="tab" type="button" data-b="ally" aria-selected="false">Alliance<small data-vi="Thi đấu liên minh">Alliance matches</small></button>
+      <button role="tab" type="button" data-b="award" aria-selected="false"><span data-vi="Thành tích">Awards</span><small data-vi="Giải thưởng cả mùa">Season awards</small></button>
     </div>
     <p class="count" id="rkCount"></p>
     <div class="rk-table" id="rkTable"></div>
     <div class="rk-info">
-      <details open><summary>Cách tính</summary><div id="rkMethod"></div></details>
-      <details><summary>Dành cho Event Partner: gửi kết quả giải</summary>
-        <p>Sau mỗi giải, xuất kết quả thành file CSV theo mẫu (mỗi dòng là một điểm hoặc một giải thưởng của một đội) và gửi cho SEPA. Kết quả chỉ được tính khi giải có trong danh sách giải RECF và Event Partner đã được xác minh.</p>
-        <div class="tbl"><table><thead><tr><th>Cột</th><th>Ví dụ</th><th>Ghi chú</th></tr></thead><tbody>
-          <tr><td class="code">event_code</td><td>ENG20261234</td><td>Mã giải trên RECF Events</td></tr>
+      <details open><summary data-vi="Cách tính">How it's calculated</summary><div id="rkMethod"></div></details>
+      <details><summary data-vi="Dành cho Event Partner: gửi kết quả giải">For Event Partners: submitting results</summary>
+        <p data-vi="Sau mỗi giải, xuất kết quả thành file CSV theo mẫu (mỗi dòng là một điểm hoặc một giải thưởng của một đội) và gửi cho SEPA. Kết quả chỉ được tính khi giải có trong danh sách giải RECF và Event Partner đã được xác minh.">After each event, export the results as a CSV file using the template (one row per score or award for a team) and send it to SEPA. Results only count when the event is listed on RECF Events and the Event Partner has been verified.</p>
+        <div class="tbl"><table><thead><tr><th data-vi="Cột">Column</th><th data-vi="Ví dụ">Example</th><th data-vi="Ghi chú">Notes</th></tr></thead><tbody>
+          <tr><td class="code">event_code</td><td>ENG20261234</td><td data-vi="Mã giải trên RECF Events">Event code on RECF Events</td></tr>
           <tr><td class="code">program</td><td>Engage</td><td>Engage, Achieve, Inspire, ADC, ADC Pro</td></tr>
-          <tr><td class="code">team / team_name</td><td>VN1234A / Sao Mai</td><td>Mã đội và tên đội</td></tr>
-          <tr><td class="code">team_country</td><td>Vietnam</td><td>Tên quốc gia tiếng Anh</td></tr>
-          <tr><td class="code">grade</td><td>ES</td><td>ES tiểu học · MS THCS · HS THPT · UNI đại học</td></tr>
+          <tr><td class="code">team / team_name</td><td>VN1234A / Sao Mai</td><td data-vi="Mã đội và tên đội">Team number and team name</td></tr>
+          <tr><td class="code">team_country</td><td>Vietnam</td><td data-vi="Tên quốc gia tiếng Anh">Country name in English</td></tr>
+          <tr><td class="code">grade</td><td>ES</td><td data-vi="ES tiểu học · MS THCS · HS THPT · UNI đại học">ES elementary · MS middle school · HS high school · UNI university</td></tr>
           <tr><td class="code">type</td><td>solo1</td><td>solo1 Driving/Piloting · solo2 Coding/Autonomous · alliance · award</td></tr>
-          <tr><td class="code">value</td><td>85</td><td>Điểm, hoặc tên giải thưởng nếu type là award</td></tr>
+          <tr><td class="code">value</td><td>85</td><td data-vi="Điểm, hoặc tên giải thưởng nếu type là award">Score, or the award name if type is award</td></tr>
         </tbody></table></div>
       </details>
     </div>
@@ -241,11 +246,31 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 
 <script>
 var TODAY = new Date().toISOString().slice(0,10);
+/* Ngôn ngữ: tiếng Anh mặc định; ?lang=vi hoặc nút EN/VI, lựa chọn được nhớ trong trình duyệt. */
+var LANG=(function(){var q=/[?&]lang=(en|vi)\b/.exec(location.search);if(q)return q[1];try{var v=localStorage.getItem('lang');if(v==='en'||v==='vi')return v;}catch(x){}return 'en';})();
+function tr(en,vi){return LANG==='vi'?vi:en;}
+function loc(){return LANG==='vi'?'vi-VN':'en-US';}
+function applyStatic(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('[data-vi]').forEach(function(el){if(el.dataset.en==null)el.dataset.en=el.innerHTML;el.innerHTML=LANG==='vi'?el.dataset.vi:el.dataset.en;});
+  document.querySelectorAll('[data-vi-ph]').forEach(function(el){if(el.dataset.enPh==null)el.dataset.enPh=el.placeholder;el.placeholder=LANG==='vi'?el.dataset.viPh:el.dataset.enPh;});
+  document.querySelectorAll('[data-vi-aria]').forEach(function(el){if(el.dataset.enAria==null)el.dataset.enAria=el.getAttribute('aria-label');el.setAttribute('aria-label',LANG==='vi'?el.dataset.viAria:el.dataset.enAria);});
+  document.querySelectorAll('#lang button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.l===LANG);});
+}
+function setLang(l){
+  if(l===LANG)return; LANG=l; try{localStorage.setItem('lang',l);}catch(x){}
+  closeEvent(); applyStatic();
+  if(EV.length){paintEvents();render();}
+  if(RS){paintRankOptions();drawRankCtl();drawRank();}
+}
 var PROG = {Engage:'--engage',Achieve:'--achieve',Inspire:'--inspire','ADC':'--adc','ADC Pro':'--adcpro',Launch:'--launch'};
 var PNAME = {Engage:'Engage',Achieve:'Achieve',Inspire:'Inspire',ADC:'Aerial Drone',  'ADC Pro':'ADC Pro',Launch:'Launch'};
 var VN_NAME = {'United States':'Hoa Kỳ',China:'Trung Quốc',Australia:'Úc',Vietnam:'Việt Nam',Canada:'Canada','South Korea':'Hàn Quốc',Libya:'Libya',Turkey:'Thổ Nhĩ Kỳ',Chile:'Chile',Myanmar:'Myanmar',Lithuania:'Litva',Greece:'Hy Lạp'};
-var STATUS = {'Registration Open':['Đang mở đăng ký','s-open'],'Registration Opens Soon':['Sắp mở','s-soon'],'Event full':['Đã đủ đội','s-full'],'Registration Closed':['Đóng đăng ký','s-closed'],'Ended':['Đã kết thúc','s-ended']};
-var MON = ['TH1','TH2','TH3','TH4','TH5','TH6','TH7','TH8','TH9','TH10','TH11','TH12'];
+var STATUS_VI = {'Registration Open':['Đang mở đăng ký','s-open'],'Registration Opens Soon':['Sắp mở','s-soon'],'Event full':['Đã đủ đội','s-full'],'Registration Closed':['Đóng đăng ký','s-closed'],'Ended':['Đã kết thúc','s-ended']};
+var STATUS_EN = {'Registration Open':['Registration open','s-open'],'Registration Opens Soon':['Opens soon','s-soon'],'Event full':['Full','s-full'],'Registration Closed':['Registration closed','s-closed'],'Ended':['Ended','s-ended']};
+function status(e){return (LANG==='vi'?STATUS_VI:STATUS_EN)[e.status]||[e.status,''];}
+var MON_VI = ['TH1','TH2','TH3','TH4','TH5','TH6','TH7','TH8','TH9','TH10','TH11','TH12'];
+var MON_EN = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 var D, EV = [], st = {q:'',prog:new Set(),country:'',when:'up',limit:50};
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
@@ -253,31 +278,36 @@ function $(id){return document.getElementById(id);}
 function col(p){return 'var('+(PROG[p]||'--launch')+')';}
 function isPast(e){return (e.end||e.start||'9999') < TODAY || e.status==='Ended';}
 function fmtRange(e){
-  if(!e.start) return e.dates||'Chưa công bố';
+  if(!e.start) return e.dates||tr('TBA','Chưa công bố');
   var a=new Date(e.start+'T00:00'), b=new Date((e.end||e.start)+'T00:00');
-  var f=function(d){return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();};
+  var f=function(d){return LANG==='vi'?d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear():d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});};
   return e.end&&e.end!==e.start ? f(a)+' – '+f(b) : f(a);
 }
 
+applyStatic();
+$('lang').addEventListener('click',function(ev){var b=ev.target.closest('button');if(b)setLang(b.dataset.l);});
 fetch('events.json?t='+Math.floor(Date.now()/300000)).then(function(r){return r.json();}).then(function(d){D=d;EV=d.events;init();})
-  .catch(function(){$('list').innerHTML='<p class="empty">Không tải được dữ liệu sự kiện. Tải lại trang để thử lại.</p>';});
+  .catch(function(){$('list').innerHTML='<p class="empty">'+tr('Could not load event data. Reload the page to try again.','Không tải được dữ liệu sự kiện. Tải lại trang để thử lại.')+'</p>';});
 
-function init(){
+function init(){ bind(); paintEvents(); render(); route(); }
+function paintEvents(){
   var up=EV.filter(function(e){return !isPast(e);});
   var teams=new Set(); EV.forEach(function(e){(e.teams||[]).forEach(function(t){teams.add(t[0]);});});
   var countries={}; EV.forEach(function(e){countries[e.country]=(countries[e.country]||0)+1;});
-  $('tally').innerHTML=[[up.length,'Giải sắp tới'],[teams.size.toLocaleString('vi-VN'),'Đội đăng ký'],[Object.keys(countries).length,'Quốc gia']]
+  $('tally').innerHTML=[[up.length,tr('Upcoming events','Giải sắp tới')],[teams.size.toLocaleString(loc()),tr('Registered teams','Đội đăng ký')],[Object.keys(countries).length,tr('Countries','Quốc gia')]]
     .map(function(x){return '<div><b>'+x[0]+'</b><small>'+x[1]+'</small></div>';}).join('');
   var progs={}; EV.forEach(function(e){progs[e.program]=(progs[e.program]||0)+1;});
   $('progChips').innerHTML=Object.keys(PROG).filter(function(p){return progs[p];}).map(function(p){
-    return '<button type="button" class="chip" aria-pressed="false" data-p="'+esc(p)+'" style="--c:'+col(p)+'"><i></i>'+esc(PNAME[p])+'</button>';}).join('');
-  $('country').innerHTML='<option value="">Tất cả quốc gia</option>'+Object.keys(countries).sort(function(a,b){return countries[b]-countries[a];})
-    .map(function(c){return '<option value="'+esc(c)+'">'+esc(VN_NAME[c]||c)+' ('+countries[c]+')</option>';}).join('');
+    return '<button type="button" class="chip" aria-pressed="'+st.prog.has(p)+'" data-p="'+esc(p)+'" style="--c:'+col(p)+'"><i></i>'+esc(PNAME[p])+'</button>';}).join('');
+  $('country').innerHTML='<option value="">'+tr('All countries','Tất cả quốc gia')+'</option>'+Object.keys(countries).sort(function(a,b){return countries[b]-countries[a];})
+    .map(function(c){return '<option value="'+esc(c)+'">'+esc(cname(c))+' ('+countries[c]+')</option>';}).join('');
+  $('country').value=st.country;
   var vn=EV.filter(function(e){return e.country==='Vietnam';}).sort(function(a,b){return isPast(a)-isPast(b)||(isPast(a)?(b.start||'').localeCompare(a.start||''):(a.start||'').localeCompare(b.start||''));});
-  if(vn.length){$('vnSec').hidden=false;$('vnStrip').innerHTML=vn.map(function(e){var s=STATUS[e.status]||[e.status,''];
+  if(vn.length){$('vnSec').hidden=false;$('vnStrip').innerHTML=vn.map(function(e){var s=status(e);
     return '<button type="button" class="mini" data-id="'+e.id+'" style="--c:'+col(e.program)+'"><span class="prog">'+esc(PNAME[e.program])+'</span><span class="t">'+esc(e.title)+'</span><span class="m">'+fmtRange(e)+' · '+esc(e.city)+'</span><span class="pill '+s[1]+'" style="justify-self:start;align-self:flex-start">'+s[0]+'</span></button>';}).join('');}
-  $('foot').innerHTML='Dữ liệu lấy từ <a href="'+esc(D.source)+'" target="_blank" rel="noopener">recfevents.org</a> (trang công khai) lúc '+esc(new Date(D.fetched).toLocaleString('vi-VN'))+'. EventSTEM là dự án của SEPA, không phải trang chính thức của RECF. Kết quả xếp hạng do Event Partner gửi.';
-  bind(); render(); route();
+  var src='<a href="'+esc(D.source)+'" target="_blank" rel="noopener">recfevents.org</a>', at=esc(new Date(D.fetched).toLocaleString(loc()));
+  $('foot').innerHTML=tr('Data from '+src+' (public pages), fetched '+at+'. EventSTEM is a SEPA project, not an official RECF site. Rankings are based on results submitted by Event Partners.',
+    'Dữ liệu lấy từ '+src+' (trang công khai) lúc '+at+'. EventSTEM là dự án của SEPA, không phải trang chính thức của RECF. Kết quả xếp hạng do Event Partner gửi.');
 }
 
 function bind(){
@@ -305,21 +335,21 @@ function match(e){
 
 function render(){
   var rows=EV.filter(match).sort(function(a,b){var x=(a.start||'9999').localeCompare(b.start||'9999');return st.when==='past'?-x:x;});
-  $('count').textContent=rows.length+' giải'+(st.q?' khớp “'+st.q+'”':'');
-  if(!rows.length){$('list').innerHTML='<p class="empty">Không có giải nào khớp bộ lọc. Thử bỏ bớt chương trình hoặc quốc gia.</p>';$('more').hidden=true;return;}
+  $('count').textContent=tr(rows.length+(rows.length===1?' event':' events')+(st.q?' matching “'+st.q+'”':''),rows.length+' giải'+(st.q?' khớp “'+st.q+'”':''));
+  if(!rows.length){$('list').innerHTML='<p class="empty">'+tr('No events match these filters. Try removing a program or country.','Không có giải nào khớp bộ lọc. Thử bỏ bớt chương trình hoặc quốc gia.')+'</p>';$('more').hidden=true;return;}
   $('list').innerHTML=rows.slice(0,st.limit).map(row).join('');
-  $('more').hidden=rows.length<=st.limit; $('more').textContent='Xem thêm ('+(rows.length-st.limit)+' giải)';
+  $('more').hidden=rows.length<=st.limit; $('more').textContent=tr('Show more ('+(rows.length-st.limit)+' events)','Xem thêm ('+(rows.length-st.limit)+' giải)');
 }
 
 function row(e){
-  var d=e.start?new Date(e.start+'T00:00'):null, s=STATUS[e.status]||[e.status,''];
+  var d=e.start?new Date(e.start+'T00:00'):null, s=status(e), MON=LANG==='vi'?MON_VI:MON_EN;
   var pct=e.capacity?Math.min(100,Math.round(100*(e.registered||0)/e.capacity)):0;
   var hit=st.q&&(e.teams||[]).filter(function(t){return (t[0]+' '+t[1]).toLowerCase().indexOf(st.q)>=0;}).slice(0,2).map(function(t){return t[0];});
   return '<button type="button" class="ev" data-id="'+e.id+'" style="--c:'+col(e.program)+'">'+
-    '<div class="date">'+(d?'<b>'+d.getDate()+'</b><small>'+MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2)+'</small>':'<small>Chưa<br>có ngày</small>')+'</div>'+
+    '<div class="date">'+(d?'<b>'+d.getDate()+'</b><small>'+MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2)+'</small>':'<small>'+tr('Date<br>TBA','Chưa<br>có ngày')+'</small>')+'</div>'+
     '<div style="min-width:0"><span class="prog">'+esc(PNAME[e.program])+'</span><div class="t">'+esc(e.title)+'</div>'+
-    '<div class="m"><span>'+esc(e.city||e.region)+(e.country&&e.country!=='United States'?', '+esc(VN_NAME[e.country]||e.country):'')+'</span><span class="code">'+esc(e.code)+'</span>'+(hit&&hit.length?'<span>Đội: <b>'+esc(hit.join(', '))+'</b></span>':'')+'</div></div>'+
-    '<div class="cap">'+(e.capacity?'<div class="fill">'+(e.registered||0)+' / '+e.capacity+' đội</div><div class="bar"><span style="width:'+pct+'%"></span></div>':'<div class="fill">'+(e.teams||[]).length+' đội</div>')+'</div>'+
+    '<div class="m"><span>'+esc(e.city||e.region)+(e.country&&e.country!=='United States'?', '+esc(cname(e.country)):'')+'</span><span class="code">'+esc(e.code)+'</span>'+(hit&&hit.length?'<span>'+tr('Team','Đội')+': <b>'+esc(hit.join(', '))+'</b></span>':'')+'</div></div>'+
+    '<div class="cap">'+(e.capacity?'<div class="fill">'+(e.registered||0)+' / '+e.capacity+tr(' teams',' đội')+'</div><div class="bar"><span style="width:'+pct+'%"></span></div>':'<div class="fill">'+(e.teams||[]).length+tr(' teams',' đội')+'</div>')+'</div>'+
     '<span class="pill '+s[1]+'">'+s[0]+'</span></button>';
 }
 
@@ -327,26 +357,27 @@ var lastFocus=null;
 function openEvent(id){
   var e=EV.find(function(x){return x.id===id;}); if(!e)return;
   lastFocus=document.activeElement;
-  var s=STATUS[e.status]||[e.status,''];
-  var price=e.price==='Free'?'Miễn phí':(e.price||'—');
+  var s=status(e);
+  var price=e.price==='Free'?tr('Free','Miễn phí'):(e.price||'—');
   $('sheet').innerHTML=
     '<div class="sh-top"><span class="prog">'+esc(PNAME[e.program])+'</span><h2 id="shTitle">'+esc(e.title)+'</h2><span class="code">'+esc(e.code)+'</span>'+
-    '<button class="x" type="button" aria-label="Đóng" id="shClose">✕</button></div>'+
-    '<div class="facts"><div><small>Thời gian</small><b>'+fmtRange(e)+'</b></div><div><small>Địa điểm</small><b>'+esc(e.city||e.region)+'</b></div>'+
-    '<div><small>Đội</small><b>'+(e.registered||0)+(e.capacity?' / '+e.capacity:'')+'</b></div><div><small>Lệ phí</small><b>'+esc(price)+'</b></div>'+
-    '<div><small>Trạng thái</small><b class="'+s[1]+'">'+s[0]+'</b></div></div>'+
-    '<div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-t="info" type="button">Thông tin</button><button role="tab" aria-selected="false" data-t="teams" type="button">Đội đăng ký ('+(e.teams||[]).length+')</button><button role="tab" aria-selected="false" data-t="rank" type="button">Xếp hạng</button></div>'+
+    '<button class="x" type="button" aria-label="'+tr('Close','Đóng')+'" id="shClose">✕</button></div>'+
+    '<div class="facts"><div><small>'+tr('Dates','Thời gian')+'</small><b>'+fmtRange(e)+'</b></div><div><small>'+tr('Location','Địa điểm')+'</small><b>'+esc(e.city||e.region)+'</b></div>'+
+    '<div><small>'+tr('Teams','Đội')+'</small><b>'+(e.registered||0)+(e.capacity?' / '+e.capacity:'')+'</b></div><div><small>'+tr('Fee','Lệ phí')+'</small><b>'+esc(price)+'</b></div>'+
+    '<div><small>'+tr('Status','Trạng thái')+'</small><b class="'+s[1]+'">'+s[0]+'</b></div></div>'+
+    '<div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-t="info" type="button">'+tr('Info','Thông tin')+'</button><button role="tab" aria-selected="false" data-t="teams" type="button">'+tr('Teams','Đội đăng ký')+' ('+(e.teams||[]).length+')</button><button role="tab" aria-selected="false" data-t="rank" type="button">'+tr('Results','Xếp hạng')+'</button></div>'+
     '<div class="pane" id="pane"></div>';
   var panes={
-    info:(e.venue?'<h3>Nơi thi đấu</h3><p><b>'+esc(e.venue)+'</b><br>'+esc(e.address)+'</p>':'')+
-      (e.info?'<h3>Giới thiệu</h3><p>'+esc(e.info)+(e.info.length>=420?'…':'')+'</p>':'')+
-      (e.agenda?'<h3>Lịch trình</h3><p>'+esc(e.agenda)+(e.agenda.length>=420?'…':'')+'</p>':'')+
-      (e.awards&&e.awards.length?'<h3>Giải thưởng</h3><div class="awards">'+e.awards.map(function(a){return '<span>'+esc(a)+'</span>';}).join('')+'</div>':'')+
-      '<a class="out" href="https://recfevents.org/Events/Details/'+e.id+'" target="_blank" rel="noopener">Đăng ký và xem đầy đủ trên RECF Events ↗</a>',
-    teams:(e.teams&&e.teams.length?'<div class="tbl"><table><thead><tr><th>Mã đội</th><th>Tên đội</th><th>Đơn vị</th></tr></thead><tbody>'+
+    info:(e.venue?'<h3>'+tr('Venue','Nơi thi đấu')+'</h3><p><b>'+esc(e.venue)+'</b><br>'+esc(e.address)+'</p>':'')+
+      (e.info?'<h3>'+tr('About','Giới thiệu')+'</h3><p>'+esc(e.info)+(e.info.length>=420?'…':'')+'</p>':'')+
+      (e.agenda?'<h3>'+tr('Agenda','Lịch trình')+'</h3><p>'+esc(e.agenda)+(e.agenda.length>=420?'…':'')+'</p>':'')+
+      (e.awards&&e.awards.length?'<h3>'+tr('Awards','Giải thưởng')+'</h3><div class="awards">'+e.awards.map(function(a){return '<span>'+esc(a)+'</span>';}).join('')+'</div>':'')+
+      '<a class="out" href="https://recfevents.org/Events/Details/'+e.id+'" target="_blank" rel="noopener">'+tr('Register and see full details on RECF Events ↗','Đăng ký và xem đầy đủ trên RECF Events ↗')+'</a>',
+    teams:(e.teams&&e.teams.length?'<div class="tbl"><table><thead><tr><th>'+tr('Team #','Mã đội')+'</th><th>'+tr('Team name','Tên đội')+'</th><th>'+tr('Organization','Đơn vị')+'</th></tr></thead><tbody>'+
       e.teams.map(function(t){return '<tr><td class="code" style="color:var(--ink)">'+esc(t[0])+'</td><td>'+esc(t[1])+'</td><td>'+esc(t[2])+'</td></tr>';}).join('')+'</tbody></table></div>'
-      :'<div class="note"><b>Chưa có đội nào đăng ký công khai.</b>Danh sách sẽ hiện ở đây khi đội đăng ký trên RECF Events.</div>'),
-    rank:'<div class="note"><b>Chưa có kết quả thi đấu cho giải này.</b>Khi Event Partner chấm điểm bằng hệ thống chấm điểm RECF Engage (Google Sheet, web trọng tài hoặc bản offline), bảng xếp hạng vòng loại, kết quả từng trận và xếp hạng Solo sẽ hiện tại đây.</div>'
+      :'<div class="note">'+tr('<b>No publicly registered teams yet.</b>Teams will appear here once they register on RECF Events.','<b>Chưa có đội nào đăng ký công khai.</b>Danh sách sẽ hiện ở đây khi đội đăng ký trên RECF Events.')+'</div>'),
+    rank:'<div class="note">'+tr('<b>No results for this event yet.</b>When the Event Partner scores the event with the RECF Engage scoring system (Google Sheet, referee web app or offline version), qualification rankings, match results and Solo rankings will appear here.',
+      '<b>Chưa có kết quả thi đấu cho giải này.</b>Khi Event Partner chấm điểm bằng hệ thống chấm điểm RECF Engage (Google Sheet, web trọng tài hoặc bản offline), bảng xếp hạng vòng loại, kết quả từng trận và xếp hạng Solo sẽ hiện tại đây.')+'</div>'
   };
   function show(t){$('pane').innerHTML=panes[t];$('sheet').querySelectorAll('.tabs button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.t===t);});}
   $('sheet').querySelector('.tabs').addEventListener('click',function(ev){var b=ev.target.closest('button');if(b)show(b.dataset.t);});
@@ -361,7 +392,7 @@ function openFromHash(){var m=/^#e(\d+)$/.exec(location.hash);if(m)openEvent(+m[
 
 /* ---------- điều hướng 2 mục ---------- */
 function route(){
-  var rank=location.hash==='#xephang';
+  var rank=location.hash==='#xephang'||location.hash==='#rankings';
   $('viewEvents').hidden=rank; $('viewRank').hidden=!rank;
   ['navEvents','navRank'].forEach(function(id,i){var on=(i===1)===rank;if(on)$(id).setAttribute('aria-current','page');else $(id).removeAttribute('aria-current');});
   if(rank){ if(!RS) loadRank(); } else openFromHash();
@@ -370,7 +401,8 @@ window.addEventListener('hashchange',function(){ if(!/^#e\d+$/.test(location.has
 
 /* ---------- XẾP HẠNG TOÀN CẦU ---------- */
 var RS=null, RK={prog:'Engage',grade:'',country:'',season:'',q:'',board:'solo'};
-var GR={ES:'Tiểu học',MS:'THCS',HS:'THPT',UNI:'Đại học'};
+var GR_VI={ES:'Tiểu học',MS:'THCS',HS:'THPT',UNI:'Đại học'}, GR_EN={ES:'Elementary',MS:'Middle School',HS:'High School',UNI:'University'};
+function gname(g){return (LANG==='vi'?GR_VI:GR_EN)[g]||g;}
 var RPROGS=['Engage','Achieve','Inspire','ADC','ADC Pro'];
 function soloLbl(p){return /ADC/.test(p)?['Piloting','Autonomous']:['Driving','Coding'];}
 function awardPts(n){n=n.toLowerCase();
@@ -379,25 +411,22 @@ function awardPts(n){n=n.toLowerCase();
   if(n.indexOf('champion')>=0)return 5;
   if(/design|innovate|think|amaze|build|create|judges|inspire|sportsmanship|energy/.test(n))return 3;
   return 2;}
-function cname(c){return VN_NAME[c]||c;}
+function cname(c){return LANG==='vi'?(VN_NAME[c]||c):c;}
 function cc(c){var m={'United States':'US',Vietnam:'VN',China:'CN',Australia:'AU',Canada:'CA','South Korea':'KR',Turkey:'TR',Chile:'CL',Myanmar:'MM',Lithuania:'LT',Greece:'GR',Libya:'LY'};return m[c]||String(c||'').slice(0,2).toUpperCase();}
 function avg(a){return a.length?a.reduce(function(x,y){return x+y;},0)/a.length:0;}
 function topN(a,n){return a.slice().sort(function(x,y){return y-x;}).slice(0,n);}
 
 function loadRank(){
-  $('rkTable').innerHTML='<p class="empty">Đang tải bảng xếp hạng…</p>';
+  $('rkTable').innerHTML='<p class="empty">'+tr('Loading rankings…','Đang tải bảng xếp hạng…')+'</p>';
   fetch('results.json?t='+Math.floor(Date.now()/300000)).then(function(r){return r.json();}).then(function(d){RS=d;initRank();})
-    .catch(function(){$('rkTable').innerHTML='<p class="empty">Chưa có dữ liệu kết quả. Bảng xếp hạng sẽ hiện khi Event Partner gửi điểm.</p>';});
+    .catch(function(){$('rkTable').innerHTML='<p class="empty">'+tr('No results data yet. Rankings will appear once Event Partners submit scores.','Chưa có dữ liệu kết quả. Bảng xếp hạng sẽ hiện khi Event Partner gửi điểm.')+'</p>';});
 }
 function initRank(){
   RS.ev={}; RS.events.forEach(function(e){RS.ev[e.code]=e;});
   $('rkSample').hidden=!RS.sample;
-  var seasons=Array.from(new Set(RS.events.map(function(e){return e.season;}))).sort().reverse();
-  RK.season=seasons[0]||'';
-  $('rkSeason').innerHTML=seasons.map(function(x){return '<option value="'+esc(x)+'">Mùa '+esc(x)+'</option>';}).join('');
-  var cs={}; RS.records.forEach(function(r){var e=RS.ev[r[0]];if(e&&e.verified)cs[r[4]]=1;});
-  $('rkCountry').innerHTML='<option value="">Toàn cầu</option>'+Object.keys(cs).sort(function(a,b){return cname(a).localeCompare(cname(b),'vi');})
-    .map(function(c){return '<option value="'+esc(c)+'">'+esc(cname(c))+'</option>';}).join('');
+  RS.seasons=Array.from(new Set(RS.events.map(function(e){return e.season;}))).sort().reverse();
+  RK.season=RS.seasons[0]||'';
+  paintRankOptions();
   $('rkSeason').onchange=function(){RK.season=this.value;drawRankCtl();drawRank();};
   $('rkCountry').onchange=function(){RK.country=this.value;drawRank();};
   $('rkQ').oninput=function(){RK.q=this.value.trim().toLowerCase();drawRank();};
@@ -407,23 +436,36 @@ function initRank(){
   var has=progsWithData(); if(has.indexOf(RK.prog)<0&&has.length)RK.prog=has[0];
   drawRankCtl(); drawRank();
 }
+function paintRankOptions(){
+  $('rkSeason').innerHTML=RS.seasons.map(function(x){return '<option value="'+esc(x)+'">'+tr('Season ','Mùa ')+esc(x)+'</option>';}).join('');
+  $('rkSeason').value=RK.season;
+  var cs={}; RS.records.forEach(function(r){var e=RS.ev[r[0]];if(e&&e.verified)cs[r[4]]=1;});
+  $('rkCountry').innerHTML='<option value="">'+tr('Global','Toàn cầu')+'</option>'+Object.keys(cs).sort(function(a,b){return cname(a).localeCompare(cname(b),LANG);})
+    .map(function(c){return '<option value="'+esc(c)+'">'+esc(cname(c))+'</option>';}).join('');
+  $('rkCountry').value=RK.country;
+}
 function seasonRecs(){return RS.records.filter(function(r){var e=RS.ev[r[0]];return e&&e.verified&&e.season===RK.season;});}
 function progsWithData(){var p={};seasonRecs().forEach(function(r){p[RS.ev[r[0]].program]=1;});return RPROGS.filter(function(x){return p[x];});}
 function drawRankCtl(){
   var has=progsWithData();
-  $('rkProg').innerHTML=RPROGS.map(function(p){return '<button type="button" data-v="'+esc(p)+'" aria-pressed="'+(p===RK.prog)+'"'+(has.indexOf(p)<0?' disabled title="Chưa có kết quả"':'')+'>'+esc(PNAME[p])+'</button>';}).join('');
+  $('rkProg').innerHTML=RPROGS.map(function(p){return '<button type="button" data-v="'+esc(p)+'" aria-pressed="'+(p===RK.prog)+'"'+(has.indexOf(p)<0?' disabled title="'+tr('No results yet','Chưa có kết quả')+'"':'')+'>'+esc(PNAME[p])+'</button>';}).join('');
   var gs={}; seasonRecs().forEach(function(r){if(RS.ev[r[0]].program===RK.prog)gs[r[5]]=1;});
-  $('rkGrade').innerHTML='<button type="button" data-v="" aria-pressed="'+(RK.grade==='')+'">Mọi cấp</button>'+['ES','MS','HS','UNI'].filter(function(g){return gs[g];})
-    .map(function(g){return '<button type="button" data-v="'+g+'" aria-pressed="'+(RK.grade===g)+'">'+GR[g]+'</button>';}).join('');
+  $('rkGrade').innerHTML='<button type="button" data-v="" aria-pressed="'+(RK.grade==='')+'">'+tr('All grades','Mọi cấp')+'</button>'+['ES','MS','HS','UNI'].filter(function(g){return gs[g];})
+    .map(function(g){return '<button type="button" data-v="'+g+'" aria-pressed="'+(RK.grade===g)+'">'+gname(g)+'</button>';}).join('');
   $('rkBoards').style.setProperty('--c',col(RK.prog));
   var L=soloLbl(RK.prog);
   $('rkBoards').querySelectorAll('button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.b===RK.board);});
   $('rkBoards').querySelector('[data-b=solo] small').textContent=L[0]+' + '+L[1];
-  $('rkMethod').innerHTML={
+  $('rkMethod').innerHTML=(LANG==='vi'?{
     solo:'<ul><li>Điểm Solo = <b>'+L[0]+' cao nhất + '+L[1]+' cao nhất</b> của đội trong mùa, lấy từ mọi giải đã xác minh.</li><li>Bằng điểm: so '+L[1]+' cao nhất, rồi '+L[0]+' cao nhất.</li><li>Đội thi một mình nên đây là bảng so sánh công bằng nhất giữa các giải và các nước.</li></ul>',
     ally:'<ul><li>Xếp theo <b>trung bình 3 trận Alliance cao nhất</b> trong mùa (đủ 3 trận trở lên mới tính trung bình đầy đủ).</li><li>Bằng điểm: so trận cao nhất.</li><li>Điểm Alliance phụ thuộc đội ghép cặp, nên dùng để tham khảo bên cạnh bảng Solo.</li></ul>',
     award:'<ul><li>Điểm thành tích cộng từ giải thưởng: Excellence 6 · Champions 5 · Solo/Skills Champion 4 · Design, Innovate, Think, Judges… 3 · giải khác 2.</li><li>Bằng điểm: so số giải thưởng, rồi số giải đấu đã tham gia.</li></ul>'
-  }[RK.board]+'<p style="margin-top:8px;color:var(--mut)">Chỉ tính giải có trong danh sách RECF Events và do Event Partner đã xác minh gửi điểm. Đây là bảng xếp hạng không chính thức; suất dự Championship do RECF quyết định.</p>';
+  }:{
+    solo:'<ul><li>Solo score = <b>best '+L[0]+' + best '+L[1]+'</b> for the team this season, across all verified events.</li><li>Ties: compare best '+L[1]+', then best '+L[0]+'.</li><li>Teams play alone, so this is the fairest comparison across events and countries.</li></ul>',
+    ally:'<ul><li>Ranked by the <b>average of the top 3 Alliance matches</b> this season (teams need 3+ matches for a full average).</li><li>Ties: compare the best match.</li><li>Alliance scores depend on the partner team, so use them alongside the Solo board.</li></ul>',
+    award:'<ul><li>Award points: Excellence 6 · Champions 5 · Solo/Skills Champion 4 · Design, Innovate, Think, Judges… 3 · other awards 2.</li><li>Ties: compare number of awards, then number of events attended.</li></ul>'
+  })[RK.board]+'<p style="margin-top:8px;color:var(--mut)">'+tr('Only events listed on RECF Events with scores submitted by verified Event Partners count. These are unofficial rankings; Championship spots are decided by RECF.',
+    'Chỉ tính giải có trong danh sách RECF Events và do Event Partner đã xác minh gửi điểm. Đây là bảng xếp hạng không chính thức; suất dự Championship do RECF quyết định.')+'</p>';
 }
 function aggregate(){
   var T={}, evCount={};
@@ -445,18 +487,19 @@ function drawRank(){
   else rows=A.teams.filter(function(t){return t.aw.length;}).sort(function(x,y){return y.pts-x.pts||y.aw.length-x.aw.length||y.nev-x.nev;});
   rows.forEach(function(t,i){t.g=i+1;});
   var shown=rows.filter(function(t){return (!RK.country||t.country===RK.country)&&(!RK.q||(t.team+' '+t.name+' '+t.org).toLowerCase().indexOf(RK.q)>=0);});
-  $('rkCount').textContent=shown.length+' đội'+(RK.country?' · '+cname(RK.country):' · toàn cầu')+' · từ '+A.nev+' giải đã xác minh';
-  if(!rows.length){$('rkTable').innerHTML='<p class="empty">Chưa có kết quả '+esc(PNAME[RK.prog])+' mùa '+esc(RK.season)+'. Khi Event Partner gửi điểm, bảng sẽ hiện ở đây.</p>';return;}
-  if(!shown.length){$('rkTable').innerHTML='<p class="empty">Không có đội nào khớp bộ lọc.</p>';return;}
+  $('rkCount').textContent=tr(shown.length+(shown.length===1?' team':' teams')+(RK.country?' · '+cname(RK.country):' · global')+' · from '+A.nev+' verified '+(A.nev===1?'event':'events'),
+    shown.length+' đội'+(RK.country?' · '+cname(RK.country):' · toàn cầu')+' · từ '+A.nev+' giải đã xác minh');
+  if(!rows.length){$('rkTable').innerHTML='<p class="empty">'+tr('No '+esc(PNAME[RK.prog])+' results for season '+esc(RK.season)+' yet. Rankings will appear here once Event Partners submit scores.','Chưa có kết quả '+esc(PNAME[RK.prog])+' mùa '+esc(RK.season)+'. Khi Event Partner gửi điểm, bảng sẽ hiện ở đây.')+'</p>';return;}
+  if(!shown.length){$('rkTable').innerHTML='<p class="empty">'+tr('No teams match these filters.','Không có đội nào khớp bộ lọc.')+'</p>';return;}
   var gcol=!!(RK.country||RK.q);
-  var head='<th>#</th>'+(gcol?'<th class="n">Hạng TG</th>':'')+'<th>Đội</th><th>Cấp</th>';
-  var cols={solo:['<th class="n">'+L[0]+'</th><th class="n">'+L[1]+'</th><th class="n">Tổng</th><th class="n">Giải</th>',function(t){return '<td class="n">'+t.b1+'</td><td class="n">'+t.b2+'</td><td class="n big">'+t.solo+'</td><td class="n">'+t.nev+'</td>';}],
-    ally:['<th class="n">Số trận</th><th class="n">Cao nhất</th><th class="n">TB 3 trận cao nhất</th>',function(t){return '<td class="n">'+t.al.length+'</td><td class="n">'+t.best+'</td><td class="n big">'+t.top3.toFixed(1)+'</td>';}],
-    award:['<th>Giải thưởng</th><th class="n">Điểm</th>',function(t){return '<td>'+t.aw.map(function(a){return '<span class="aw">'+esc(a)+'</span>';}).join('')+'</td><td class="n big">'+t.pts+'</td>';}]}[b];
+  var head='<th>#</th>'+(gcol?'<th class="n">'+tr('World rank','Hạng TG')+'</th>':'')+'<th>'+tr('Team','Đội')+'</th><th>'+tr('Grade','Cấp')+'</th>';
+  var cols={solo:['<th class="n">'+L[0]+'</th><th class="n">'+L[1]+'</th><th class="n">'+tr('Total','Tổng')+'</th><th class="n">'+tr('Events','Giải')+'</th>',function(t){return '<td class="n">'+t.b1+'</td><td class="n">'+t.b2+'</td><td class="n big">'+t.solo+'</td><td class="n">'+t.nev+'</td>';}],
+    ally:['<th class="n">'+tr('Matches','Số trận')+'</th><th class="n">'+tr('Best','Cao nhất')+'</th><th class="n">'+tr('Top-3 avg','TB 3 trận cao nhất')+'</th>',function(t){return '<td class="n">'+t.al.length+'</td><td class="n">'+t.best+'</td><td class="n big">'+t.top3.toFixed(1)+'</td>';}],
+    award:['<th>'+tr('Awards','Giải thưởng')+'</th><th class="n">'+tr('Points','Điểm')+'</th>',function(t){return '<td>'+t.aw.map(function(a){return '<span class="aw">'+esc(a)+'</span>';}).join('')+'</td><td class="n big">'+t.pts+'</td>';}]}[b];
   $('rkTable').innerHTML='<table><thead><tr>'+head+cols[0]+'</tr></thead><tbody>'+shown.slice(0,300).map(function(t,i){
     return '<tr class="tr" data-team="'+esc(t.team)+'" tabindex="0"><td class="pos">'+(i+1)+'</td>'+(gcol?'<td class="n">'+t.g+'</td>':'')+
       '<td><span class="tm">'+esc(t.team)+'<span class="cc" title="'+esc(cname(t.country))+'">'+esc(cc(t.country))+'</span></span><span class="sub">'+esc(t.name)+(t.org?' · '+esc(t.org):'')+'</span></td>'+
-      '<td class="gr">'+esc(GR[t.grade]||t.grade)+'</td>'+cols[1](t)+'</tr>';}).join('')+'</tbody></table>';
+      '<td class="gr">'+esc(gname(t.grade))+'</td>'+cols[1](t)+'</tr>';}).join('')+'</tbody></table>';
 }
 document.addEventListener('keydown',function(ev){if(ev.key==='Enter'&&ev.target.dataset&&ev.target.dataset.team)openTeam(ev.target.dataset.team);});
 
@@ -470,13 +513,13 @@ function openTeam(team){
     if(r[6]==='solo1')o.s1.push(r[7]);else if(r[6]==='solo2')o.s2.push(r[7]);else if(r[6]==='alliance')o.al.push(r[7]);else o.aw.push(r[7]);});
   var list=Object.keys(byEv).map(function(k){return byEv[k];}).sort(function(a,b){return (b.e.date||'').localeCompare(a.e.date||'');});
   var mx=function(a){return a.length?Math.max.apply(null,a):'–';};
-  $('sheet').innerHTML='<div class="sh-top"><span class="prog">'+esc(cname(f[4]))+' · '+esc(GR[f[5]]||f[5])+'</span><h2 id="shTitle">'+esc(team)+'</h2><span class="code">'+esc(f[2])+(f[3]?' · '+esc(f[3]):'')+'</span>'+
-    '<button class="x" type="button" aria-label="Đóng" id="shClose">✕</button></div>'+
-    '<div class="pane">'+(RS.sample?'<div class="sample">Dữ liệu mẫu, không phải kết quả thật.</div>':'')+'<h3>Kết quả mùa '+esc(RK.season)+'</h3>'+
+  $('sheet').innerHTML='<div class="sh-top"><span class="prog">'+esc(cname(f[4]))+' · '+esc(gname(f[5]))+'</span><h2 id="shTitle">'+esc(team)+'</h2><span class="code">'+esc(f[2])+(f[3]?' · '+esc(f[3]):'')+'</span>'+
+    '<button class="x" type="button" aria-label="'+tr('Close','Đóng')+'" id="shClose">✕</button></div>'+
+    '<div class="pane">'+(RS.sample?'<div class="sample">'+tr('Sample data, not real results.','Dữ liệu mẫu, không phải kết quả thật.')+'</div>':'')+'<h3>'+tr('Season '+esc(RK.season)+' results','Kết quả mùa '+esc(RK.season))+'</h3>'+
     list.map(function(o){var L=soloLbl(o.e.program);return '<div style="border:1px solid var(--line);border-left:4px solid '+col(o.e.program)+';border-radius:8px;padding:10px 14px;margin-bottom:10px">'+
       '<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>'+esc(o.e.name)+'</b><span class="code">'+esc(o.e.code)+'</span></div>'+
-      '<div class="gr">'+esc(PNAME[o.e.program])+' · '+esc(o.e.date)+' · '+esc(cname(o.e.country))+(o.e.verified?'':' · <b style="color:var(--bad)">chưa xác minh, không tính xếp hạng</b>')+'</div>'+
-      '<div class="tbl"><table style="margin-top:6px"><tr><th class="n">'+L[0]+'</th><th class="n">'+L[1]+'</th><th class="n">Alliance cao nhất</th><th class="n">Số trận</th></tr>'+
+      '<div class="gr">'+esc(PNAME[o.e.program])+' · '+esc(o.e.date)+' · '+esc(cname(o.e.country))+(o.e.verified?'':' · <b style="color:var(--bad)">'+tr('unverified, not ranked','chưa xác minh, không tính xếp hạng')+'</b>')+'</div>'+
+      '<div class="tbl"><table style="margin-top:6px"><tr><th class="n">'+L[0]+'</th><th class="n">'+L[1]+'</th><th class="n">'+tr('Best Alliance','Alliance cao nhất')+'</th><th class="n">'+tr('Matches','Số trận')+'</th></tr>'+
       '<tr><td class="n">'+mx(o.s1)+'</td><td class="n">'+mx(o.s2)+'</td><td class="n">'+mx(o.al)+'</td><td class="n">'+o.al.length+'</td></tr></table></div>'+
       (o.aw.length?'<div style="margin-top:6px">'+o.aw.map(function(a){return '<span class="aw">'+esc(a)+'</span>';}).join('')+'</div>':'')+'</div>';}).join('')+'</div>';
   $('scrim').hidden=false;$('sheet').hidden=false;$('sheet').scrollTop=0;document.body.style.overflow='hidden';

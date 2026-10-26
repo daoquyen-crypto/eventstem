@@ -37,21 +37,23 @@ Menu trái → **Authentication**:
 
 ## Bước 4 – Nối trang web với Supabase
 
-1. Menu trái → **Project Settings → API**. Chép 2 giá trị:
+1. Bấm nút **Connect** ở thanh trên cùng (hoặc vào **Project Settings → Data API / API Keys**). Chép 2 giá trị:
    - **Project URL** (dạng `https://abcd1234.supabase.co`)
-   - **anon public** key (chuỗi dài bắt đầu bằng `eyJ…`)
+   - **Publishable key** (`sb_publishable_…`) hoặc khoá **anon public** cũ (`eyJ…`). Dùng loại nào cũng được.
+
+   Cửa sổ Connect còn hiện các bước `npm install`, `.env.local`, `page.tsx`… Các bước đó dành cho dự án Next.js, **EventSTEM không cần**.
 2. Trên GitHub, mở file `js/config.js` → biểu tượng bút chì → điền 2 giá trị:
    ```js
    window.EVENTSTEM_CONFIG = {
      supabaseUrl: 'https://abcd1234.supabase.co',
-     supabaseAnonKey: 'eyJ...'
+     supabaseAnonKey: 'sb_publishable_...'
    };
    ```
 3. **Commit changes**. Khoảng 1 phút sau, trang tự cập nhật.
 
-Khoá *anon public* được thiết kế để nằm công khai trong trang web. Quyền đọc/ghi do các quy tắc trong `schema.sql` kiểm soát.
+Khoá *publishable* / *anon public* được thiết kế để nằm công khai trong trang web. Quyền đọc/ghi do các quy tắc trong `schema.sql` kiểm soát.
 
-⚠ **Không bao giờ** dán khoá **service_role** vào trang web hay lên GitHub. Khoá đó có toàn quyền với dữ liệu.
+⚠ **Không bao giờ** dán khoá **secret** (`sb_secret_…`) hoặc **service_role** vào trang web hay lên GitHub. Khoá đó có toàn quyền với dữ liệu.
 
 ## Bước 5 – Tạo tài khoản SEPA (quản trị)
 

@@ -4,6 +4,8 @@ const BASE = process.env.BASE || 'http://localhost:8767';
 const assert = (c, m) => { if (!c) throw new Error('ASSERT: ' + m); console.log('  ok  ', m); };
 (async () => {
   const b = await chromium.launch(), ctx = await b.newContext({ acceptDownloads: true, viewport: { width: 1280, height: 800 } }), p = await ctx.newPage();
+  // Luôn chạy ở chế độ demo, kể cả khi js/config.js đã có Supabase thật (không tạo dữ liệu thử trên máy chủ)
+  await ctx.route('**/js/config.js', r => r.fulfill({ contentType: 'application/javascript', body: 'window.EVENTSTEM_CONFIG = { supabaseUrl: "", supabaseAnonKey: "" };' }));
   const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
   p.on('dialog', d => d.accept(d.type() === 'prompt' ? (globalThis.PROMPT || '') : undefined));
   const shot = async n => { if (process.env.SHOTS) await p.screenshot({ path: process.env.SHOTS + '/' + n + '.png', fullPage: false }); };

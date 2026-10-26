@@ -18,7 +18,7 @@ Trang tĩnh tại **[eventstem.com](https://eventstem.com)**. Trang tổng hợp
 | `js/store.js` | Lưu dữ liệu: Supabase, hoặc chế độ demo trong trình duyệt |
 | `js/config.js` | Địa chỉ và khoá công khai của Supabase (để trống = chế độ demo) |
 | `js/manage.js`, `js/event.js`, `js/views.js`, `js/i18n.js`, `css/app.css` | Giao diện của 2 trang trên |
-| `js/vendor/` | Thư viện supabase-js 2.45.4 (MIT), để sẵn trong kho để không phụ thuộc CDN |
+| `js/vendor/` | Thư viện supabase-js 2.117.3 (MIT), để sẵn trong kho để không phụ thuộc CDN |
 | `supabase/schema.sql` | Cơ sở dữ liệu và phân quyền (chạy 1 lần trong Supabase) |
 | `tests/` | Kiểm thử luật, phân quyền và giao diện; chạy tự động bằng `.github/workflows/tests.yml` |
 | `events.json` | Dữ liệu giải, tự sinh bởi `scripts/crawler.py` |

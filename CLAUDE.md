@@ -25,7 +25,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 
 | File | Vai trò |
 |---|---|
-| `index.html` | Trang chủ, 1 file chứa cả CSS và JS: lịch giải RECF và xếp hạng toàn cầu. Bảng xếp hạng gộp `results.json` với các giải đã được SEPA xác minh từ Supabase (`toolResults()`, `mergeTool()`) |
+| `index.html` | Trang chủ, 1 file chứa cả CSS và JS: lịch giải RECF và xếp hạng toàn cầu. Lịch giải: dải "Gần bạn" (giải sắp tới ở nước người xem, rồi nước lân cận trong `NEAR_KM`; giải đã qua chỉ là link "đã diễn ra"), danh sách **nhóm theo tháng** (`<details class="mon">`, chỉ dựng khi mở; "Đang diễn ra" cho league đã bắt đầu; mặc định mở tháng đầu, tìm kiếm / lọc ≤ 40 giải thì mở hết), lọc "Chỉ giải đang mở đăng ký". Bảng xếp hạng gộp `results.json` với các giải đã được SEPA xác minh từ Supabase (`toolResults()`, `mergeTool()`) |
 | `manage.html` + `js/manage.js` | Công cụ ban tổ chức: đăng nhập, tạo giải, đội, lịch, chấm điểm, Solo, xếp hạng, chung kết / loại trực tiếp, giải thưởng, xuất CSV; SEPA duyệt tài khoản |
 | `event.html` + `js/event.js` | Trang xem trực tiếp, tự kiểm tra cập nhật mỗi 20 giây |
 | `show.html` + `js/show.js` | Màn hình trình chiếu tại sân: các màn tự chuyển (trận sắp đánh, xếp hạng, Solo, loại trực tiếp, giải thưởng, nhà tài trợ), tự cập nhật mỗi 15 giây. Cài đặt ở `event.config.show`; ghi đè bằng `&s=10`, `&only=rank,solo` |
@@ -74,7 +74,7 @@ node tests/e2e_adc.js                             # E2E luồng ADC (chế độ
 node tests/e2e_adc_pro.js                         # E2E luồng ADC Pro, nhập điểm thành phần (chế độ demo)
 node tests/e2e_show.js                            # E2E logo + màn hình trình chiếu (chế độ demo)
 node tests/e2e_rehearsal.js                       # E2E chế độ tập dượt
-node tests/e2e_home.js                            # E2E trang chủ: "Giải gần bạn" theo quốc gia
+node tests/e2e_home.js                            # E2E trang chủ: "Gần bạn" theo quốc gia, xem theo tháng
 ```
 
 - Các test E2E chặn `js/config.js` để luôn chạy ở chế độ demo, **không ghi dữ liệu thử lên Supabase thật**.

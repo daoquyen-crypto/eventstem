@@ -186,6 +186,40 @@ create table if not exists public.matches (
   foreign key (event_id, blue) references public.teams (event_id, number) on update cascade
 );
 
+-- ---------- Achieve (Pinnacle): trận 2 đấu 2, ranking points, nhánh loại trực tiếp ----------
+-- Thêm cột vào bảng matches. Chạy lại file này trên project đã có dữ liệu cũng an toàn: cột đã có thì bỏ qua.
+--   red/red2 = liên minh đỏ, blue/blue2 = liên minh xanh; score = điểm đỏ, score_blue = điểm xanh
+--   auto_* / end_* = Autonomous / Endgame ranking point của từng liên minh (5.5.1, 5.5.2)
+--   label = vị trí trong nhánh đấu (R1-2, F…); seed / seed_blue = hạt giống 2 liên minh
+alter table public.matches add column if not exists red2         text;
+alter table public.matches add column if not exists blue2        text;
+alter table public.matches add column if not exists red2_counts  boolean not null default true;
+alter table public.matches add column if not exists blue2_counts boolean not null default true;
+alter table public.matches add column if not exists red2_status  text not null default 'ok' check (red2_status  in ('ok', 'absent', 'red'));
+alter table public.matches add column if not exists blue2_status text not null default 'ok' check (blue2_status in ('ok', 'absent', 'red'));
+alter table public.matches add column if not exists score_blue   int check (score_blue >= 0);
+alter table public.matches add column if not exists auto_red     boolean not null default false;
+alter table public.matches add column if not exists auto_blue    boolean not null default false;
+alter table public.matches add column if not exists end_red      boolean not null default false;
+alter table public.matches add column if not exists end_blue     boolean not null default false;
+alter table public.matches add column if not exists seed_blue    int;
+alter table public.matches add column if not exists label        text;
+alter table public.matches drop constraint if exists matches_round_check;
+alter table public.matches add constraint matches_round_check check (round in ('practice', 'qual', 'elim', 'final'));
+alter table public.matches drop constraint if exists matches_distinct_teams;
+alter table public.matches add constraint matches_distinct_teams check (
+  (red2  is null or (red2 <> red and red2 <> blue)) and
+  (blue2 is null or (blue2 <> red and blue2 <> blue and blue2 is distinct from red2)));
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'matches_red2_fkey') then
+    alter table public.matches add constraint matches_red2_fkey foreign key (event_id, red2) references public.teams (event_id, number) on update cascade;
+  end if;
+  if not exists (select 1 from pg_constraint where conname = 'matches_blue2_fkey') then
+    alter table public.matches add constraint matches_blue2_fkey foreign key (event_id, blue2) references public.teams (event_id, number) on update cascade;
+  end if;
+end $$;
+
 -- ---------- Trận Solo (3.0, 4.0, 7.4.1) ----------
 create table if not exists public.solo_runs (
   id          uuid primary key default gen_random_uuid(),

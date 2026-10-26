@@ -66,6 +66,16 @@ Khoá *publishable* / *anon public* được thiết kế để nằm công khai
 
 Từ giờ, muốn cấp quyền SEPA cho đồng nghiệp thì bấm **Make SEPA admin** ở tab Accounts, không cần dùng SQL nữa.
 
+## Khi có bản cập nhật cơ sở dữ liệu
+
+Một số tính năng mới cần thêm cột vào cơ sở dữ liệu. Ví dụ: luật **RECF Achieve** cần trận 2 đấu 2, điểm của 2 liên minh, ranking points và nhánh loại trực tiếp.
+
+Khi PR ghi *"cần chạy lại schema.sql"*:
+1. Merge PR đó.
+2. Làm lại **Bước 2**: copy toàn bộ `supabase/schema.sql` → **SQL Editor** → **New query** → dán → **Run**.
+
+File được viết để chạy lại an toàn: bảng và dữ liệu cũ giữ nguyên, chỉ thêm phần còn thiếu.
+
 ## Duyệt tài khoản
 
 Tab **Approval settings** có 3 chế độ:

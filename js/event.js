@@ -3,6 +3,11 @@
 (function () {
   'use strict';
   var S = window.Store, E = window.Engage, app = $id('app');
+  function R() { return Rules.of(B.event); }
+  function cfg() { return R().cfg(B.event.config); }
+  function rank() { return R().ranking(B.teams, B.matches, Object.assign({ seed: B.event.id }, cfg())); }
+  function slotsOf(m) { return ['red', 'red2', 'blue', 'blue2'].filter(function (s) { return m[s]; }); }
+  function sideOf(m, n) { var s = slotsOf(m).find(function (x) { return m[x] === n; }); return s ? (s.indexOf('red') === 0 ? 'red' : 'blue') : null; }
   var id = new URLSearchParams(location.search).get('id'), B = null, stamp = null, tab = null, myTeam = '';
   try { myTeam = localStorage.getItem('eventstem-myteam') || ''; } catch (x) {}
   var POLL_MS = 20000;
@@ -19,7 +24,7 @@
       var done = list.filter(function (e) { return e.status === 'completed' || (e.status === 'published' && e.date && e.date < today); });
       var item = function (e) {
         return '<a class="ev-item" href="event.html?id=' + esc(e.id) + '"><div style="min-width:0"><div class="t">' + esc(e.name) + '</div><div class="m"><span>' + esc(fmtDate(e.date)) + '</span>' +
-          (e.location ? '<span>' + esc(e.location) + '</span>' : '') + (e.organizer_name ? '<span>' + esc(e.organizer_name) + '</span>' : '') + '<span>' + esc(e.program === 'Engage' ? 'RECF Engage' : tr('Independent', 'Tự tổ chức')) + '</span></div></div>' +
+          (e.location ? '<span>' + esc(e.location) + '</span>' : '') + (e.organizer_name ? '<span>' + esc(e.organizer_name) + '</span>' : '') + '<span>' + esc(e.program === 'Custom' ? tr('Independent', 'Tự tổ chức') : 'RECF ' + e.program) + '</span></div></div>' +
           '<span class="pill s-' + esc(e.status) + '">' + esc(statusName(e.status)) + '</span></a>';
       };
       var sec = function (title, l) { return l.length ? '<h3 class="t">' + title + ' (' + l.length + ')</h3><div class="ev-list">' + l.map(item).join('') + '</div>' : ''; };
@@ -50,7 +55,9 @@
       '<label class="f no-print" style="width:180px"><span>' + tr('Follow a team', 'Theo dõi đội') + '</span><input type="search" id="myTeam" list="tl" value="' + esc(myTeam) + '" placeholder="VN1234A" autocomplete="off"></label>' +
       '<datalist id="tl">' + B.teams.map(function (t) { return '<option value="' + esc(t.number) + '">' + esc(t.name) + '</option>'; }).join('') + '</datalist></div>' +
       '<div id="mine"></div>' +
-      '<div class="tabs" role="tablist" style="margin-top:12px">' + TABS.map(function (t) { return '<a role="tab" href="#' + t[0] + '" aria-selected="' + (t[0] === tab) + '">' + esc(tr(t[1], t[2])) + '</a>'; }).join('') + '</div>' +
+      '<div class="tabs" role="tablist" style="margin-top:12px">' + TABS.map(function (t) {
+        var lb = t[0] === 'finals' && R().format === 'versus' ? tr('Eliminations', 'Loại trực tiếp') : tr(t[1], t[2]);
+        return '<a role="tab" href="#' + t[0] + '" aria-selected="' + (t[0] === tab) + '">' + esc(lb) + '</a>'; }).join('') + '</div>' +
       '<div id="pane"></div><p class="small mut" id="upd"></p>';
     (PANES[tab] || PANES.rankings)();
     paintMine(); highlight();
@@ -65,14 +72,19 @@
   function paintMine() {
     var box = $id('mine'), t = B.teams.find(function (x) { return x.number === myTeam; });
     if (!t) { box.innerHTML = ''; return; }
-    var rk = E.allianceRanking(B.teams, B.matches, Object.assign({ seed: B.event.id }, E.cfg(B.event.config))).find(function (r) { return r.team === t.number; });
-    var sr = E.soloRanking(B.solo).find(function (r) { return r.team === t.number; });
-    var next = B.matches.filter(function (m) { return m.score == null && (m.red === t.number || m.blue === t.number); }).sort(function (a, b) { return (a.round === 'final') - (b.round === 'final') || a.num - b.num; })[0];
+    var vs = R().format === 'versus', rk = rank().find(function (r) { return r.team === t.number; });
+    var sr = R().solo(B.solo).find(function (r) { return r.team === t.number; });
+    var ord = { practice: 0, qual: 1, elim: 2, final: 3 };
+    var next = B.matches.filter(function (m) { return m.score == null && sideOf(m, t.number); }).sort(function (a, b) { return ord[a.round] - ord[b.round] || a.num - b.num; })[0];
     box.innerHTML = '<div class="card" style="margin:12px 0 0;border-left:4px solid var(--signal)"><div class="spread"><b>' + esc(t.number) + (t.name ? ' · ' + esc(t.name) : '') + '</b>' +
-      '<span class="small">' + (rk && rk.played ? tr('Alliance rank ', 'Hạng Alliance ') + '<b>#' + rk.rank + '</b> (' + rk.avg.toFixed(1) + ')' : '') +
+      '<span class="small">' + (rk && rk.played ? (vs ? tr('Rank ', 'Hạng ') : tr('Alliance rank ', 'Hạng Alliance ')) + '<b>#' + rk.rank + '</b> (' + (vs ? rk.avg.toFixed(2) + ' RP' : rk.avg.toFixed(1)) + ')' : '') +
       (sr ? ' · ' + tr('Solo rank ', 'Hạng Solo ') + '<b>#' + sr.rank + '</b> (' + sr.total + ')' : '') + '</span></div>' +
-      (next ? '<div class="small" style="margin-top:4px">' + tr('Next match: ', 'Trận tiếp theo: ') + '<b>' + (next.round === 'final' ? 'F' : 'Q') + next.num + '</b>' + (next.time ? ' · ' + esc(next.time) : '') + (next.field ? ' · ' + tr('Field ', 'Sân ') + esc(next.field) : '') +
-        ' · ' + tr('with ', 'cùng ') + esc(next.red === t.number ? next.blue : next.red) + ' · ' + (next.red === t.number ? '<span class="tm-r">' + tr('Red', 'Đỏ') + '</span>' : '<span class="tm-b">' + tr('Blue', 'Xanh') + '</span>') + '</div>' : '') + '</div>';
+      (next ? (function () {
+        var sd = sideOf(next, t.number), mates = slotsOf(next).filter(function (s) { return next[s] !== t.number && (vs ? s.indexOf(sd) === 0 : true); }).map(function (s) { return next[s]; });
+        var opp = vs ? slotsOf(next).filter(function (s) { return s.indexOf(sd) !== 0; }).map(function (s) { return next[s]; }) : [];
+        return '<div class="small" style="margin-top:4px">' + tr('Next match: ', 'Trận tiếp theo: ') + '<b>' + Views.matchCode(next, B.matches) + '</b>' + (next.time ? ' · ' + esc(next.time) : '') + (next.field ? ' · ' + tr('Field ', 'Sân ') + esc(next.field) : '') +
+          ' · ' + tr('with ', 'cùng ') + esc(mates.join(', ')) + (opp.length ? ' · ' + tr('vs ', 'gặp ') + esc(opp.join(' + ')) : '') + ' · ' + (sd === 'red' ? '<span class="tm-r">' + tr('Red', 'Đỏ') + '</span>' : '<span class="tm-b">' + tr('Blue', 'Xanh') + '</span>') + '</div>';
+      })() : '') + '</div>';
   }
   function highlight() {
     document.querySelectorAll('#pane [data-hl]').forEach(function (r) {
@@ -83,12 +95,13 @@
   function pane(h) { $id('pane').innerHTML = h; }
   var PANES = {
     rankings: function () {
-      var c = E.cfg(B.event.config);
-      pane('<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(340px,1fr));align-items:start"><div><h3 class="t">' + tr('Alliance rankings', 'Xếp hạng Alliance') + '</h3>' +
-        Views.allianceTable(B, E.allianceRanking(B.teams, B.matches, Object.assign({ seed: B.event.id }, c)), E.redCards(B.matches)) +
-        '<p class="small mut">' + (c.dropLowest ? tr('Average after dropping each team\'s lowest score (7.4.2). ', 'Trung bình sau khi bỏ trận thấp nhất của mỗi đội (7.4.2). ') : '') + tr('Ties: 2nd, 3rd, 4th highest score (7.4.4).', 'Bằng điểm: so điểm cao thứ 2, 3, 4 (7.4.4).') + '</p></div>' +
-        '<div><h3 class="t">' + tr('Solo rankings', 'Xếp hạng Solo') + '</h3>' + Views.soloTable(B, E.soloRanking(B.solo), c.soloAttempts) +
-        '<p class="small mut">' + tr('Best driving + best coding. Ties broken by coding first (3.5).', 'Driving cao nhất + Coding cao nhất. Bằng điểm: ưu tiên Coding (3.5).') + '</p></div></div>');
+      var c = cfg(), vs = R().format === 'versus', rc = R().redCards(B.matches);
+      pane('<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(340px,1fr));align-items:start"><div><h3 class="t">' + (vs ? tr('Qualification rankings', 'Xếp hạng vòng loại') : tr('Alliance rankings', 'Xếp hạng Alliance')) + '</h3>' +
+        (vs ? Views.rpTable(B, rank(), rc) + '<p class="small mut">' + tr('Average ranking points per match: win 2, tie 1, plus Autonomous and Endgame RP (5.5).', 'Trung bình điểm xếp hạng mỗi trận: thắng 2, hoà 1, cộng Autonomous RP và Endgame RP (5.5).') + '</p>'
+          : Views.allianceTable(B, rank(), rc) +
+          '<p class="small mut">' + (c.dropLowest ? tr('Average after dropping each team\'s lowest score (7.4.2). ', 'Trung bình sau khi bỏ trận thấp nhất của mỗi đội (7.4.2). ') : '') + tr('Ties: 2nd, 3rd, 4th highest score (7.4.4).', 'Bằng điểm: so điểm cao thứ 2, 3, 4 (7.4.4).') + '</p>') + '</div>' +
+        '<div><h3 class="t">' + tr('Solo rankings', 'Xếp hạng Solo') + '</h3>' + Views.soloTable(B, R().solo(B.solo), c.soloAttempts) +
+        '<p class="small mut">' + tr('Best driving + best coding (3.5).', 'Driving cao nhất + Coding cao nhất (3.5).') + '</p></div></div>');
     },
     schedule: function () {
       var q = B.matches.filter(function (m) { return m.round === 'qual'; }).sort(function (a, b) { return a.num - b.num; });
@@ -96,9 +109,18 @@
         (q.some(function (m) { return !m.red_counts || !m.blue_counts; }) ? '<p class="small mut"><span class="star">*</span> ' + tr('Extra match to even out match counts; does not affect ranking (7.4.2).', 'Trận đánh thêm cho đủ số trận; không tính xếp hạng (7.4.2).') + '</p>' : ''));
     },
     solo: function () {
-      pane(Views.soloTable(B, E.soloRanking(B.solo), E.cfg(B.event.config).soloAttempts));
+      pane(Views.soloTable(B, R().solo(B.solo), cfg().soloAttempts));
     },
     finals: function () {
+      if (R().format === 'versus') {
+        var st = Achieve.selection([], (B.event.config || {}).selection), br = Achieve.bracket(st.alliances, B.matches, cfg());
+        var em = B.matches.filter(function (m) { return m.round === 'elim' || m.round === 'final'; }).sort(function (a, b) { return (a.round === 'final') - (b.round === 'final') || a.num - b.num; });
+        return pane((br.champion ? '<div class="champ">🏆 ' + tr('Tournament Champions', 'Vô địch giải') + ': <b>' + esc(br.champion.captain) + ' + ' + esc(br.champion.partner) + '</b></div>' : '') +
+          (st.alliances.length ? '<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start"><div><h3 class="t">' + tr('Alliances', 'Các liên minh') + '</h3>' + Views.alliancesTable(B, st.alliances) + '</div>' +
+            '<div><h3 class="t">' + tr('Bracket', 'Nhánh đấu') + '</h3>' + (em.length ? Views.bracketView(B, br, st.alliances) : '<p class="small mut">' + tr('Coming up after alliance selection.', 'Sẽ có sau khi chọn liên minh.') + '</p>') + '</div></div>' +
+            (em.length ? '<h3 class="t">' + tr('Matches', 'Các trận') + '</h3>' + Views.matchTable(B, em, { versus: true }) : '')
+            : '<p class="empty">' + tr('Alliance selection has not started yet.', 'Chưa đến phần chọn liên minh.') + '</p>'));
+      }
       var f = B.matches.filter(function (m) { return m.round === 'final'; }).sort(function (a, b) { return a.num - b.num; }), r = E.finalsResult(B.matches);
       pane((r.champion ? '<div class="champ">🏆 ' + tr('Tournament Champions', 'Vô địch giải') + ': <b>' + esc(r.champion.red) + ' + ' + esc(r.champion.blue) + '</b></div>' : '') +
         (r.tied.length ? '<div class="banner info">' + tr('Tie for first place: tiebreaker round coming up.', 'Hoà hạng nhất: sắp đánh vòng tiebreak.') + '</div>' : '') +
@@ -106,7 +128,7 @@
         (f.length ? '<p class="small mut">' + tr('Finals are played one at a time, starting with the lowest-ranked alliance. Highest score wins (7.4.4).', 'Chung kết đánh lần lượt, bắt đầu từ liên minh hạng thấp nhất. Điểm cao nhất vô địch (7.4.4).') + '</p>' : ''));
     },
     awards: function () {
-      var all = E.performanceAwards(B.matches, B.solo).concat(B.awards);
+      var all = R().performanceAwards(B.matches, B.solo, B.event).concat(B.awards);
       pane(all.length ? '<div class="tbl"><table><thead><tr><th>' + tr('Award', 'Giải thưởng') + '</th><th>' + tr('Team', 'Đội') + '</th></tr></thead><tbody>' +
         all.map(function (a) { return '<tr data-hl="' + esc(a.team) + '"><td><b>' + esc(a.name) + '</b></td><td>' + Views.teamCell(B, a.team, 'x') + '</td></tr>'; }).join('') + '</tbody></table></div>'
         : '<p class="empty">' + tr('Awards will be announced at the end of the event.', 'Giải thưởng sẽ được công bố cuối giải.') + '</p>');

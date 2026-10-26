@@ -76,6 +76,14 @@ check "SEPA xác minh giải" '^t$' "$(su "select verified from events where id=
 as $ORG "update events set name='Giải Engage Hà Nội' where id='$EV'" >/dev/null
 check "organizer sửa giải không làm mất xác minh" '^t$' "$(su "select verified from events where id='$EV'")"
 check "đổi mã đội cập nhật lịch trận" '^VN1X$' "$(as $ORG "update teams set number='VN1X' where event_id='$EV' and number='VN1A'"; su "select red from matches where event_id='$EV' and num=1")"
+# Achieve: trận 2 đấu 2, nhánh loại trực tiếp
+as $ORG "insert into teams(event_id,number) values ('$EV','VN4D')" >/dev/null
+check "Achieve: trận 4 đội + 2 điểm + RP" '^qual\|30\|45\|true$' "$(as $ORG "insert into matches(event_id,num,red,red2,blue,blue2,score,score_blue,auto_red) values ('$EV',10,'VN1X','VN2B','VN3C','VN4D',30,45,true) returning round||'|'||score||'|'||score_blue||'|'||auto_red")"
+check "Achieve: 4 đội phải khác nhau" 'matches_distinct_teams' "$(as $ORG "insert into matches(event_id,num,red,red2,blue,blue2) values ('$EV',11,'VN1X','VN2B','VN3C','VN2B')")"
+check "Achieve: đội thứ 2 phải có trong giải" 'matches_red2_fkey' "$(as $ORG "insert into matches(event_id,num,red,red2,blue,blue2) values ('$EV',12,'VN1X','ZZ9','VN3C','VN4D')")"
+check "Achieve: vòng loại trực tiếp có nhãn nhánh" '^elim\|R1-1$' "$(as $ORG "insert into matches(event_id,round,num,label,seed,seed_blue,red,red2,blue,blue2) values ('$EV','elim',1,'R1-1',1,4,'VN1X','VN2B','VN3C','VN4D') returning round||'|'||label")"
+check "Achieve: điểm xanh âm bị chặn" 'violates check' "$(as $ORG "update matches set score_blue=-1 where event_id='$EV' and num=10")"
+check "Achieve: khách xem được trận 2v2" '^2$' "$(as anon "select count(*) from matches where red2 is not null")"
 check "tài khoản bị từ chối mất quyền sửa" '^0$' "$(as $SEPA "select admin_set_user('$ORG','rejected')" >/dev/null; as $ORG "with u as (update teams set name='x' where event_id='$EV' returning 1) select count(*) from u")"
 check "xoá giải xoá cả dữ liệu con" '^0\|0$' "$(as $SEPA "delete from events where id='$EV'" >/dev/null; su "select (select count(*) from teams)||'|'||(select count(*) from matches)")"
 

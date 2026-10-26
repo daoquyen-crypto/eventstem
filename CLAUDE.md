@@ -35,6 +35,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 | `js/rules.js` | `Rules.of(event)` chọn bộ luật theo `event.ruleset` (`engage-2026` / `achieve-2026` / `adc-2027`). Giao diện chỉ gọi qua lớp này |
 | `js/store.js` | Lưu dữ liệu, cùng một giao diện cho `SupabaseStore` và `DemoStore`. Bản demo phải áp đúng các ràng buộc của `schema.sql` |
 | `js/views.js` | Bảng dùng chung cho 2 trang (lịch trận, xếp hạng, nhánh đấu) |
+| `js/geo.js` | Đoán quốc gia người xem (quốc gia đã chọn trước → múi giờ → ngôn ngữ trình duyệt), không gửi gì ra ngoài. Dùng cho dải "Giải gần bạn" ở trang chủ và ô quốc gia mặc định |
 | `js/i18n.js`, `css/app.css` | Ngôn ngữ và giao diện chung của `manage.html` và `event.html` |
 | `js/vendor/supabase-2.117.3.js` | supabase-js đóng gói sẵn (MIT); không dùng CDN |
 | `supabase/schema.sql` | Bảng, RLS, trigger duyệt tài khoản, ràng buộc luật. **Phải chạy lại an toàn nhiều lần** (`if not exists`, `drop … if exists`) |
@@ -55,6 +56,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 - **Tập dượt** (`?rehearsal=1` trên `manage.html`, `event.html`, `show.html`): `DemoStore` dùng kho riêng `eventstem-rehearsal-v1` trong localStorage, tự đăng nhập tài khoản tập (ban tổ chức), không bao giờ gọi Supabase. Link nội bộ phải bọc `Rehearsal.url(...)` để giữ tham số. `Rehearsal.seedFrom(B)` chép cài đặt + đội + logo của giải thật (không chép trận, điểm, chọn liên minh).
 - **Logo:** bảng `event_assets` (logo đơn vị + tối đa 8 logo nhà tài trợ), ảnh thu nhỏ trong trình duyệt (`shrinkImage` trong `manage.js`) và lưu dạng data URL ≤ 400 KB; schema chặn mọi thứ không phải `data:image/...`. Không lấy bảng này trong các truy vấn danh sách giải.
 - **Đổi cơ sở dữ liệu:** thêm `alter table … add column if not exists` vào `schema.sql`. Trong mô tả PR ghi rõ "cần chạy lại schema.sql". Cập nhật luôn `DemoStore` (`MATCH_COLS`, `MATCH_DEFAULTS`).
+- **Hướng ra toàn cầu:** không mặc định hay nhấn mạnh riêng Việt Nam trên giao diện. Quốc gia mặc định lấy từ `Geo.guess()`.
 - Không đưa họ tên, ngày sinh hay liên lạc của học sinh vào kho. Kho để public.
 - Không ghép logo hay thương hiệu RECF/VEX vào nhận diện EventSTEM.
 
@@ -69,6 +71,7 @@ node tests/e2e_achieve.js                         # E2E luồng Achieve (chế �
 node tests/e2e_adc.js                             # E2E luồng ADC (chế độ demo)
 node tests/e2e_show.js                            # E2E logo + màn hình trình chiếu (chế độ demo)
 node tests/e2e_rehearsal.js                       # E2E chế độ tập dượt
+node tests/e2e_home.js                            # E2E trang chủ: "Giải gần bạn" theo quốc gia
 ```
 
 - Các test E2E chặn `js/config.js` để luôn chạy ở chế độ demo, **không ghi dữ liệu thử lên Supabase thật**.

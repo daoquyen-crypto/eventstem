@@ -79,7 +79,7 @@
         '<form id="fSignup" class="grid2" style="grid-template-columns:1fr">' +
         '<label class="f"><span>' + tr('Your name', 'Họ tên') + '</span><input type="text" id="suName" required autocomplete="name"></label>' +
         '<label class="f"><span>' + tr('School / organization', 'Trường / đơn vị') + '</span><input type="text" id="suOrg" required autocomplete="organization"></label>' +
-        '<label class="f"><span>' + tr('Country', 'Quốc gia') + '</span><input type="text" id="suCountry" value="Vietnam" autocomplete="country-name"></label>' +
+        '<label class="f"><span>' + tr('Country', 'Quốc gia') + '</span><input type="text" id="suCountry" value="' + esc(Geo.guess()) + '" autocomplete="country-name"></label>' +
         '<label class="f"><span>Email</span><input type="email" id="suEmail" required autocomplete="email"></label>' +
         '<label class="f"><span>' + tr('Password (6+ characters)', 'Mật khẩu (từ 6 ký tự)') + '</span><input type="password" id="suPw" required minlength="6" autocomplete="new-password"></label>' +
         '<div class="row"><button class="btn pri" type="submit">' + tr('Create account', 'Tạo tài khoản') + '</button></div></form>'
@@ -193,7 +193,7 @@
       ev.preventDefault();
       var ch = Rules.CHOICES.find(function (x) { return x.key === val('prProg'); }), RR = Rules.byId[ch.ruleset], n = Math.max(4, Math.min(24, num('prTeams', 12)));
       var g = RR.grades, pre = ch.program === 'ADC' ? 'DR' : ch.program === 'Achieve' ? 'PA' : 'PE';
-      var teams = SAMPLE.slice(0, n).map(function (nm, i) { return { number: pre + (101 + i) + (ch.program === 'ADC' ? '' : 'A'), name: nm, org: tr('Practice school ', 'Trường tập ') + (i % 4 + 1), grade: g[i % g.length], country: 'Vietnam' }; });
+      var teams = SAMPLE.slice(0, n).map(function (nm, i) { return { number: pre + (101 + i) + (ch.program === 'ADC' ? '' : 'A'), name: nm, org: tr('Practice school ', 'Trường tập ') + (i % 4 + 1), grade: g[i % g.length], country: Geo.guess() }; });
       S.createEvent({ name: tr('Practice: ', 'Tập dượt: ') + tr(ch.en, ch.vi), program: ch.program, ruleset: ch.ruleset, date: new Date().toISOString().slice(0, 10), status: 'draft', grades: g,
         location: tr('Practice', 'Tập dượt'), config: { matchesPerTeam: RR.cfg({}).matchesPerTeam, soloAttempts: RR.cfg({}).soloAttempts, fields: 2, start: '09:00', cycleMin: RR.cfg({}).cycleMin, minGap: 1 } })
         .then(function (e) { return S.upsertTeams(e.id, teams).then(function () { toast(tr('Practice event created', 'Đã tạo giải tập')); go('#e/' + e.id + '/schedule'); }); }).catch(fail);
@@ -233,7 +233,7 @@
       '<label class="f"><span>' + tr('Date', 'Ngày thi') + '</span><input type="date" id="evDate" value="' + esc(e && e.date ? e.date : '') + '"></label>' +
       '<label class="f"><span>' + tr('End date (optional)', 'Ngày kết thúc (nếu nhiều ngày)') + '</span><input type="date" id="evEnd" value="' + esc(e && e.end_date ? e.end_date : '') + '"></label>' +
       '<label class="f"><span>' + tr('Venue / city', 'Địa điểm / thành phố') + '</span><input type="text" id="evLoc" value="' + esc(e ? e.location : '') + '"></label>' +
-      '<label class="f"><span>' + tr('Country', 'Quốc gia') + '</span><input type="text" id="evCountry" value="' + esc(e ? e.country : (me.profile.country || 'Vietnam')) + '"></label>' +
+      '<label class="f"><span>' + tr('Country', 'Quốc gia') + '</span><input type="text" id="evCountry" value="' + esc(e ? e.country : (me.profile.country || Geo.guess())) + '"></label>' +
       '<label class="f"><span>' + tr('Organizer', 'Đơn vị tổ chức') + '</span><input type="text" id="evOrg" value="' + esc(e ? e.organizer_name : (me.profile.organization || '')) + '"></label>' +
       '<div class="f"><span>' + tr('Grade levels', 'Cấp học') + '</span><div class="row">' + gradeCk + '</div></div>' +
       '</div><h3 class="t">' + tr('Match rules', 'Thông số thi đấu') + '</h3><div class="grid2">' +

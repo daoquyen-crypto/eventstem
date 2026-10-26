@@ -50,6 +50,7 @@
       team_in_use: ['This team is in the match schedule. Clear the schedule first, or rename the team instead.', 'Đội này đang có trong lịch trận. Xoá lịch trước, hoặc đổi mã đội thay vì xoá.'],
       bad_team: ['Team numbers use only letters A–Z, digits, - or _ (2–20 characters).', 'Mã đội chỉ gồm chữ A–Z, số, - hoặc _ (2–20 ký tự).'],
       bad_score: ['Scores cannot be negative.', 'Điểm không được âm.'],
+      bad_image: ['This image could not be saved. Use a PNG, JPG, WebP or GIF file (max 8 sponsor logos).', 'Không lưu được ảnh này. Dùng file PNG, JPG, WebP hoặc GIF (tối đa 8 logo nhà tài trợ).'],
       forbidden: ['You do not have permission to do this. Is your account approved?', 'Bạn không có quyền làm việc này. Tài khoản đã được duyệt chưa?'],
       bad_login: ['Wrong email or password.', 'Sai email hoặc mật khẩu.'],
       not_confirmed: ['Please confirm your email first (check your inbox).', 'Bạn cần xác nhận email trước (xem hộp thư).'],

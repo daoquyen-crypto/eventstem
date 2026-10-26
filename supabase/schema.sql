@@ -268,11 +268,31 @@ create table if not exists public.awards (
 -- 6.3: mỗi đội nhận tối đa 1 giải do giám khảo chấm
 create unique index if not exists awards_one_judged on public.awards (event_id, team) where judged;
 
+-- ---------- Logo của giải (ban tổ chức + nhà tài trợ) ----------
+-- Ảnh đã được thu nhỏ trong trình duyệt, lưu dạng data URL. Bảng riêng để danh sách giải không phải tải ảnh.
+--   organizer = logo đơn vị tổ chức; sponsors = [{src, name}], tối đa 8
+create or replace function public.is_image_data(t text) returns boolean
+language sql immutable as $$
+  select t is null or (t ~ '^data:image/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$' and length(t) <= 400000)
+$$;
+create or replace function public.valid_sponsors(j jsonb) returns boolean
+language sql immutable as $$
+  select jsonb_typeof(j) = 'array' and jsonb_array_length(j) <= 8 and
+    not exists (select 1 from jsonb_array_elements(j) x
+                where jsonb_typeof(x) <> 'object' or not public.is_image_data(x ->> 'src') or x ->> 'src' is null
+                   or length(coalesce(x ->> 'name', '')) > 80)
+$$;
+create table if not exists public.event_assets (
+  event_id   uuid primary key references public.events(id) on delete cascade,
+  organizer  text check (public.is_image_data(organizer)),
+  sponsors   jsonb not null default '[]' check (public.valid_sponsors(sponsors))
+);
+
 -- ---------- Quyền cho các bảng con ----------
 do $$
 declare t text;
 begin
-  foreach t in array array['teams', 'matches', 'solo_runs', 'awards'] loop
+  foreach t in array array['teams', 'matches', 'solo_runs', 'awards', 'event_assets'] loop
     execute format('alter table public.%I enable row level security', t);
     execute format('drop policy if exists %I on public.%I', t || '_select', t);
     execute format('create policy %I on public.%I for select using (can_view_event(event_id))', t || '_select', t);
@@ -291,15 +311,15 @@ end $$;
 do $$
 declare t text;
 begin
-  foreach t in array array['teams', 'matches', 'solo_runs', 'awards'] loop
+  foreach t in array array['teams', 'matches', 'solo_runs', 'awards', 'event_assets'] loop
     execute format('drop trigger if exists touch_event on public.%I', t);
     execute format('create trigger touch_event after insert or update or delete on public.%I for each row execute function public.touch_event()', t);
   end loop;
 end $$;
 
 grant usage on schema public to anon, authenticated;
-grant select on public.events, public.teams, public.matches, public.solo_runs, public.awards to anon, authenticated;
-grant insert, update, delete on public.events, public.teams, public.matches, public.solo_runs, public.awards to authenticated;
+grant select on public.events, public.teams, public.matches, public.solo_runs, public.awards, public.event_assets to anon, authenticated;
+grant insert, update, delete on public.events, public.teams, public.matches, public.solo_runs, public.awards, public.event_assets to authenticated;
 grant select on public.profiles, public.app_settings to authenticated;
 grant update on public.app_settings to authenticated;
 grant execute on function public.admin_set_user(uuid, text, text) to authenticated;

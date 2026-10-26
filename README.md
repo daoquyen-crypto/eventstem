@@ -14,6 +14,7 @@ Trang tĩnh tại **[eventstem.com](https://eventstem.com)**. Trang tổng hợp
 | `index.html` | Trang chủ: lịch giải RECF và xếp hạng toàn cầu |
 | `manage.html` | Công cụ tổ chức giải (cần đăng nhập) |
 | `event.html` | Trang xem trực tiếp: lịch trận, điểm, xếp hạng của từng giải |
+| `show.html` | Màn hình trình chiếu tại sân (máy chiếu / TV) |
 | `js/engage.js` | Luật Engage: tạo lịch, xếp hạng Alliance/Solo, chung kết, giải thưởng, xuất CSV |
 | `js/achieve.js` | Luật Achieve: lịch 2 đấu 2, ranking points, chọn liên minh, nhánh loại trực tiếp |
 | `js/adc.js` | Luật ADC Fast Track: Solo Piloting/Autonomous, chọn liên minh, loại trực tiếp theo vòng |
@@ -61,7 +62,8 @@ Lưu ý: `results/mau_2026-2027.csv` là dữ liệu mẫu, nên trang đang hi�
 6. **Scoring**: nhập điểm từng trận, kể cả thẻ đỏ hoặc vắng mặt. **Solo**: ghi từng lượt driving/coding (tối đa 5 lượt mỗi đội). Bảng xếp hạng tự tính theo luật 3.5 và 7.4.4.
 7. **Finals**: tạo các cặp 1+2, 3+4…, đánh từ cặp hạng thấp nhất, nhập điểm. Hoà hạng nhất thì thêm trận tiebreak.
 8. **Awards**: nhập giải giám khảo (mỗi đội tối đa 1 giải). Vô địch giải và vô địch Solo được tự động thêm.
-9. **Export**: tải file CSV kết quả. Khi SEPA đánh dấu giải **Verified**, kết quả tự vào xếp hạng toàn cầu.
+9. **Logo & show** (Logo & trình chiếu): tải logo đơn vị và logo nhà tài trợ; chọn các màn trình chiếu, số giây mỗi màn; bấm **Open show screen** trên máy nối máy chiếu, bấm F để toàn màn hình.
+10. **Export**: tải file CSV kết quả. Khi SEPA đánh dấu giải **Verified**, kết quả tự vào xếp hạng toàn cầu.
 
 **Giải Achieve** khác Engage ở 3 bước:
 - **Chấm điểm**: nhập điểm của cả 2 liên minh và tick *Auto RP* / *Endgame RP*.

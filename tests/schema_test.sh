@@ -90,6 +90,12 @@ check "Achieve: đội thứ 2 phải có trong giải" 'matches_red2_fkey' "$(a
 check "Achieve: vòng loại trực tiếp có nhãn nhánh" '^elim\|R1-1$' "$(as $ORG "insert into matches(event_id,round,num,label,seed,seed_blue,red,red2,blue,blue2) values ('$EV','elim',1,'R1-1',1,4,'VN1X','VN2B','VN3C','VN4D') returning round||'|'||label")"
 check "Achieve: điểm xanh âm bị chặn" 'violates check' "$(as $ORG "update matches set score_blue=-1 where event_id='$EV' and num=10")"
 check "Achieve: khách xem được trận 2v2" '^2$' "$(as anon "select count(*) from matches where red2 is not null")"
+PNG='data:image/png;base64,iVBORw0KGgo='
+check "logo: ban tổ chức lưu logo + nhà tài trợ" '^1$' "$(as $ORG "insert into event_assets(event_id,organizer,sponsors) values ('$EV','$PNG','[{\"src\":\"$PNG\",\"name\":\"ABC\"}]') returning jsonb_array_length(sponsors)")"
+check "logo: chặn đường dẫn không phải ảnh" 'violates check' "$(as $ORG "update event_assets set organizer='javascript:alert(1)' where event_id='$EV'")"
+check "logo: chặn quá 8 nhà tài trợ" 'violates check' "$(as $ORG "update event_assets set sponsors=(select jsonb_agg(jsonb_build_object('src','$PNG')) from generate_series(1,9)) where event_id='$EV'")"
+check "logo: khách xem được logo giải đã công bố" '^1$' "$(as anon "select count(*) from event_assets where organizer is not null")"
+check "logo: tài khoản khác không sửa được" '^0$' "$(as $DOM "with u as (update event_assets set organizer=null where event_id='$EV' returning 1) select count(*) from u")"
 check "tài khoản bị từ chối mất quyền sửa" '^0$' "$(as $SEPA "select admin_set_user('$ORG','rejected')" >/dev/null; as $ORG "with u as (update teams set name='x' where event_id='$EV' returning 1) select count(*) from u")"
 check "xoá giải xoá cả dữ liệu con" '^0\|0$' "$(as $SEPA "delete from events where id in ('$EV','$EVA')" >/dev/null; su "select (select count(*) from teams)||'|'||(select count(*) from matches)")"
 

@@ -881,9 +881,16 @@
   }
   PANES.show = function () {
     var e = B.event, a = B.assets || { organizer: null, sponsors: [] }, sh = (e.config || {}).show || {}, on = sh.slides || {};
-    var SL = [['next', tr('Up next & latest results', 'Trận sắp đánh & kết quả mới')], ['rank', tr('Alliance / qualification rankings', 'Xếp hạng Alliance / vòng loại')], ['solo', tr('Solo rankings', 'Xếp hạng Solo')],
-      ['elim', tr('Finals / eliminations', 'Chung kết / loại trực tiếp')], ['awards', tr('Awards', 'Giải thưởng')], ['sponsors', tr('Sponsors', 'Nhà tài trợ')]];
-    var url = location.href.replace(/manage\.html.*$/, Rehearsal.url('show.html?id=' + e.id));
+    var SL = [['next', tr('Up next & latest results', 'Trận sắp đánh & kết quả mới')], ['sched', tr('Full match schedule', 'Lịch các trận còn lại')], ['rank', tr('Alliance / qualification rankings', 'Xếp hạng Alliance / vòng loại')], ['solo', tr('Solo rankings', 'Xếp hạng Solo')],
+      ['elim', tr('Finals / eliminations', 'Chung kết / loại trực tiếp')], ['awards', tr('Awards', 'Giải thưởng')], ['events', tr('Upcoming RECF events nearby', 'Các giải RECF sắp tới ở gần')], ['sponsors', tr('Sponsors', 'Nhà tài trợ')]];
+    var base = location.href.replace(/manage\.html.*$/, ''), url = base + Rehearsal.url('show.html?id=' + e.id);
+    /* Link riêng cho từng màn: mỗi TV / máy chiếu mở 1 link (show.js, &screen=) */
+    var SCR = [['matches', tr('Match schedule', 'Lịch trận'), tr('Up next, latest results, remaining schedule', 'Trận sắp đánh, kết quả mới, lịch các trận còn lại')],
+      ['standings', tr('Results & standings', 'Kết quả & xếp hạng'), tr('Rankings, solo, eliminations, awards', 'Xếp hạng, Solo, loại trực tiếp, giải thưởng')],
+      ['events', tr('Upcoming events', 'Giải sắp tới'), tr('RECF events coming up in your country and nearby', 'Các giải RECF sắp diễn ra trong nước và lân cận')],
+      ['sponsors', tr('Sponsors', 'Nhà tài trợ'), tr('Thank-you slide with sponsor logos', 'Màn cảm ơn với logo nhà tài trợ')]];
+    var scrUrl = function (k, extra) { return Rehearsal.url('show.html?id=' + e.id + '&screen=' + k + (extra || '')); };
+    var fields = Math.max(1, +cfgOf(e).fields || 1);
     pane('<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start"><div>' +
       '<div class="card"><h3 style="margin-top:0">' + tr('Organizer logo', 'Logo đơn vị tổ chức') + '</h3>' +
       '<p class="small mut" style="margin-top:0">' + tr('Shown on the public page and the show screen. PNG with a transparent background works best; the image is resized automatically.', 'Hiện ở trang công khai và màn hình trình chiếu. Nên dùng PNG nền trong suốt; ảnh được tự thu nhỏ.') + '</p>' +
@@ -898,7 +905,7 @@
           '<button class="btn sm danger" data-del type="button" aria-label="' + esc(tr('Remove', 'Xoá')) + '">✕</button></div>'; }).join('') + '</div>' : '') +
       (a.sponsors.length < 8 ? '<label class="f"><span>' + tr('Add sponsor logos (you can pick several files)', 'Thêm logo nhà tài trợ (chọn được nhiều file)') + '</span><input type="file" id="spFile" multiple accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"></label>' : '') +
       '</div></div>' +
-      '<form class="card" id="fShow"><h3 style="margin-top:0">' + tr('Show screen', 'Màn hình trình chiếu') + '</h3>' +
+      '<div><form class="card" id="fShow"><h3 style="margin-top:0">' + tr('Show screen', 'Màn hình trình chiếu') + '</h3>' +
       '<p class="small mut" style="margin-top:0">' + tr('Open the show screen on the computer connected to the projector or TV, then press F for full screen. Slides change automatically and scores update by themselves. Keys: ← → change slide, Space pauses.',
         'Mở màn hình trình chiếu trên máy nối với máy chiếu hoặc TV, rồi bấm F để toàn màn hình. Các màn tự chuyển, điểm tự cập nhật. Phím: ← → chuyển màn, Space tạm dừng.') + '</p>' +
       (e.status === 'draft' ? '<p class="banner err small">' + tr('This event is still a draft: the show screen only works in a browser where you are signed in. Publish the event to show it on any computer.', 'Giải đang ở dạng nháp: màn hình trình chiếu chỉ chạy trên trình duyệt đã đăng nhập tài khoản này. Công bố giải để chiếu được trên mọi máy.') + '</p>' : '') +
@@ -906,7 +913,26 @@
       '<div class="grid2" style="margin-top:8px"><label class="f"><span>' + tr('Seconds per slide', 'Số giây mỗi màn') + '</span><input type="number" id="shSec" min="4" max="120" value="' + (sh.seconds || 12) + '"></label>' +
       '<label class="f"><span>' + tr('Rows per ranking slide', 'Số dòng mỗi màn xếp hạng') + '</span><input type="number" id="shRows" min="5" max="20" value="' + (sh.rows || 10) + '"></label></div>' +
       '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">' + tr('Save', 'Lưu') + '</button><a class="btn acc" id="openShow" href="' + esc(Rehearsal.url('show.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Open show screen ↗', 'Mở màn hình trình chiếu ↗') + '</a></div>' +
-      '<p class="small mut">' + tr('Link: ', 'Đường dẫn: ') + '<code style="word-break:break-all">' + esc(url) + '</code></p></form></div>');
+      '<p class="small mut">' + tr('Link: ', 'Đường dẫn: ') + '<code style="word-break:break-all">' + esc(url) + '</code></p></form>' +
+      '<div class="card" id="shScreens"><h3 style="margin-top:0">' + tr('One screen per TV', 'Mỗi TV một màn') + '</h3>' +
+      '<p class="small mut" style="margin-top:0">' + tr('The link above rotates through the slides ticked above. To keep one TV on a single screen, open one of these links instead. You can also switch screens from the control bar on the show screen.',
+        'Link ở trên chạy luân phiên các màn đã chọn. Muốn mỗi TV chỉ hiện 1 màn, mở 1 trong các link dưới. Cũng có thể đổi màn ngay trên thanh điều khiển của màn hình trình chiếu.') + '</p>' +
+      SCR.map(function (x) { return '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line)"><div><b>' + esc(x[1]) + '</b><div class="small mut">' + esc(x[2]) + '</div></div>' +
+        '<a class="btn sm" data-scr="' + x[0] + '" href="' + esc(scrUrl(x[0])) + '" target="_blank" rel="noopener">' + tr('Open ↗', 'Mở ↗') + '</a></div>'; }).join('') + '</div>' +
+      '<div class="card" id="shLive"><h3 style="margin-top:0">' + tr('Livestream overlay', 'Lớp phủ cho livestream') + '</h3>' +
+      '<p class="small mut" style="margin-top:0">' + tr('Put the event logo, sponsor logos and the match being played on top of your camera video. It updates by itself as you score.', 'Đặt logo giải, logo nhà tài trợ và trận đang đánh lên trên hình camera. Tự cập nhật khi chấm điểm.') + '</p>' +
+      '<ol class="small" style="padding-left:18px;margin:0 0 8px"><li>' + tr('In OBS Studio (free) add your camera, then <b>Sources → + → Browser</b>.', 'Trong OBS Studio (miễn phí), thêm camera, rồi bấm <b>Sources → + → Browser</b>.') + '</li>' +
+        '<li>' + tr('Paste the link below, set width <b>1920</b> and height <b>1080</b>. The background is transparent, so the camera shows through.', 'Dán link dưới, đặt chiều rộng <b>1920</b>, chiều cao <b>1080</b>. Nền trong suốt nên vẫn thấy hình camera.') + '</li>' +
+        '<li>' + tr('Hardware video mixer instead of OBS? Use the green-background link and key out the green.', 'Dùng bàn trộn hình thay cho OBS? Dùng link nền xanh rồi tách nền xanh (chroma key).') + '</li></ol>' +
+      '<label class="f"><span>' + tr('Overlay link (transparent background)', 'Link lớp phủ (nền trong suốt)') + '</span><input type="text" id="ovUrl" readonly value="' + esc(base + scrUrl('overlay')) + '"></label>' +
+      (fields > 1 ? '<p class="small mut">' + tr('Several fields: add ', 'Nhiều sân: thêm ') + '<code>&amp;field=2</code>' + tr(' to show only field 2.', ' để chỉ hiện sân 2.') + '</p>' : '') +
+      '<div class="row" style="margin-top:8px"><button class="btn sm pri" id="ovCopy" type="button">' + tr('Copy link', 'Chép link') + '</button>' +
+        '<a class="btn sm" href="' + esc(scrUrl('overlay', '&bg=dark')) + '" target="_blank" rel="noopener">' + tr('Preview ↗', 'Xem thử ↗') + '</a>' +
+        '<a class="btn sm" href="' + esc(scrUrl('overlay', '&bg=green')) + '" target="_blank" rel="noopener">' + tr('Green background ↗', 'Nền xanh ↗') + '</a></div></div></div></div>');
+    $id('ovCopy').onclick = function () {
+      var inp = $id('ovUrl'); inp.select();
+      (navigator.clipboard ? navigator.clipboard.writeText(inp.value) : Promise.reject()).catch(function () { document.execCommand('copy'); }).then(function () { toast(tr('Link copied', 'Đã chép link')); });
+    };
 
     var save = function (next) { return S.saveAssets(e.id, next).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail); };
     $id('orgFile').onchange = function () {

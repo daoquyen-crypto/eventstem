@@ -1,12 +1,24 @@
 /* Màn hình trình chiếu tại sân (show.html?id=…): các màn tự chuyển, dữ liệu tự cập nhật.
-   Cài đặt của ban tổ chức ở event.config.show = {seconds, rows, slides: {next, rank, solo, elim, awards, sponsors}}.
-   Có thể ghi đè bằng tham số trên đường dẫn: &s=10 (giây mỗi màn), &only=rank,solo (chỉ hiện các màn này). */
+   Cài đặt của ban tổ chức ở event.config.show = {seconds, rows, slides: {next, sched, rank, solo, elim, awards, events, sponsors}}.
+   Chọn màn bằng &screen=:
+     all (mặc định)  chạy luân phiên các màn đã bật trong cài đặt
+     matches         Lịch trận: trận sắp đánh, kết quả mới nhất, lịch các trận còn lại
+     standings       Kết quả & xếp hạng: xếp hạng vòng loại, Solo, loại trực tiếp, giải thưởng
+     events          Các giải RECF sắp tới ở nước này và lân cận (từ events.json)
+     sponsors        Cảm ơn nhà tài trợ
+     overlay         Lớp phủ livestream: nền trong suốt (&bg=green nền xanh để tách nền, &bg=dark), logo + trận đang đánh; &field=2 chọn sân
+   Ghi đè khác: &s=10 (giây mỗi màn), &only=rank,solo (chỉ hiện các màn này). */
 (function () {
   'use strict';
   var S = window.Store, E = window.Engage;
   var P = new URLSearchParams(location.search), id = P.get('id');
   var B = null, stamp = null, slides = [], cur = 0, paused = false, timer = null, POLL_MS = 15000;
-  var SLIDES = ['next', 'rank', 'solo', 'elim', 'awards', 'sponsors'];
+  var SLIDES = ['next', 'sched', 'rank', 'solo', 'elim', 'awards', 'events', 'sponsors'];
+  var SCREENS = { matches: ['next', 'sched'], standings: ['rank', 'solo', 'elim', 'awards'], events: ['events'], sponsors: ['sponsors'] };
+  var SCREEN_NAMES = [['all', 'All screens (rotate)', 'Tất cả (luân phiên)'], ['matches', 'Match schedule', 'Lịch trận'], ['standings', 'Results & standings', 'Kết quả & xếp hạng'],
+    ['events', 'Upcoming events', 'Giải sắp tới'], ['sponsors', 'Sponsors', 'Nhà tài trợ'], ['overlay', 'Livestream overlay', 'Lớp phủ livestream']];
+  function screen() { var x = P.get('screen'); return SCREENS[x] || x === 'overlay' ? x : 'all'; }
+  var EVJ = null;   // events.json (giải RECF), tải 1 lần cho màn "Giải sắp tới"
 
   function R() { return Rules.of(B.event); }
   function cfg() { return R().cfg(B.event.config); }
@@ -14,6 +26,8 @@
   function showCfg() {
     var c = (B.event.config || {}).show || {}, on = {};
     SLIDES.forEach(function (k) { on[k] = !c.slides || c.slides[k] !== false; });
+    var sc = SCREENS[screen()];
+    if (sc) SLIDES.forEach(function (k) { on[k] = sc.indexOf(k) >= 0; });
     if (P.get('only')) { var only = P.get('only').split(','); SLIDES.forEach(function (k) { on[k] = only.indexOf(k) >= 0; }); }
     var sec = +P.get('s') || +c.seconds || 12;
     return { seconds: Math.max(4, Math.min(120, sec)), rows: Math.max(5, Math.min(20, +c.rows || 10)), on: on };
@@ -35,13 +49,39 @@
       '<div class="show-mbody">' + side(m, 'red') + '<div class="show-vs">' + (vs ? 'vs' : '+') + '</div>' + side(m, 'blue') + '</div>' + sc + '</div>';
   }
   function nextSlide(c) {
-    var open = B.matches.filter(function (m) { return !scored(m) && m.round !== 'practice'; }).sort(function (a, b) { return ORD[a.round] - ORD[b.round] || a.num - b.num; });
+    var open = openMatches();
     var done = B.matches.filter(scored).sort(function (a, b) { return String(b.updated_at || '').localeCompare(String(a.updated_at || '')) || ORD[b.round] - ORD[a.round] || b.num - a.num; });
     var n = Math.max(2, Math.min(6, (+cfg().fields || 1) * 2));
     if (!open.length && !done.length) return null;
     return { key: 'next', title: tr('Matches', 'Trận đấu'), html: '<div class="show-cols">' +
       (open.length ? '<section><h2>' + tr('Up next', 'Sắp đánh') + '</h2>' + open.slice(0, n).map(function (m) { return matchCard(m, false); }).join('') + '</section>' : '') +
       (done.length ? '<section><h2>' + tr('Latest results', 'Kết quả mới nhất') + '</h2>' + done.slice(0, Math.min(4, n)).map(function (m) { return matchCard(m, true); }).join('') + '</section>' : '') + '</div>' };
+  }
+  function openMatches() { return B.matches.filter(function (m) { return !scored(m) && m.round !== 'practice'; }).sort(function (a, b) { return ORD[a.round] - ORD[b.round] || a.num - b.num; }); }
+  /* Lịch các trận còn lại, chia trang */
+  function schedSlides(c) {
+    var open = openMatches(); if (!open.length) return [];
+    var vs = R().format === 'versus';
+    return pages('sched', tr('Match schedule', 'Lịch trận'), open, Math.max(6, c.rows), function (part) { return Views.matchTable(B, part, { versus: vs }); });
+  }
+  /* Giải RECF sắp tới ở nước của giải này, rồi các nước trong 3.500 km (giống "Gần bạn" ở trang chủ) */
+  function km(a, b) { var r = Math.PI / 180, x = Math.sin((b.lat - a.lat) * r / 2), y = Math.sin((b.lng - a.lng) * r / 2); return 12742 * Math.asin(Math.sqrt(x * x + Math.cos(a.lat * r) * Math.cos(b.lat * r) * y * y)); }
+  function eventsSlide() {
+    if (!EVJ || !B.event.country) return null;
+    var today = new Date().toISOString().slice(0, 10), code = (B.event.recf_code || '').toUpperCase(), ctry = B.event.country;
+    var up = EVJ.filter(function (e) { return e.start && e.start >= today && e.code !== code; });
+    var mine = EVJ.filter(function (e) { return e.country === ctry && e.lat != null; });
+    var c = mine.length ? { lat: mine.reduce(function (s, e) { return s + e.lat; }, 0) / mine.length, lng: mine.reduce(function (s, e) { return s + e.lng; }, 0) / mine.length } : null;
+    var local = up.filter(function (e) { return e.country === ctry; }), near = c ? up.filter(function (e) { return e.country !== ctry && e.lat != null && km(c, e) <= 3500; }) : [];
+    var by = function (a, b) { return a.start.localeCompare(b.start); }, list = local.sort(by).concat(near.sort(by)).slice(0, 8);
+    if (!list.length) return null;
+    var cn = function (x) { return I18N.lang === 'vi' && x === 'Vietnam' ? 'Việt Nam' : x; };
+    return { key: 'events', title: tr('Upcoming RECF events', 'Các giải RECF sắp tới') + ' · ' + cn(ctry) + (near.length ? tr(' & nearby', ' và lân cận') : ''),
+      html: '<div class="show-events">' + list.map(function (e) {
+        return '<div class="show-ev"><div class="show-ev-d">' + esc(fmtDate(e.start)) + '</div><div class="show-ev-p">' + esc(e.program === 'ADC' ? 'Aerial Drone' : e.program) + '</div>' +
+          '<div class="show-ev-t">' + esc(e.title) + '</div><div class="show-ev-m">' + esc([e.city, e.country !== ctry ? cn(e.country) : ''].filter(Boolean).join(', ')) +
+          (e.status === 'Registration Open' ? ' · <b>' + tr('Registration open', 'Đang mở đăng ký') + '</b>' : '') + '</div></div>';
+      }).join('') + '</div><p class="show-ev-foot">' + tr('Details and registration: eventstem.com', 'Xem chi tiết và đăng ký: eventstem.com') + '</p>' };
   }
   function pages(key, title, list, rows, render) {
     var out = [], total = Math.ceil(list.length / rows);
@@ -94,14 +134,41 @@
   function build() {
     var c = showCfg(), out = [];
     if (c.on.next) { var n = nextSlide(c); if (n) out.push(n); }
+    if (c.on.sched) out = out.concat(schedSlides(c));
     if (c.on.rank) out = out.concat(rankSlides(c));
     if (c.on.solo) out = out.concat(soloSlides(c));
     if (c.on.elim) { var el = elimSlide(); if (el) out.push(el); }
     if (c.on.awards) { var aw = awardsSlide(); if (aw) out.push(aw); }
+    if (c.on.events) { var ev = eventsSlide(); if (ev) out.push(ev); }
     if (c.on.sponsors) { var sp = sponsorSlide(); if (sp) out.push(sp); }
     if (!out.length) out.push({ key: 'welcome', title: '', html: '<div class="show-welcome">' + (B.assets && B.assets.organizer ? '<img src="' + esc(B.assets.organizer) + '" alt="">' : '') +
       '<h2>' + esc(B.event.name) + '</h2><p>' + tr('Matches and rankings will appear here.', 'Lịch trận và bảng xếp hạng sẽ hiện ở đây.') + '</p></div>' });
     return out;
+  }
+
+  /* ---------- Lớp phủ livestream (&screen=overlay) ----------
+     Dùng làm "Browser Source" trong OBS / vMix, đặt trên hình camera (1920×1080). Nền trong suốt; &bg=green cho bộ trộn hình cần tách nền xanh.
+     Góc trên: logo đơn vị + tên giải, logo nhà tài trợ đổi lần lượt. Dải dưới: trận đang đánh (trận chưa chấm đầu tiên, theo sân nếu có &field=),
+     kết quả trận vừa xong, và 2 trận kế tiếp. */
+  var spIdx = 0, spTimer = null;
+  function overlay() {
+    var a = B.assets || {}, f = P.get('field'), open = openMatches().filter(function (m) { return !f || String(m.field) === f; });
+    var done = B.matches.filter(function (m) { return scored(m) && (!f || String(m.field) === f); }).sort(function (x, y) { return String(y.updated_at || '').localeCompare(String(x.updated_at || '')) || ORD[y.round] - ORD[x.round] || y.num - x.num; });
+    var now = open[0], last = done[0];
+    var teams = function (m, sd) { return teamsOf(m).filter(function (s) { return s.indexOf(sd) === 0; }).map(function (s) { return '<span><b>' + esc(m[s]) + '</b> ' + esc(teamName(m[s])) + '</span>'; }).join(''); };
+    var head = function (m) { return Views.matchCode(m, B.matches) + (m.field && (+cfg().fields || 1) > 1 ? ' · ' + tr('Field ', 'Sân ') + esc(m.field) : ''); };
+    var vs = function (m) { return !!(m.red2 || m.blue2 || m.score_blue != null); };
+    $id('ovTop').innerHTML = (a.organizer ? '<img src="' + esc(a.organizer) + '" alt="">' : '') + '<div><b>' + esc(B.event.name) + '</b><span>' + esc([B.event.location].filter(Boolean).join(' · ')) + '</span></div>';
+    $id('ovBar').innerHTML = now ? '<div class="ov-now"><div class="ov-tag">' + tr('NOW', 'ĐANG ĐÁNH') + '<small>' + head(now) + '</small></div>' +
+        '<div class="ov-al red">' + teams(now, 'red') + '</div><div class="ov-vs">' + (vs(now) ? 'VS' : '+') + '</div><div class="ov-al blue">' + teams(now, 'blue') + '</div></div>' +
+        (open.length > 1 ? '<div class="ov-next">' + tr('Next: ', 'Tiếp theo: ') + open.slice(1, 3).map(function (m) { return '<span><b>' + Views.matchCode(m, B.matches) + '</b> ' + esc(teamsOf(m).map(function (s) { return m[s]; }).join(' · ')) + '</span>'; }).join('') + '</div>' : '')
+      : '<div class="ov-now"><div class="ov-tag">' + esc(B.event.name) + '</div></div>';
+    $id('ovLast').innerHTML = last ? '<small>' + tr('Last result', 'Kết quả vừa xong') + ' · ' + head(last) + '</small>' + (vs(last) ? '<b class="r">' + last.score + '</b><b>–</b><b class="b">' + last.score_blue + '</b>' : '<b>' + last.score + '</b>') : '';
+    $id('ovLast').hidden = !last;
+    var sp = a.sponsors || [];
+    clearInterval(spTimer);
+    var paintSp = function () { $id('ovSpons').innerHTML = sp.length ? '<img src="' + esc(sp[spIdx % sp.length].src) + '" alt="' + esc(sp[spIdx % sp.length].name || '') + '">' : ''; spIdx++; };
+    paintSp(); if (sp.length > 1) spTimer = setInterval(paintSp, 8000);
   }
 
   /* ---------- khung trang ---------- */
@@ -134,6 +201,12 @@
     if (!paused && slides.length > 1) timer = setTimeout(function () { show(cur + 1); }, showCfg().seconds * 1000);
   }
   function rebuild(keepKey) {
+    var ov = screen() === 'overlay';
+    document.body.classList.toggle('overlay', ov);
+    document.body.dataset.bg = P.get('bg') || '';
+    $id('shOverlay').hidden = !ov;
+    if (ov) { clearTimeout(timer); overlay(); return; }
+    clearInterval(spTimer);
     var key = slides[cur] && slides[cur].key;
     slides = build(); paintFrame();
     var j = keepKey ? slides.findIndex(function (s) { return s.key === key; }) : 0;
@@ -160,8 +233,18 @@
     else if (a === 'full') toggleFull();
   }
 
-  I18N.apply(); I18N.bindToggle();
-  I18N.onChange(function () { if (B) rebuild(true); });
+  function paintPicker() {
+    $id('shScreen').innerHTML = SCREEN_NAMES.map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === screen() ? ' selected' : '') + '>' + esc(tr(x[1], x[2])) + '</option>'; }).join('');
+  }
+  $id('shScreen').addEventListener('change', function () {
+    if (this.value === 'all') P.delete('screen'); else P.set('screen', this.value);
+    try { history.replaceState(null, '', location.pathname + '?' + P.toString()); } catch (x) {}
+    if (B) rebuild(false);
+  });
+  I18N.apply(); I18N.bindToggle(); paintPicker();
+  I18N.onChange(function () { paintPicker(); if (B) rebuild(true); });
+  /* Danh sách giải RECF cho màn "Giải sắp tới"; không có cũng không sao */
+  fetch('events.json').then(function (r) { return r.json(); }).then(function (d) { EVJ = d.events || []; if (B && screen() !== 'overlay') rebuild(true); }).catch(function () {});
   $id('shCtl').addEventListener('click', function (ev) { var b = ev.target.closest('[data-a]'); if (b) act(b.dataset.a); });
   document.addEventListener('keydown', function (ev) {
     var k = ev.key;
@@ -171,11 +254,11 @@
     else if (k === 'f' || k === 'F') act('full');
   });
   /* Ẩn thanh điều khiển và con trỏ khi không động chuột */
-  var idle = null;
+  var idle = setTimeout(function () { document.body.classList.add('idle'); }, 3000);   // OBS không có chuột: tự ẩn sau 3 giây
   document.addEventListener('mousemove', function () { document.body.classList.remove('idle'); clearTimeout(idle); idle = setTimeout(function () { document.body.classList.add('idle'); }, 3000); });
   window.addEventListener('resize', fit);
   clock(); setInterval(clock, 10000);
   if (!id) $id('shMain').innerHTML = '<p class="empty">' + tr('Open this page from the organizer tool (Logo & show tab).', 'Mở trang này từ công cụ tổ chức giải (tab Logo & trình chiếu).') + '</p>';
   else { load(false).catch(function (e) { $id('shMain').innerHTML = '<div class="banner err">' + esc(errText(e)) + '</div>'; }); setInterval(poll, POLL_MS); }
-  window.EventSTEMShow = { slides: function () { return slides.map(function (s) { return s.key; }); }, go: show };   // cho kiểm thử
+  window.EventSTEMShow = { slides: function () { return slides.map(function (s) { return s.key; }); }, go: show, ready: function () { return !!EVJ; } };   // cho kiểm thử
 })();

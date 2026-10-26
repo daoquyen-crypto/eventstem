@@ -19,7 +19,7 @@ const asset = f => path.join(__dirname, '..', f);
 
   // 1. Giải Engage nhỏ: 6 đội, chấm vài trận, vài lượt solo
   await p.click('text=+ New event');
-  await p.fill('#evName', 'Show Test Cup'); await p.fill('#evDate', '2026-12-20'); await p.fill('#evLoc', 'Hà Nội'); await p.fill('#cMpt', '4'); await p.fill('#cFields', '2');
+  await p.fill('#evName', 'Show Test Cup'); await p.fill('#evDate', '2026-12-20'); await p.fill('#evLoc', 'Hà Nội'); await p.fill('#evCountry', 'Vietnam'); await p.fill('#cMpt', '4'); await p.fill('#cFields', '2');
   await p.click('#fNew button[type=submit]'); await p.waitForSelector('#tmPaste');
   await p.fill('#tmPaste', Array.from({ length: 6 }, (_, i) => `SH${10 + i}A, Robo ${i + 1}, School ${i % 2}`).join('\n'));
   await p.click('#tmAdd'); await p.waitForSelector('text=6 teams');
@@ -94,6 +94,43 @@ const asset = f => path.join(__dirname, '..', f);
   await s.goto(BASE + '/show.html?id=' + evId + '&only=rank'); await s.waitForSelector('.show-slide[data-k=rank]');
   assert(!(await s.evaluate(() => document.documentElement.scrollWidth > innerWidth || document.documentElement.scrollHeight > innerHeight)), 'show screen fits 1280×720 without scrolling');
   if (process.env.SHOTS) await s.screenshot({ path: process.env.SHOTS + '/show-720-rank.png' });
+  await s.setViewportSize({ width: 1920, height: 1080 });
+
+  // Từng màn riêng (&screen=) và đổi màn ngay trên thanh điều khiển
+  const keysOf = async q => { await s.goto(BASE + '/show.html?id=' + evId + q); await s.waitForSelector('.show-slide'); await s.waitForFunction(() => EventSTEMShow.ready()); await s.waitForTimeout(200); return s.evaluate(() => EventSTEMShow.slides()); };
+  let k = await keysOf('&screen=matches');
+  assert(k.length >= 2 && k.every(x => x === 'next' || x === 'sched'), 'Match schedule screen: up next + remaining schedule only (' + k.join(', ') + ')');
+  await s.waitForFunction(() => { EventSTEMShow.go(1); return document.querySelector('.show-slide[data-k=sched] table'); });
+  assert(/Match schedule/.test(await s.locator('.show-h').innerText()), 'schedule slide lists the remaining matches');
+  if (process.env.SHOTS) await s.screenshot({ path: process.env.SHOTS + '/show-1080-sched.png' });
+  k = await keysOf('&screen=standings');
+  assert(k.includes('rank') && k.includes('solo') && !k.includes('next') && !k.includes('sponsors'), 'Results & standings screen: rankings + solo only');
+  k = await keysOf('&screen=events');
+  assert(k.length === 1 && k[0] === 'events', 'Upcoming events screen');
+  const evText = await s.locator('.show-slide').innerText();
+  assert(/Vietnam/.test(await s.locator('.show-h').innerText()) && (await s.locator('.show-ev').count()) > 0, 'upcoming RECF events in the event\'s country and nearby');
+  if (process.env.SHOTS) await s.screenshot({ path: process.env.SHOTS + '/show-1080-events.png' });
+  await s.selectOption('#shScreen', 'sponsors'); await s.waitForSelector('.show-slide[data-k=sponsors]');
+  assert(/screen=sponsors/.test(s.url()) && (await s.evaluate(() => EventSTEMShow.slides())).join() === 'sponsors', 'switch screen from the control bar (link updates too)');
+
+  // Lớp phủ livestream: nền trong suốt, logo, trận đang đánh, kết quả vừa xong
+  await s.goto(BASE + '/show.html?id=' + evId + '&screen=overlay'); await s.waitForSelector('#ovBar .ov-now');
+  assert(await s.evaluate(() => getComputedStyle(document.body).backgroundColor) === 'rgba(0, 0, 0, 0)', 'overlay background is transparent (for OBS browser source)');
+  assert(!(await s.locator('#shMain').isVisible()) && !(await s.locator('.show-head').isVisible()), 'overlay hides the normal show layout');
+  assert(await s.locator('#ovTop img').count() === 1 && await s.locator('#ovSpons img').count() === 1, 'overlay shows organizer logo and one sponsor logo at a time');
+  assert(/NOW/.test(await s.locator('.ov-tag').innerText()) && /SH\d\dA/.test(await s.locator('.ov-al.red').innerText()), 'overlay shows the match being played with its teams');
+  assert(/Last result/.test(await s.locator('#ovLast').innerText()), 'overlay shows the last result');
+  if (process.env.SHOTS) { await s.goto(BASE + '/show.html?id=' + evId + '&screen=overlay&bg=green'); await s.waitForSelector('#ovBar .ov-now'); await s.screenshot({ path: process.env.SHOTS + '/show-overlay-green.png' }); }
+  await s.goto(BASE + '/show.html?id=' + evId + '&screen=overlay&field=2'); await s.waitForSelector('#ovBar .ov-now');
+  assert(/Field 2/.test(await s.locator('.ov-tag').innerText()), 'overlay can follow a single field (&field=2)');
+  await s.waitForTimeout(3300);
+  assert(await s.evaluate(() => getComputedStyle(document.querySelector('#shCtl')).opacity) === '0', 'controls hide by themselves without a mouse (OBS)');
+
+  // Tab Logo & trình chiếu: link từng màn + lớp phủ
+  await tab('Logo & show', '#shScreens');
+  assert(await p.locator('#shScreens a[data-scr]').count() === 4, 'one link per screen in the organizer tool');
+  assert(/screen=overlay/.test(await p.inputValue('#ovUrl')), 'overlay link ready to copy');
+  await s.goto(BASE + '/show.html?id=' + evId + '&only=rank'); await s.waitForSelector('.show-slide[data-k=rank]');
   // cập nhật trực tiếp: chấm thêm 1 trận ở trang quản lý → màn hình tự tải lại
   await tab('Scoring', '#scRows tbody tr');
   const r5 = p.locator('#scRows tbody tr').nth(4); await r5.locator('.score-in').fill('99'); await r5.locator('.score-in').press('Enter');

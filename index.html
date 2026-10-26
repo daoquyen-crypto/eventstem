@@ -487,11 +487,11 @@ function drawRankCtl(){
   $('rkBoards').querySelector('[data-b=solo] small').textContent=L[0]+' + '+L[1];
   $('rkMethod').innerHTML=(LANG==='vi'?{
     solo:'<ul><li>Điểm Solo = <b>'+L[0]+' cao nhất + '+L[1]+' cao nhất</b> của đội trong mùa, lấy từ mọi giải đã xác minh.</li><li>Bằng điểm: so '+L[1]+' cao nhất, rồi '+L[0]+' cao nhất.</li><li>Đội thi một mình nên đây là bảng so sánh công bằng nhất giữa các giải và các nước.</li></ul>',
-    ally:'<ul><li>Xếp theo <b>trung bình 3 trận Alliance cao nhất</b> trong mùa (đủ 3 trận trở lên mới tính trung bình đầy đủ).</li><li>Bằng điểm: so trận cao nhất.</li><li>Điểm Alliance phụ thuộc đội ghép cặp, nên dùng để tham khảo bên cạnh bảng Solo.</li></ul>',
+    ally:'<ul><li>Theo luật RECF (7.4.2): ở mỗi giải, <b>bỏ trận Alliance thấp nhất</b> của đội (kể cả trận 0 điểm), rồi lấy <b>trung bình các trận còn lại</b> trong mùa.</li><li>Bằng điểm: so điểm Alliance cao thứ 2, rồi thứ 3, thứ 4 (7.4.4).</li><li>Điểm Alliance phụ thuộc đội ghép cặp, nên dùng để tham khảo bên cạnh bảng Solo.</li></ul>',
     award:'<ul><li>Điểm thành tích cộng từ giải thưởng: Excellence 6 · Champions 5 · Solo/Skills Champion 4 · Design, Innovate, Think, Judges… 3 · giải khác 2.</li><li>Bằng điểm: so số giải thưởng, rồi số giải đấu đã tham gia.</li></ul>'
   }:{
     solo:'<ul><li>Solo score = <b>best '+L[0]+' + best '+L[1]+'</b> for the team this season, across all verified events.</li><li>Ties: compare best '+L[1]+', then best '+L[0]+'.</li><li>Teams play alone, so this is the fairest comparison across events and countries.</li></ul>',
-    ally:'<ul><li>Ranked by the <b>average of the top 3 Alliance matches</b> this season (teams need 3+ matches for a full average).</li><li>Ties: compare the best match.</li><li>Alliance scores depend on the partner team, so use them alongside the Solo board.</li></ul>',
+    ally:'<ul><li>Following RECF rule 7.4.2: at each event the team\'s <b>lowest Alliance score is dropped</b> (even a zero), then the <b>remaining scores are averaged</b> across the season.</li><li>Ties: compare the 2nd, then 3rd and 4th highest Alliance score (7.4.4).</li><li>Alliance scores depend on the partner team, so use them alongside the Solo board.</li></ul>',
     award:'<ul><li>Award points: Excellence 6 · Champions 5 · Solo/Skills Champion 4 · Design, Innovate, Think, Judges… 3 · other awards 2.</li><li>Ties: compare number of awards, then number of events attended.</li></ul>'
   })[RK.board]+'<p style="margin-top:8px;color:var(--mut)">'+tr('Only events listed on RECF Events with scores submitted by verified Event Partners count. These are unofficial rankings; Championship spots are decided by RECF.',
     'Chỉ tính giải có trong danh sách RECF Events và do Event Partner đã xác minh gửi điểm. Đây là bảng xếp hạng không chính thức; suất dự Championship do RECF quyết định.')+'</p>';
@@ -500,19 +500,26 @@ function aggregate(){
   var T={}, evCount={};
   seasonRecs().forEach(function(r){var e=RS.ev[r[0]];if(e.program!==RK.prog)return;if(RK.grade&&r[5]!==RK.grade)return;
     evCount[r[0]]=1;
-    var t=T[r[1]]=T[r[1]]||{team:r[1],name:r[2],org:r[3],country:r[4],grade:r[5],ev:{},s1:[],s2:[],al:[],aw:[]};
+    var t=T[r[1]]=T[r[1]]||{team:r[1],name:r[2],org:r[3],country:r[4],grade:r[5],ev:{},s1:[],s2:[],al:[],alEv:{},aw:[]};
     t.ev[r[0]]=1;
-    if(r[6]==='solo1')t.s1.push(r[7]);else if(r[6]==='solo2')t.s2.push(r[7]);else if(r[6]==='alliance')t.al.push(r[7]);else t.aw.push(r[7]);});
+    if(r[6]==='solo1')t.s1.push(r[7]);else if(r[6]==='solo2')t.s2.push(r[7]);
+    else if(r[6]==='alliance'){t.al.push(r[7]);(t.alEv[r[0]]=t.alEv[r[0]]||[]).push(r[7]);}else t.aw.push(r[7]);});
   return {teams:Object.keys(T).map(function(k){var t=T[k];t.nev=Object.keys(t.ev).length;
     t.b1=t.s1.length?Math.max.apply(null,t.s1):0;t.b2=t.s2.length?Math.max.apply(null,t.s2):0;t.solo=t.b1+t.b2;
-    t.best=t.al.length?Math.max.apply(null,t.al):0;t.top3=avg(topN(t.al,3));
+    /* RECF 7.4.2: ở mỗi giải bỏ trận Alliance thấp nhất của đội, rồi lấy trung bình các trận còn lại trong mùa */
+    var kept=[];Object.keys(t.alEv).forEach(function(c){var s=topN(t.alEv[c],t.alEv[c].length);kept=kept.concat(s.length>1?s.slice(0,-1):s);});
+    t.sorted=topN(t.al,t.al.length);t.best=t.sorted[0]||0;t.avgAl=avg(kept);t.dropped=t.al.length-kept.length;
     t.pts=t.aw.reduce(function(a,n){return a+awardPts(n);},0);return t;}), nev:Object.keys(evCount).length};
 }
 function drawRank(){
   if(!RS)return;
   var A=aggregate(), rows, b=RK.board, L=soloLbl(RK.prog);
   if(b==='solo')rows=A.teams.filter(function(t){return t.s1.length||t.s2.length;}).sort(function(x,y){return y.solo-x.solo||y.b2-x.b2||y.b1-x.b1;});
-  else if(b==='ally')rows=A.teams.filter(function(t){return t.al.length;}).sort(function(x,y){return y.top3-x.top3||y.best-x.best;});
+  /* RECF 7.4.4: bằng điểm thì so điểm Alliance cao thứ 2, 3, 4 */
+  else if(b==='ally')rows=A.teams.filter(function(t){return t.al.length;}).sort(function(x,y){
+    if(y.avgAl!==x.avgAl)return y.avgAl-x.avgAl;
+    for(var i=1;i<=3;i++){var a=x.sorted[i]||0,c=y.sorted[i]||0;if(a!==c)return c-a;}
+    return String(x.team).localeCompare(String(y.team));});
   else rows=A.teams.filter(function(t){return t.aw.length;}).sort(function(x,y){return y.pts-x.pts||y.aw.length-x.aw.length||y.nev-x.nev;});
   rows.forEach(function(t,i){t.g=i+1;});
   var shown=rows.filter(function(t){return (!RK.country||t.country===RK.country)&&(!RK.q||(t.team+' '+t.name+' '+t.org).toLowerCase().indexOf(RK.q)>=0);});
@@ -523,7 +530,7 @@ function drawRank(){
   var gcol=!!(RK.country||RK.q);
   var head='<th>#</th>'+(gcol?'<th class="n">'+tr('World rank','Hạng TG')+'</th>':'')+'<th>'+tr('Team','Đội')+'</th><th>'+tr('Grade','Cấp')+'</th>';
   var cols={solo:['<th class="n">'+L[0]+'</th><th class="n">'+L[1]+'</th><th class="n">'+tr('Total','Tổng')+'</th><th class="n">'+tr('Events','Giải')+'</th>',function(t){return '<td class="n">'+t.b1+'</td><td class="n">'+t.b2+'</td><td class="n big">'+t.solo+'</td><td class="n">'+t.nev+'</td>';}],
-    ally:['<th class="n">'+tr('Matches','Số trận')+'</th><th class="n">'+tr('Best','Cao nhất')+'</th><th class="n">'+tr('Top-3 avg','TB 3 trận cao nhất')+'</th>',function(t){return '<td class="n">'+t.al.length+'</td><td class="n">'+t.best+'</td><td class="n big">'+t.top3.toFixed(1)+'</td>';}],
+    ally:['<th class="n">'+tr('Matches','Số trận')+'</th><th class="n">'+tr('Best','Cao nhất')+'</th><th class="n" title="7.4.2">'+tr('Average (lowest dropped)','Trung bình (bỏ trận thấp nhất)')+'</th>',function(t){return '<td class="n">'+t.al.length+'</td><td class="n">'+t.best+'</td><td class="n big">'+t.avgAl.toFixed(1)+'</td>';}],
     award:['<th>'+tr('Awards','Giải thưởng')+'</th><th class="n">'+tr('Points','Điểm')+'</th>',function(t){return '<td>'+t.aw.map(function(a){return '<span class="aw">'+esc(a)+'</span>';}).join('')+'</td><td class="n big">'+t.pts+'</td>';}]}[b];
   $('rkTable').innerHTML='<table><thead><tr>'+head+cols[0]+'</tr></thead><tbody>'+shown.slice(0,300).map(function(t,i){
     return '<tr class="tr" data-team="'+esc(t.team)+'" tabindex="0"><td class="pos">'+(i+1)+'</td>'+(gcol?'<td class="n">'+t.g+'</td>':'')+

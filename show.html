@@ -25,10 +25,18 @@
   <div class="show-spons" id="shSpons"></div>
   <div class="show-brand"><img src="assets/logo-mark-white.svg" alt="" width="22" height="22"> eventstem.com</div>
 </footer>
+<!-- Lớp phủ livestream (&screen=overlay) -->
+<div class="ov" id="shOverlay" hidden>
+  <div class="ov-top" id="ovTop"></div>
+  <div class="ov-spons" id="ovSpons"></div>
+  <div class="ov-last" id="ovLast" hidden></div>
+  <div class="ov-bar" id="ovBar"></div>
+</div>
 <div class="show-ctl" id="shCtl" role="toolbar" aria-label="Show controls" data-vi-aria="Điều khiển trình chiếu">
   <button type="button" data-a="prev" aria-label="Previous" data-vi-aria="Màn trước">◀</button>
   <button type="button" data-a="pause" id="shPause" aria-label="Pause" data-vi-aria="Tạm dừng">❚❚</button>
   <button type="button" data-a="next" aria-label="Next" data-vi-aria="Màn sau">▶</button>
+  <select id="shScreen" aria-label="Screen" data-vi-aria="Màn hình"></select>
   <button type="button" data-a="full" aria-label="Full screen" data-vi-aria="Toàn màn hình">⛶</button>
   <div class="lang" role="group" aria-label="Language / Ngôn ngữ"><button type="button" data-l="en" lang="en" aria-pressed="true">EN</button><button type="button" data-l="vi" lang="vi" aria-pressed="false">VI</button></div>
 </div>

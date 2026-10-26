@@ -68,12 +68,16 @@ button{font:inherit;color:inherit}
 .strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
 .mini{scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px;min-width:0}
 .mini:hover{border-color:var(--mut)}
-.mini .t{font-weight:600;line-height:1.3}
+.mini .t{font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .mini .m{font-size:12.5px;color:var(--mut)}
+.near-sub{font-size:13px;color:var(--mut);margin:-4px 0 10px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.near-sub b{color:var(--ink);font-weight:600}
+.mini .far{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--mut)}
 
 /* filters */
 .filters{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 .filters .wrap{padding-block:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters .brk{flex-basis:100%;height:0}
 .search{flex:1 1 260px;min-width:0;position:relative}
 .search input{width:100%;padding:10px 12px 10px 36px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit}
 .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--mut)}
@@ -103,9 +107,38 @@ select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;backgroun
 .bar span{display:block;height:100%;background:var(--c)}
 .pill{justify-self:end;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
 .s-open{color:var(--ok)} .s-soon{color:var(--warn)} .s-full,.s-closed{color:var(--bad)} .s-ended{color:var(--mut)}
-.more{display:block;margin:16px auto 0;padding:10px 20px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer}
+/* nhóm theo tháng: bấm vào tháng để mở danh sách từng ngày */
+.mon{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
+.mon>summary{display:grid;grid-template-columns:190px minmax(0,1fr) auto 18px;gap:16px;align-items:center;padding:12px 16px;cursor:pointer;list-style:none;border-radius:10px}
+.mon>summary::-webkit-details-marker{display:none}
+.mon>summary:hover{background:var(--soft)}
+.mon[open]>summary{border-bottom:1px solid var(--line);border-radius:10px 10px 0 0}
+.mn{font-family:var(--f-disp);line-height:1}
+.mn b{display:block;font-size:26px;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.mn small{font-size:12px;letter-spacing:1px;color:var(--mut)}
+.mix{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--soft)}
+.mix span{display:block;height:100%;background:var(--c)}
+.mstat{font-size:13px;color:var(--mut);text-align:right;white-space:nowrap}
+.mstat b{color:var(--ink);font-size:15px}
+.mstat .here{display:inline-block;margin-left:8px;color:var(--signal);font-weight:600}
+.chev{width:10px;height:10px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:rotate(45deg);margin-top:-4px;transition:transform .15s}
+.mon[open] .chev{transform:rotate(225deg);margin-top:4px}
+.mbody{padding:10px 10px 4px}
+.mbody .ev{margin-bottom:8px}
+.dayh{font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--mut);margin:6px 6px 6px}
+.mon.now>summary .mn b{color:var(--ok)}
+.chip.reg[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
 .empty{padding:40px 0;text-align:center;color:var(--mut)}
 @media (max-width:760px){
+  .band .wrap{padding-block:14px 8px;gap:10px 18px;align-items:center}
+  .brand p{display:none}
+  .tally{gap:16px}
+  .tally b{font-size:22px}
+  .tally small{font-size:9.5px;letter-spacing:.8px}
+  .mon>summary{grid-template-columns:minmax(0,1fr) auto 14px;gap:8px 12px;padding:10px 12px}
+  .mon>summary .mix{grid-column:1/-1;grid-row:2}
+  .mn b{font-size:22px}
+  .mbody{padding:8px 6px 2px}
   .filters{position:static}
   .ev{grid-template-columns:56px minmax(0,1fr);gap:6px 12px}
   .ev .cap,.ev .pill{grid-column:2}
@@ -182,6 +215,19 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 .rk-info p,.rk-info li{font-size:14px;max-width:65ch}
 .rk-info ul{padding-left:18px;margin:8px 0 0}
 @media (max-width:760px){.boards button{font-size:18px;padding:8px 10px}.boards button small{display:none}}
+/* điện thoại: menu 1 dòng (cuộn ngang), mỗi giải gọn 3 dòng */
+@media (max-width:760px){
+  .navrow{flex-wrap:nowrap}
+  .views{flex-wrap:nowrap;overflow-x:auto;min-width:0;scrollbar-width:none;flex:1}
+  .views a{padding:8px 10px 10px;font-size:14px}
+  .ev{grid-template-columns:48px minmax(0,1fr) auto;padding:10px 12px;gap:4px 10px}
+  .ev .date{grid-row:1/3}
+  .ev>div:nth-child(2){grid-column:2/4}
+  .ev .cap{grid-column:2}
+  .ev .pill{grid-column:3;grid-row:2;align-self:center}
+  .ev .m .code{display:none}
+  .bar{display:none}
+}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:in .22s ease-out}@keyframes in{from{transform:translateX(24px);opacity:.6}}}
 </style>
 
@@ -198,21 +244,23 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 <div id="viewEvents">
 <section class="wrap near" id="nearSec" hidden>
   <div class="sec-h"><h2 id="nearH"></h2><button class="linkbtn" id="nearAll" type="button" data-vi="Xem tất cả">See all</button></div>
+  <p class="near-sub" id="nearSub"></p>
   <div class="strip" id="nearStrip"></div>
 </section>
 
 <div class="filters"><div class="wrap">
   <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <input id="q" type="search" placeholder="Search events, cities, event codes or team numbers…" data-vi-ph="Tìm giải, thành phố, mã giải hoặc mã đội…" aria-label="Search" data-vi-aria="Tìm kiếm"></label>
-  <div class="chips" id="progChips"></div>
   <select id="country" aria-label="Country" data-vi-aria="Quốc gia"></select>
   <div class="seg" id="when"><button type="button" data-v="up" aria-pressed="true" data-vi="Sắp tới">Upcoming</button><button type="button" data-v="past" aria-pressed="false" data-vi="Đã kết thúc">Past</button></div>
+  <span class="brk"></span>
+  <div class="chips" id="progChips"></div>
+  <button type="button" class="chip reg" id="regOpen" aria-pressed="false"><span data-vi="Chỉ giải đang mở đăng ký">Open for registration only</span></button>
 </div></div>
 
 <main class="wrap list">
   <p class="count" id="count"></p>
   <div id="list"></div>
-  <button class="more" id="more" type="button" hidden></button>
 </main>
 </div>
 
@@ -285,7 +333,7 @@ var STATUS_EN = {'Registration Open':['Registration open','s-open'],'Registratio
 function status(e){return (LANG==='vi'?STATUS_VI:STATUS_EN)[e.status]||[e.status,''];}
 var MON_VI = ['TH1','TH2','TH3','TH4','TH5','TH6','TH7','TH8','TH9','TH10','TH11','TH12'];
 var MON_EN = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-var D, EV = [], st = {q:'',prog:new Set(),country:'',when:'up',limit:50};
+var D, EV = [], st = {q:'',prog:new Set(),country:'',when:'up',reg:false,exp:null};   // exp: các tháng đang mở (null = để trang tự chọn)
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function $(id){return document.getElementById(id);}
@@ -323,28 +371,52 @@ function paintEvents(){
     'Dữ liệu lấy từ '+src+' (trang công khai) lúc '+at+'. EventSTEM là dự án của SEPA, không phải trang chính thức của RECF. Kết quả xếp hạng do Event Partner gửi.');
 }
 
-/* "Giải gần bạn": quốc gia người xem chọn lần trước, hoặc đoán từ múi giờ / ngôn ngữ trình duyệt (js/geo.js).
-   Nước đó chưa có giải thì hiện các giải sắp diễn ra trên toàn thế giới. */
-var NEAR='';
+/* "Gần bạn": quốc gia người xem chọn lần trước, hoặc đoán từ múi giờ / ngôn ngữ trình duyệt (js/geo.js).
+   Dải thẻ: giải sắp tới ở nước đó, rồi giải sắp tới ở các nước lân cận (trong NEAR_KM tính từ tâm các giải của nước đó).
+   Giải đã qua ở nước đó không chiếm chỗ trên dải, chỉ hiện thành link "kết quả gần đây".
+   Không có gì sắp tới ở nước đó và lân cận thì hiện các giải sắp diễn ra trên toàn thế giới. */
+var NEAR='', NEAR_KM=3500;
+function km(a,b){var r=Math.PI/180,x=Math.sin((b.lat-a.lat)*r/2),y=Math.sin((b.lng-a.lng)*r/2);return 12742*Math.asin(Math.sqrt(x*x+Math.cos(a.lat*r)*Math.cos(b.lat*r)*y*y));}
+function byStart(a,b){return (a.start||'9999').localeCompare(b.start||'9999');}
 function paintNear(countries){
   NEAR=(window.Geo?Geo.countries():[]).find(function(c){return countries[c];})||'';
-  var byDate=function(a,b){return isPast(a)-isPast(b)||(isPast(a)?(b.start||'').localeCompare(a.start||''):(a.start||'').localeCompare(b.start||''));};
-  var list=NEAR?EV.filter(function(e){return e.country===NEAR;}).sort(byDate):EV.filter(function(e){return !isPast(e);}).sort(byDate).slice(0,16);
+  var mine=EV.filter(function(e){return e.country===NEAR;}), local=mine.filter(function(e){return !isPast(e);}).sort(byStart), recent=mine.length-local.length;
+  var pts=mine.filter(function(e){return e.lat!=null&&e.lng!=null;}), c=pts.length?{lat:pts.reduce(function(s,e){return s+e.lat;},0)/pts.length,lng:pts.reduce(function(s,e){return s+e.lng;},0)/pts.length}:null;
+  var nearby=c&&local.length<16?EV.filter(function(e){return e.country!==NEAR&&!isPast(e)&&e.lat!=null&&km(c,e)<=NEAR_KM;}).sort(byStart):[];
+  var list=local.concat(nearby).slice(0,16), world=!list.length;
+  if(world) list=EV.filter(function(e){return !isPast(e)&&e.start>=TODAY;}).sort(byStart).slice(0,16);
   $('nearSec').hidden=!list.length;
-  $('nearH').textContent=NEAR?tr('Events in ','Giải tại ')+cname(NEAR):tr('Coming up worldwide','Sắp diễn ra trên thế giới');
-  $('nearStrip').innerHTML=list.map(function(e){var s=status(e);
-    return '<button type="button" class="mini" data-id="'+e.id+'" style="--c:'+col(e.program)+'"><span class="prog">'+esc(PNAME[e.program])+'</span><span class="t">'+esc(e.title)+'</span><span class="m">'+fmtRange(e)+' · '+esc(e.city)+(NEAR?'':', '+esc(cname(e.country)))+'</span><span class="pill '+s[1]+'" style="justify-self:start;align-self:flex-start">'+s[0]+'</span></button>';}).join('');
+  $('nearH').textContent=!NEAR||world?tr('Coming up worldwide','Sắp diễn ra trên thế giới'):nearby.length?tr('Events in '+cname(NEAR)+' & nearby','Giải tại '+cname(NEAR)+' và lân cận'):tr('Events in ','Giải tại ')+cname(NEAR);
+  $('nearAll').hidden=!NEAR||!local.length;
+  var nc=[]; nearby.forEach(function(e){if(nc.indexOf(e.country)<0)nc.push(e.country);});
+  var sub=[];
+  if(NEAR) sub.push('<span><b>'+local.length+'</b> '+tr('upcoming in '+esc(cname(NEAR)),'giải sắp tới ở '+esc(cname(NEAR)))+'</span>');
+  if(nearby.length) sub.push('<span><b>'+nearby.length+'</b> '+tr('nearby','giải lân cận')+' ('+nc.slice(0,4).map(function(x){return esc(cname(x));}).join(', ')+(nc.length>4?'…':'')+')</span>');
+  if(recent) sub.push('<button type="button" class="linkbtn" id="nearPast">'+tr(recent+' recent event'+(recent>1?'s':'')+' with results','Xem '+recent+' giải đã diễn ra')+'</button>');
+  $('nearSub').innerHTML=sub.join('');
+  if($('nearPast')) $('nearPast').onclick=function(){filterTo(NEAR,'past');};
+  $('nearStrip').innerHTML=list.map(function(e){var s=status(e),far=world||e.country!==NEAR;
+    return '<button type="button" class="mini" data-id="'+e.id+'" style="--c:'+col(e.program)+'"><span class="prog">'+esc(PNAME[e.program])+(far&&!world?' <span class="far">· '+esc(cname(e.country))+'</span>':'')+'</span><span class="t">'+esc(e.title)+'</span><span class="m">'+fmtRange(e)+' · '+esc(e.city)+(world?', '+esc(cname(e.country)):'')+'</span><span class="pill '+s[1]+'" style="justify-self:start;align-self:flex-start">'+s[0]+'</span></button>';}).join('');
+}
+/* Đặt bộ lọc quốc gia + sắp tới / đã qua rồi cuộn tới danh sách */
+function filterTo(country,when){
+  st.country=country; $('country').value=country; st.when=when; st.exp=null;
+  $('when').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.v===when);});
+  render(); $('count').scrollIntoView({behavior:'smooth'});
 }
 
 function bind(){
-  $('q').addEventListener('input',function(){st.q=this.value.trim().toLowerCase();st.limit=50;render();});
-  $('country').addEventListener('change',function(){st.country=this.value;st.limit=50;if(this.value&&window.Geo){Geo.remember(this.value);paintNear(countryCount());}render();});
+  $('q').addEventListener('input',function(){st.q=this.value.trim().toLowerCase();st.exp=null;render();});
+  $('regOpen').addEventListener('click',function(){st.reg=!st.reg;this.setAttribute('aria-pressed',st.reg);st.exp=null;render();});
+  $('country').addEventListener('change',function(){st.country=this.value;st.exp=null;if(this.value&&window.Geo){Geo.remember(this.value);paintNear(countryCount());}render();});
   $('progChips').addEventListener('click',function(ev){var b=ev.target.closest('.chip');if(!b)return;var p=b.dataset.p;
-    if(st.prog.has(p))st.prog.delete(p);else st.prog.add(p);b.setAttribute('aria-pressed',st.prog.has(p));st.limit=50;render();});
+    if(st.prog.has(p))st.prog.delete(p);else st.prog.add(p);b.setAttribute('aria-pressed',st.prog.has(p));st.exp=null;render();});
   $('when').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;st.when=b.dataset.v;
-    this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});st.limit=50;render();});
-  $('more').addEventListener('click',function(){st.limit+=50;render();});
-  $('nearAll').addEventListener('click',function(){st.country=NEAR;$('country').value=NEAR;if(!NEAR){st.when='up';$('when').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.v==='up');});}render();$('list').scrollIntoView({behavior:'smooth'});});
+    this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});$('regOpen').hidden=st.when==='past';st.exp=null;render();});
+  $('nearAll').addEventListener('click',function(){filterTo(NEAR,'up');});
+  /* mở / đóng 1 tháng: nhớ lựa chọn, chỉ dựng danh sách khi mở */
+  $('list').addEventListener('toggle',function(ev){var d=ev.target;if(!d.classList||!d.classList.contains('mon'))return;
+    if(!st.exp)st.exp={}; st.exp[d.dataset.k]=d.open; if(d.open&&!d.querySelector('.mbody').innerHTML)fillMonth(d);},true);
   document.addEventListener('click',function(ev){var b=ev.target.closest('[data-id]');if(b){openEvent(+b.dataset.id);return;}var t=ev.target.closest('[data-team]');if(t)openTeam(t.dataset.team);});
   $('scrim').addEventListener('click',closeEvent);
   document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeEvent();});
@@ -354,18 +426,44 @@ function match(e){
   if(st.prog.size&&!st.prog.has(e.program))return false;
   if(st.country&&e.country!==st.country)return false;
   if((st.when==='past')!==isPast(e))return false;
+  if(st.reg&&st.when!=='past'&&e.status!=='Registration Open')return false;
   if(st.q){var hay=(e.title+' '+e.city+' '+e.region+' '+e.code+' '+e.country).toLowerCase();
     if(hay.indexOf(st.q)<0 && !(e.teams||[]).some(function(t){return (t[0]+' '+t[1]).toLowerCase().indexOf(st.q)>=0;}))return false;}
   return true;
 }
 
+/* Danh sách nhóm theo tháng (theo ngày bắt đầu). Giải đã bắt đầu nhưng chưa kết thúc (thường là league) gom vào "Đang diễn ra".
+   Mặc định mở tháng đầu tiên; khi tìm kiếm hoặc lọc còn ít giải (≤ 40) thì mở hết. */
+var GROUPS={};
 function render(){
-  var rows=EV.filter(match).sort(function(a,b){var x=(a.start||'9999').localeCompare(b.start||'9999');return st.when==='past'?-x:x;});
-  $('count').textContent=tr(rows.length+(rows.length===1?' event':' events')+(st.q?' matching “'+st.q+'”':''),rows.length+' giải'+(st.q?' khớp “'+st.q+'”':''));
-  if(!rows.length){$('list').innerHTML='<p class="empty">'+tr('No events match these filters. Try removing a program or country.','Không có giải nào khớp bộ lọc. Thử bỏ bớt chương trình hoặc quốc gia.')+'</p>';$('more').hidden=true;return;}
-  $('list').innerHTML=rows.slice(0,st.limit).map(row).join('');
-  $('more').hidden=rows.length<=st.limit; $('more').textContent=tr('Show more ('+(rows.length-st.limit)+' events)','Xem thêm ('+(rows.length-st.limit)+' giải)');
+  var past=st.when==='past', rows=EV.filter(match).sort(function(a,b){var x=byStart(a,b);return past?-x:x;});
+  GROUPS={}; var keys=[];
+  rows.forEach(function(e){var k=!past&&e.start&&e.start<TODAY?'now':e.start?e.start.slice(0,7):'tba';if(!GROUPS[k]){GROUPS[k]=[];keys.push(k);}GROUPS[k].push(e);});
+  keys.sort(function(a,b){var o=function(k){return k==='now'?'0':k==='tba'?'z':k;},x=o(a).localeCompare(o(b));return past&&a!=='tba'&&b!=='tba'?-x:x;});
+  var months=keys.filter(function(k){return k!=='now'&&k!=='tba';}).length;
+  $('count').textContent=tr(rows.length+(rows.length===1?' event':' events')+(months>1?' in '+months+' months':'')+(st.q?' matching “'+st.q+'”':''),rows.length+' giải'+(months>1?' trong '+months+' tháng':'')+(st.q?' khớp “'+st.q+'”':''));
+  if(!rows.length){$('list').innerHTML='<p class="empty">'+(st.reg?tr('No events with open registration match these filters.','Không có giải nào đang mở đăng ký khớp bộ lọc.'):tr('No events match these filters. Try removing a program or country.','Không có giải nào khớp bộ lọc. Thử bỏ bớt chương trình hoặc quốc gia.'))+'</p>';return;}
+  var all=!!st.q||rows.length<=40, first=keys.filter(function(k){return k!=='now';})[0]||keys[0];
+  var isOpen=function(k){return st.exp&&k in st.exp?st.exp[k]:all||k===first;};
+  $('list').innerHTML=keys.map(function(k){return monthBlock(k,GROUPS[k],isOpen(k));}).join('');
+  $('list').querySelectorAll('.mon[open]').forEach(fillMonth);
 }
+function monthName(k){
+  if(k==='now')return [tr('Happening now','Đang diễn ra'),tr('Started, still running','Đã bắt đầu, chưa kết thúc')];
+  if(k==='tba')return [tr('Date TBA','Chưa có ngày'),''];
+  var d=new Date(k+'-01T00:00');
+  return [LANG==='vi'?'Tháng '+(d.getMonth()+1):d.toLocaleDateString('en-US',{month:'long'}),String(d.getFullYear())];
+}
+function monthBlock(k,list,open){
+  var nm=monthName(k), by={}, reg=0, here=0;
+  list.forEach(function(e){by[e.program]=(by[e.program]||0)+1;if(e.status==='Registration Open')reg++;if(NEAR&&e.country===NEAR)here++;});
+  var mix=Object.keys(PROG).filter(function(p){return by[p];}).map(function(p){return '<span style="--c:'+col(p)+';width:'+(100*by[p]/list.length)+'%" title="'+esc(PNAME[p])+': '+by[p]+'"></span>';}).join('');
+  return '<details class="mon'+(k==='now'?' now':'')+'" data-k="'+k+'"'+(open?' open':'')+'><summary>'+
+    '<div class="mn"><b>'+esc(nm[0])+'</b><small>'+esc(nm[1])+'</small></div><div class="mix" aria-hidden="true">'+mix+'</div>'+
+    '<div class="mstat"><b>'+list.length+'</b> '+tr(list.length===1?'event':'events','giải')+(reg&&st.when!=='past'?' · '+reg+' '+tr('open','mở đăng ký'):'')+
+      (here&&st.country!==NEAR?'<span class="here">'+here+' '+tr('in '+esc(cname(NEAR)),'ở '+esc(cname(NEAR)))+'</span>':'')+'</div><i class="chev" aria-hidden="true"></i></summary><div class="mbody"></div></details>';
+}
+function fillMonth(d){var list=GROUPS[d.dataset.k]||[];d.querySelector('.mbody').innerHTML=list.map(row).join('');}
 
 function row(e){
   var d=e.start?new Date(e.start+'T00:00'):null, s=status(e), MON=LANG==='vi'?MON_VI:MON_EN;

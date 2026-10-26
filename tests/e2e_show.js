@@ -72,6 +72,13 @@ const asset = f => path.join(__dirname, '..', f);
   assert(await s.locator('#shName').innerText() === 'Show Test Cup', 'show header has event name');
   assert(await s.locator('#shOrg img').count() === 1, 'organizer logo in the show header');
   assert(await s.locator('#shSpons img').count() === 2, 'sponsor strip in the footer');
+  // Spotlight Partners: dải logo luôn có ở chân màn hình và chạy liên tục
+  assert(await s.locator('#shSpotTrack img').count() >= 6, 'Spotlight Partners logos in the footer');
+  assert(!(await s.evaluate(() => [...document.querySelectorAll('#shSpotTrack img')].some(i => i.complete && !i.naturalWidth))), 'partner logo files load');
+  const x0 = await s.evaluate(() => new DOMMatrix(getComputedStyle(document.querySelector('#shSpotTrack')).transform).m41);
+  await s.waitForTimeout(1200);
+  assert(await s.evaluate(() => new DOMMatrix(getComputedStyle(document.querySelector('#shSpotTrack')).transform).m41) < x0 - 20, 'partner logos keep scrolling');
+  assert((await s.evaluate(() => EventSTEMShow.spot())).slice(0, 3).join() === 'recf,amazon,chevron', 'default order: one after another (In order)');
   const keys = await s.evaluate(() => EventSTEMShow.slides());
   console.log('       slides:', keys.join(', '));
   assert(keys[0] === 'next' && keys.includes('rank') && keys.includes('solo') && keys.includes('sponsors') && !keys.includes('awards'), 'slides follow the organizer settings');
@@ -96,6 +103,13 @@ const asset = f => path.join(__dirname, '..', f);
   if (process.env.SHOTS) await s.screenshot({ path: process.env.SHOTS + '/show-720-rank.png' });
   await s.setViewportSize({ width: 1920, height: 1080 });
 
+  // Spotlight Partners: ngẫu nhiên / tuỳ chọn qua đường dẫn
+  await s.goto(BASE + '/show.html?id=' + evId + '&spot=nasa,google'); await s.waitForSelector('#shSpotTrack img');
+  let sp = await s.evaluate(() => EventSTEMShow.spot());
+  assert(sp.every((x, i) => x === ['nasa', 'google'][i % 2]), 'custom partners only, in the chosen order (&spot=nasa,google)');
+  await s.goto(BASE + '/show.html?id=' + evId + '&spot=rand'); await s.waitForSelector('#shSpotTrack img');
+  sp = await s.evaluate(() => EventSTEMShow.spot());
+  assert(sp.every((x, i) => !i || x !== sp[i - 1]), 'random order never repeats a logo twice in a row (&spot=rand)');
   // Từng màn riêng (&screen=) và đổi màn ngay trên thanh điều khiển
   const keysOf = async q => { await s.goto(BASE + '/show.html?id=' + evId + q); await s.waitForSelector('.show-slide'); await s.waitForFunction(() => EventSTEMShow.ready()); await s.waitForTimeout(200); return s.evaluate(() => EventSTEMShow.slides()); };
   let k = await keysOf('&screen=matches');
@@ -130,6 +144,14 @@ const asset = f => path.join(__dirname, '..', f);
   await tab('Logo & show', '#shScreens');
   assert(await p.locator('#shScreens a[data-scr]').count() === 4, 'one link per screen in the organizer tool');
   assert(/screen=overlay/.test(await p.inputValue('#ovUrl')), 'overlay link ready to copy');
+  // Cài đặt Spotlight trong tab Logo & trình chiếu: Tuỳ chọn → chỉ Tesla rồi NASA
+  await p.check('input[name=spotMode][value=pick]'); await p.waitForSelector('#spotPick [data-spot]');
+  for (const id of ['recf', 'amazon', 'chevron', 'eaton', 'gdit', 'google', 'kettering', 'robolink', 'ti']) await p.uncheck(`#spotPick [data-spot=${id}]`);
+  await p.click('#spotPick [data-spot-up=tesla]');
+  await p.click('#fShow button[type=submit]'); await p.waitForFunction(() => /Saved/.test(document.querySelector('#toast').innerText));
+  await s.goto(BASE + '/show.html?id=' + evId + '&only=rank'); await s.waitForSelector('#shSpotTrack img');
+  sp = await s.evaluate(() => EventSTEMShow.spot());
+  assert(sp.every((x, i) => x === ['tesla', 'nasa'][i % 2]), 'organizer setting: custom partners in custom order (' + sp.slice(0, 4).join(', ') + ')');
   await s.goto(BASE + '/show.html?id=' + evId + '&only=rank'); await s.waitForSelector('.show-slide[data-k=rank]');
   // cập nhật trực tiếp: chấm thêm 1 trận ở trang quản lý → màn hình tự tải lại
   await tab('Scoring', '#scRows tbody tr');

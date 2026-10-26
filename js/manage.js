@@ -881,6 +881,7 @@
   }
   PANES.show = function () {
     var e = B.event, a = B.assets || { organizer: null, sponsors: [] }, sh = (e.config || {}).show || {}, on = sh.slides || {};
+    var spc = Partners.cfg(sh.spotlight), pk = spc.pick.length ? spc.pick.slice() : Partners.LIST.map(function (x) { return x.id; });
     var SL = [['next', tr('Up next & latest results', 'Trận sắp đánh & kết quả mới')], ['sched', tr('Full match schedule', 'Lịch các trận còn lại')], ['rank', tr('Alliance / qualification rankings', 'Xếp hạng Alliance / vòng loại')], ['solo', tr('Solo rankings', 'Xếp hạng Solo')],
       ['elim', tr('Finals / eliminations', 'Chung kết / loại trực tiếp')], ['awards', tr('Awards', 'Giải thưởng')], ['events', tr('Upcoming RECF events nearby', 'Các giải RECF sắp tới ở gần')], ['sponsors', tr('Sponsors', 'Nhà tài trợ')]];
     var base = location.href.replace(/manage\.html.*$/, ''), url = base + Rehearsal.url('show.html?id=' + e.id);
@@ -912,6 +913,10 @@
       '<div class="f"><span>' + tr('Slides', 'Các màn') + '</span>' + SL.map(function (x) { return '<label class="ck"><input type="checkbox" name="slide" value="' + x[0] + '"' + (on[x[0]] !== false ? ' checked' : '') + '> ' + esc(x[1]) + '</label>'; }).join('<br>') + '</div>' +
       '<div class="grid2" style="margin-top:8px"><label class="f"><span>' + tr('Seconds per slide', 'Số giây mỗi màn') + '</span><input type="number" id="shSec" min="4" max="120" value="' + (sh.seconds || 12) + '"></label>' +
       '<label class="f"><span>' + tr('Rows per ranking slide', 'Số dòng mỗi màn xếp hạng') + '</span><input type="number" id="shRows" min="5" max="20" value="' + (sh.rows || 10) + '"></label></div>' +
+      '<div class="f" id="spotSet" style="margin-top:8px"><span style="display:block">' + tr('Spotlight Partners logos (always scrolling along the bottom of the show screen)', 'Logo Spotlight Partners (luôn chạy ở chân màn hình trình chiếu)') + '</span>' +
+        [['seq', tr('In order', 'Lần lượt')], ['rand', tr('Random', 'Ngẫu nhiên')], ['pick', tr('Custom', 'Tuỳ chọn')]].map(function (x) {
+          return '<label class="ck"><input type="radio" name="spotMode" value="' + x[0] + '"' + (spc.mode === x[0] ? ' checked' : '') + '> ' + esc(x[1]) + '</label>'; }).join(' ') +
+        '<div id="spotPick" style="margin-top:6px"></div></div>' +
       '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">' + tr('Save', 'Lưu') + '</button><a class="btn acc" id="openShow" href="' + esc(Rehearsal.url('show.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Open show screen ↗', 'Mở màn hình trình chiếu ↗') + '</a></div>' +
       '<p class="small mut">' + tr('Link: ', 'Đường dẫn: ') + '<code style="word-break:break-all">' + esc(url) + '</code></p></form>' +
       '<div class="card" id="shScreens"><h3 style="margin-top:0">' + tr('One screen per TV', 'Mỗi TV một màn') + '</h3>' +
@@ -958,10 +963,32 @@
         sp[i].name = ev.target.value.trim().slice(0, 80); save({ organizer: a.organizer, sponsors: sp });
       });
     }
+    /* Spotlight Partners, chế độ "Tuỳ chọn": tích đối tác muốn hiện, ↑ để đưa lên trước (js/partners.js) */
+    var spotMode = function () { var r = document.querySelector('input[name=spotMode]:checked'); return r ? r.value : 'seq'; };
+    var drawPick = function () {
+      var box = $id('spotPick'); box.hidden = spotMode() !== 'pick'; if (box.hidden) return;
+      var ids = pk.concat(Partners.LIST.map(function (x) { return x.id; }).filter(function (id) { return pk.indexOf(id) < 0; }));
+      box.innerHTML = ids.map(function (id) {
+        var p = Partners.byId(id), n = pk.indexOf(id);
+        return '<div class="row" style="gap:8px;margin-bottom:4px"><label class="ck" style="flex:1"><input type="checkbox" data-spot="' + id + '"' + (n >= 0 ? ' checked' : '') + '> ' +
+          '<img src="' + esc(Partners.src(p)) + '" alt="" style="height:22px;width:56px;object-fit:contain;background:#fff;border-radius:3px"> ' + esc(p.name) + '</label>' +
+          (n > 0 ? '<button class="btn sm" type="button" data-spot-up="' + id + '" aria-label="' + esc(tr('Move up', 'Lên trên')) + '">↑</button>' : '') + '</div>';
+      }).join('') + (pk.length ? '' : '<p class="small mut" style="margin:0">' + tr('Nothing ticked: all partners are shown.', 'Chưa tích đối tác nào: sẽ hiện tất cả.') + '</p>');
+    };
+    $id('spotSet').addEventListener('change', function (ev) {
+      var id = ev.target.dataset.spot;
+      if (id) { pk = pk.filter(function (x) { return x !== id; }); if (ev.target.checked) pk.push(id); }
+      drawPick();
+    });
+    $id('spotSet').addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-spot-up]'); if (!b) return;
+      var n = pk.indexOf(b.dataset.spotUp); if (n > 0) { pk.splice(n - 1, 0, pk.splice(n, 1)[0]); drawPick(); }
+    });
+    drawPick();
     $id('fShow').onsubmit = function (ev) {
       ev.preventDefault();
       var slides = {}; document.querySelectorAll('input[name=slide]').forEach(function (x) { slides[x.value] = x.checked; });
-      var show = { seconds: Math.max(4, Math.min(120, num('shSec', 12))), rows: Math.max(5, Math.min(20, num('shRows', 10))), slides: slides };
+      var show = { seconds: Math.max(4, Math.min(120, num('shSec', 12))), rows: Math.max(5, Math.min(20, num('shRows', 10))), slides: slides, spotlight: { mode: spotMode(), pick: pk.slice() } };
       S.updateEvent(e.id, { config: Object.assign({}, e.config, { show: show }) }).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail);
     };
   };

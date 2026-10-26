@@ -56,7 +56,7 @@
       '<datalist id="tl">' + B.teams.map(function (t) { return '<option value="' + esc(t.number) + '">' + esc(t.name) + '</option>'; }).join('') + '</datalist></div>' +
       '<div id="mine"></div>' +
       '<div class="tabs" role="tablist" style="margin-top:12px">' + TABS.map(function (t) {
-        var lb = t[0] === 'finals' && R().format === 'versus' ? tr('Eliminations', 'Loại trực tiếp') : tr(t[1], t[2]);
+        var lb = t[0] === 'finals' && (R().format === 'versus' || R().eliminations === 'rounds') ? tr('Eliminations', 'Loại trực tiếp') : tr(t[1], t[2]);
         return '<a role="tab" href="#' + t[0] + '" aria-selected="' + (t[0] === tab) + '">' + esc(lb) + '</a>'; }).join('') + '</div>' +
       '<div id="pane"></div><p class="small mut" id="upd"></p>';
     (PANES[tab] || PANES.rankings)();
@@ -95,13 +95,14 @@
   function pane(h) { $id('pane').innerHTML = h; }
   var PANES = {
     rankings: function () {
-      var c = cfg(), vs = R().format === 'versus', rc = R().redCards(B.matches);
+      var c = cfg(), vs = R().format === 'versus', adc = !!R().soloPerKind, rc = R().redCards(B.matches);
       pane('<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(340px,1fr));align-items:start"><div><h3 class="t">' + (vs ? tr('Qualification rankings', 'Xếp hạng vòng loại') : tr('Alliance rankings', 'Xếp hạng Alliance')) + '</h3>' +
         (vs ? Views.rpTable(B, rank(), rc) + '<p class="small mut">' + tr('Average ranking points per match: win 2, tie 1, plus Autonomous and Endgame RP (5.5).', 'Trung bình điểm xếp hạng mỗi trận: thắng 2, hoà 1, cộng Autonomous RP và Endgame RP (5.5).') + '</p>'
           : Views.allianceTable(B, rank(), rc) +
-          '<p class="small mut">' + (c.dropLowest ? tr('Average after dropping each team\'s lowest score (7.4.2). ', 'Trung bình sau khi bỏ trận thấp nhất của mỗi đội (7.4.2). ') : '') + tr('Ties: 2nd, 3rd, 4th highest score (7.4.4).', 'Bằng điểm: so điểm cao thứ 2, 3, 4 (7.4.4).') + '</p>') + '</div>' +
-        '<div><h3 class="t">' + tr('Solo rankings', 'Xếp hạng Solo') + '</h3>' + Views.soloTable(B, R().solo(B.solo), c.soloAttempts) +
-        '<p class="small mut">' + tr('Best driving + best coding (3.5).', 'Driving cao nhất + Coding cao nhất (3.5).') + '</p></div></div>');
+          '<p class="small mut">' + (c.dropLowest ? tr('Average after dropping each team\'s lowest score (7.4.2). ', 'Trung bình sau khi bỏ trận thấp nhất của mỗi đội (7.4.2). ') : '') +
+            (adc ? tr('Ties: 2nd, then 3rd highest score (7.4.2).', 'Bằng điểm: so điểm cao thứ 2, rồi thứ 3 (7.4.2).') : tr('Ties: 2nd, 3rd, 4th highest score (7.4.4).', 'Bằng điểm: so điểm cao thứ 2, 3, 4 (7.4.4).')) + '</p>') + '</div>' +
+        '<div><h3 class="t">' + tr('Solo rankings', 'Xếp hạng Solo') + '</h3>' + Views.soloTable(B, R().solo(B.solo), c.soloAttempts * (adc ? 2 : 1)) +
+        '<p class="small mut">' + (adc ? tr('Best piloting + best autonomous flight score (3.5).', 'Piloting cao nhất + Autonomous cao nhất (3.5).') : tr('Best driving + best coding (3.5).', 'Driving cao nhất + Coding cao nhất (3.5).')) + '</p></div></div>');
     },
     schedule: function () {
       var q = B.matches.filter(function (m) { return m.round === 'qual'; }).sort(function (a, b) { return a.num - b.num; });
@@ -109,9 +110,20 @@
         (q.some(function (m) { return !m.red_counts || !m.blue_counts; }) ? '<p class="small mut"><span class="star">*</span> ' + tr('Extra match to even out match counts; does not affect ranking (7.4.2).', 'Trận đánh thêm cho đủ số trận; không tính xếp hạng (7.4.2).') + '</p>' : ''));
     },
     solo: function () {
-      pane(Views.soloTable(B, R().solo(B.solo), cfg().soloAttempts));
+      pane(Views.soloTable(B, R().solo(B.solo), cfg().soloAttempts * (R().soloPerKind ? 2 : 1)));
     },
     finals: function () {
+      if (R().eliminations === 'rounds') {
+        var sa = Achieve.selection([], (B.event.config || {}).selection), res = ADC.eliminations(sa.alliances, B.matches);
+        var am = B.matches.filter(function (m) { return m.round === 'elim' || m.round === 'final'; }).sort(function (a, b) { return (a.round === 'final') - (b.round === 'final') || a.num - b.num; });
+        return pane((res.champion ? '<div class="champ">🏆 ' + tr('Teamwork Champions', 'Vô địch Teamwork') + ': <b>' + esc(res.champion.captain) + ' + ' + esc(res.champion.partner) + '</b></div>' : '') +
+          (res.tied.length ? '<div class="banner info">' + tr('Tie for first place: tiebreaker round coming up (7.4.5).', 'Hoà hạng nhất: sắp đánh vòng tiebreak (7.4.5).') + '</div>' : '') +
+          (sa.alliances.length ? '<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start"><div><h3 class="t">' + tr('Alliances', 'Các liên minh') + '</h3>' + Views.alliancesTable(B, sa.alliances) + '</div>' +
+            '<div>' + (am.length ? Views.roundsView(B, res) : '<p class="small mut">' + tr('Elimination matches start after alliance selection.', 'Các trận loại trực tiếp bắt đầu sau khi chọn liên minh.') + '</p>') + '</div></div>' +
+            (am.length ? '<h3 class="t">' + tr('Matches', 'Các trận') + '</h3>' + Views.matchTable(B, am) +
+              '<p class="small mut">' + tr('Played one at a time, starting with the lowest-ranked alliance; the highest scores advance to the next round (7.4.5).', 'Đánh lần lượt, bắt đầu từ liên minh xếp thấp nhất; điểm cao nhất đi tiếp vòng sau (7.4.5).') + '</p>' : '')
+            : '<p class="empty">' + tr('Alliance selection has not started yet.', 'Chưa đến phần chọn liên minh.') + '</p>'));
+      }
       if (R().format === 'versus') {
         var st = Achieve.selection([], (B.event.config || {}).selection), br = Achieve.bracket(st.alliances, B.matches, cfg());
         var em = B.matches.filter(function (m) { return m.round === 'elim' || m.round === 'final'; }).sort(function (a, b) { return (a.round === 'final') - (b.round === 'final') || a.num - b.num; });

@@ -299,9 +299,10 @@
       },
       addSolo: function (eid, r) {
         return run(function () {
-          need(eid); var d = load(), lim = +((ev(eid).config || {}).soloAttempts || 5);
+          var perKind = ev(eid) && ev(eid).ruleset === 'adc-2027';   // giống trigger solo_limit trong schema.sql
+          need(eid); var d = load(), lim = +((ev(eid).config || {}).soloAttempts || (perKind ? 3 : 5));
           if (!hasTeam(eid, r.team)) fail('team_in_use');
-          if (d.solo_runs.filter(function (x) { return x.event_id === eid && x.team === r.team; }).length >= lim) fail('solo_limit');
+          if (d.solo_runs.filter(function (x) { return x.event_id === eid && x.team === r.team && (!perKind || x.kind === r.kind); }).length >= lim) fail('solo_limit');
           var x = { id: uid(), event_id: eid, team: r.team, kind: r.kind, score: +r.score, stop_time: r.stop_time == null ? null : +r.stop_time, created_at: now() };
           d.solo_runs.push(x); touch(eid); return x;
         });

@@ -233,14 +233,16 @@ create table if not exists public.solo_runs (
 );
 create index if not exists solo_runs_event_idx on public.solo_runs (event_id, team);
 
--- Tối đa N lượt solo mỗi đội (mặc định 5, đổi được trong config.soloAttempts)
+-- Tối đa N lượt solo mỗi đội (mặc định 5, đổi được trong config.soloAttempts).
+-- ADC (ruleset adc-2027): N lượt cho mỗi loại, mặc định 3 Piloting + 3 Autonomous (ADC 7.4.1).
 create or replace function public.solo_limit() returns trigger
 language plpgsql security definer set search_path = public as $$
-declare lim int; n int;
+declare lim int; n int; per_kind boolean;
 begin
-  select coalesce((config ->> 'soloAttempts')::int, 5) into lim from events where id = new.event_id;
-  select count(*) into n from solo_runs where event_id = new.event_id and team = new.team;
-  if n >= lim then raise exception 'Đội % đã dùng hết % lượt solo', new.team, lim using errcode = '23514'; end if;
+  select ruleset = 'adc-2027', coalesce((config ->> 'soloAttempts')::int, case when ruleset = 'adc-2027' then 3 else 5 end)
+    into per_kind, lim from events where id = new.event_id;
+  select count(*) into n from solo_runs where event_id = new.event_id and team = new.team and (not per_kind or kind = new.kind);
+  if n >= lim then raise exception 'Đội % đã dùng hết % lượt solo%', new.team, lim, case when per_kind then ' ' || new.kind else '' end using errcode = '23514'; end if;
   return new;
 end $$;
 drop trigger if exists solo_limit on public.solo_runs;

@@ -30,7 +30,8 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 | `event.html` + `js/event.js` | Trang xem trực tiếp, tự kiểm tra cập nhật mỗi 20 giây |
 | `js/engage.js` | Luật **RECF Engage: Tier Takeover** (Game Manual v2.0) |
 | `js/achieve.js` | Luật **RECF Achieve: Pinnacle** (Game Manual v2.0): 2 đấu 2, ranking points, chọn liên minh, nhánh loại trực tiếp |
-| `js/rules.js` | `Rules.of(event)` chọn bộ luật theo `event.ruleset` (`engage-2026` / `achieve-2026`). Giao diện chỉ gọi qua lớp này |
+| `js/adc.js` | Luật **RECF ADC Mission 2027: Fast Track** (Game Manual v1.1): Alliance hợp tác như Engage, Solo 3 Piloting + 3 Autonomous, chọn liên minh, loại trực tiếp theo vòng (tứ kết → bán kết → chung kết, `eliminations: 'rounds'`) |
+| `js/rules.js` | `Rules.of(event)` chọn bộ luật theo `event.ruleset` (`engage-2026` / `achieve-2026` / `adc-2027`). Giao diện chỉ gọi qua lớp này |
 | `js/store.js` | Lưu dữ liệu, cùng một giao diện cho `SupabaseStore` và `DemoStore`. Bản demo phải áp đúng các ràng buộc của `schema.sql` |
 | `js/views.js` | Bảng dùng chung cho 2 trang (lịch trận, xếp hạng, nhánh đấu) |
 | `js/i18n.js`, `css/app.css` | Ngôn ngữ và giao diện chung của `manage.html` và `event.html` |
@@ -57,11 +58,12 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 ## Kiểm thử (chạy trước mỗi PR)
 
 ```bash
-node --test tests/*.test.js                       # luật Engage + Achieve
+node --test tests/*.test.js                       # luật Engage + Achieve + ADC
 PGHOST=... PGPORT=... bash tests/schema_test.sh   # schema + RLS trên Postgres thường (giả lập Supabase bằng tests/supabase_stub.sql)
 python3 -m http.server 8767 &                     # rồi:
 node tests/e2e_manage.js                          # E2E luồng Engage (chế độ demo)
 node tests/e2e_achieve.js                         # E2E luồng Achieve (chế độ demo)
+node tests/e2e_adc.js                             # E2E luồng ADC (chế độ demo)
 ```
 
 - Các test E2E chặn `js/config.js` để luôn chạy ở chế độ demo, **không ghi dữ liệu thử lên Supabase thật**.
@@ -78,7 +80,8 @@ node tests/e2e_achieve.js                         # E2E luồng Achieve (chế �
 
 - SEPA chưa cài **SMTP** riêng cho email xác nhận của Supabase. Email mặc định bị giới hạn vài thư mỗi giờ.
 - Chưa chạy một giải thật đầy đủ trên Supabase thật. Lần đầu dùng nên theo dõi lỗi.
-- Chưa có luật **Inspire** và **Aerial Drone (ADC)**. Nếu cần, xin SEPA file Game Manual PDF.
+- Chưa có luật **Inspire** và **ADC Pro**. Nếu cần, xin SEPA file Game Manual PDF.
+- ADC: chưa có bảng tính điểm chi tiết (bóng trong goal, goal bonus, phase solo…), hiện nhập tổng điểm. Danh sách giải giám khảo vẫn là của Engage (chưa có ADC Guide to Judging). Chưa dùng stop time cho tiebreak chung kết ADC (luật ghi "may be considered"; cột `stop_time` đang giới hạn 60 giây).
 - Giải Achieve 8 đội: lịch vẫn có vài trận một đội phải đánh 2 lượt liền nhau. Không tránh được khi vừa muốn không gặp lại đồng đội vừa có ít đội.
 - `docs/HUONG_DAN_TRIEN_KHAI.md` vẫn viết theo Cloudflare Pages, trong khi trang đang chạy GitHub Pages.
 - Chưa có: nhiều trọng tài cùng chấm một giải (hiện chỉ tài khoản tạo giải và SEPA được sửa), giải nhiều buổi (league, 7.4.5 / 7.4.7), màn hình chiếu tại sân.

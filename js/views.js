@@ -9,7 +9,7 @@
   }
   /* Mã trận: Q5 (vòng loại), R1-2·2 (nhánh, trận thứ 2 của cặp), F1 (chung kết) */
   function matchCode(m, list) {
-    if (m.round === 'elim' && m.label) {
+    if (m.label && (m.round === 'elim' || /^TB/.test(m.label))) {
       var g = (list || []).filter(function (x) { return x.label === m.label && x.round === m.round && x.num <= m.num; }).length;
       return esc(m.label) + (g > 1 ? '·' + g : '');
     }
@@ -37,14 +37,15 @@
     if (opts.versus || list.some(function (m) { return m.red2 || m.score_blue != null; })) return versusTable(list, opts);
     return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Time', 'Giờ') + '</th><th>' + tr('Field', 'Sân') + '</th><th>' + tr('Red', 'Đỏ') + '</th><th>' + tr('Blue', 'Xanh') + '</th><th class="n">' + tr('Score', 'Điểm') + '</th></tr></thead><tbody>' +
       list.map(function (m) {
-        return '<tr' + (m.score != null ? ' class="done"' : '') + ' data-hl="' + esc(m.red + ' ' + m.blue) + '"><td class="code">' + (m.round === 'final' ? 'F' : 'Q') + m.num + '</td><td>' + esc(m.time || '') + '</td><td>' + esc(m.field || '') + '</td>' +
+        return '<tr' + (m.score != null ? ' class="done"' : '') + ' data-hl="' + esc(m.red + ' ' + m.blue) + '"><td class="code">' + matchCode(m, list) + '</td><td>' + esc(m.time || '') + '</td><td>' + esc(m.field || '') + '</td>' +
           '<td>' + teamCell(m.red, 'red', m.red_counts) + stTag(m.red_status) + '</td><td>' + teamCell(m.blue, 'blue', m.blue_counts) + stTag(m.blue_status) + '</td><td class="n big">' + (m.score == null ? '' : m.score) + '</td></tr>';
       }).join('') + '</tbody></table></div>';
   }
   function stTag(s) { return s === 'absent' ? ' <span class="tag">' + tr('absent', 'vắng') + '</span>' : s === 'red' ? ' <span class="tag" style="background:var(--bad);color:#fff">' + tr('red card', 'thẻ đỏ') + '</span>' : ''; }
   function soloTable(rk, lim) {
+    var L = (B && B.event && Rules.of(B.event).solo2) || ['Driving', 'Coding'];
     if (!rk.length) return '<p class="empty">' + tr('No solo scores yet.', 'Chưa có điểm Solo.') + '</p>';
-    return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Team', 'Đội') + '</th><th class="n">Driving</th><th class="n">Coding</th><th class="n">' + tr('Total', 'Tổng') + '</th><th class="n">' + tr('Tries', 'Lượt') + '</th></tr></thead><tbody>' +
+    return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Team', 'Đội') + '</th><th class="n">' + L[0] + '</th><th class="n">' + L[1] + '</th><th class="n">' + tr('Total', 'Tổng') + '</th><th class="n">' + tr('Tries', 'Lượt') + '</th></tr></thead><tbody>' +
       rk.map(function (r) { return '<tr data-hl="' + esc(r.team) + '"><td class="pos top">' + r.rank + '</td><td>' + teamCell(r.team, 'x') + '</td><td class="n">' + r.bestDriving + '</td><td class="n">' + r.bestCoding + '</td><td class="n big">' + r.total + '</td><td class="n">' + r.attempts + '/' + lim + '</td></tr>'; }).join('') + '</tbody></table></div>';
   }
   function allianceTable(rk, rc) {
@@ -88,7 +89,24 @@
         }).join('') + '</div>';
       }).join('') + '</div>';
   }
+  /* ADC (7.4.5): mỗi vòng 1 bảng điểm; liên minh đi tiếp có dấu ✓, vô địch có cúp */
+  function stageName(label) {
+    return label === 'QF' ? tr('Quarterfinals', 'Tứ kết') : label === 'SF' ? tr('Semifinals', 'Bán kết') : label === 'F' ? tr('Finals', 'Chung kết') : tr('Tiebreaker ', 'Tiebreak ') + label.slice(2);
+  }
+  function roundsView(res) {
+    var champ = res.champion && res.champion.seed;
+    var stages = res.stages.concat(res.tiebreaks);
+    if (!stages.length) return '';
+    return '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;align-items:start">' + stages.map(function (st) {
+      return '<div><h3 class="t" style="margin-top:0">' + stageName(st.label) + '</h3><div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Alliance', 'Liên minh') + '</th><th class="n">' + tr('Score', 'Điểm') + '</th></tr></thead><tbody>' +
+        st.rows.map(function (r) {
+          var win = st.done && (r.advance || (r.seed === champ && st === stages[stages.length - 1]));
+          return '<tr data-hl="' + esc(r.captain + ' ' + r.partner) + '"' + (win ? ' style="font-weight:700"' : '') + '><td class="pos">' + r.seed + '</td><td>' + teamCell(r.captain, 'x') + ' + ' + teamCell(r.partner, 'x') + '</td>' +
+            '<td class="n">' + (r.score == null ? '<span class="mut">–</span>' : '<span class="big">' + r.score + '</span>') + (r.advance ? ' ✓' : '') + (st.done && r.seed === champ && st === stages[stages.length - 1] ? ' 🏆' : '') + '</td></tr>';
+        }).join('') + '</tbody></table></div></div>';
+    }).join('') + '</div>';
+  }
   function withB(fn) { return function (b) { B = b; return fn.apply(null, Array.prototype.slice.call(arguments, 1)); }; }
   window.Views = { teamCell: withB(teamCell), matchTable: withB(matchTable), soloTable: withB(soloTable), allianceTable: withB(allianceTable),
-    rpTable: withB(rpTable), alliancesTable: withB(alliancesTable), bracketView: withB(bracketView), matchCode: matchCode, stTag: stTag, roundName: roundName };
+    rpTable: withB(rpTable), alliancesTable: withB(alliancesTable), bracketView: withB(bracketView), roundsView: withB(roundsView), stageName: stageName, matchCode: matchCode, stTag: stTag, roundName: roundName };
 })();

@@ -34,6 +34,12 @@ const assert = (c, m) => { if (!c) throw new Error('ASSERT: ' + m); console.log(
   assert(await p.isChecked('input[name=grade][value=HS]') && await p.isChecked('input[name=grade][value=UNI]') && !(await p.isChecked('input[name=grade][value=MS]')), 'ADC Pro defaults to high school + collegiate (1.4.2)');
   assert(await p.inputValue('#cSolo') === '5' && /piloting \+ autonomous/.test(await p.locator('#cSoloHint').innerText()), 'ADC Pro: 5 solo attempts in total (7.4.1)');
   assert(await p.locator('#cFinals').isVisible() && await p.locator('#cEntry').isVisible() && !(await p.locator('#cGoals').isVisible()), 'shows finals format + score entry, hides Fast Track goals option');
+  for (const id of ['#cQualRed', '#cElimRed', '#cBo3Ties']) {
+    assert(await p.locator(id).isVisible() && /Why this option/.test(await p.locator(id).locator('xpath=..').innerText()), id + ': option shown with the reason it exists');
+  }
+  await p.selectOption('#evProg', 'Achieve');
+  assert(!(await p.locator('#cQualRed').isVisible()), 'ADC Pro options hidden for Achieve');
+  await p.selectOption('#evProg', 'ADC Pro');
   await p.selectOption('#cEntry', 'detail');
   await p.fill('#evName', 'Off Grid Hà Nội'); await p.fill('#evDate', '2026-12-19'); await p.fill('#cMpt', '4');
   await p.click('#fNew button[type=submit]'); await p.waitForSelector('#tmPaste');

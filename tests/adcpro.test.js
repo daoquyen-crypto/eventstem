@@ -164,3 +164,40 @@ test('Giải thành tích + CSV: Tournament Champions, Solo Match Champion, prog
   assert.equal(rows.filter(r => r[13] === 'alliance').length, 4);
   assert.deepEqual(rows.filter(r => r[13] === 'solo2').map(r => r[14]), [60]);
 });
+
+test('Tuỳ chọn qualRedCard: đối thủ giữ kết quả thật (mặc định) hoặc được xử thắng', () => {
+  const T = teams(4), ms = [q(1, ['P01', 'P02'], ['P03', 'P04'], 50, 40, { red_status: 'red' })];
+  const rp = o => Object.fromEntries(P.ranking(T, ms, Object.assign({ seed: 'x' }, o)).map(r => [r.team, r.rp]));
+  assert.deepEqual(rp({}), { P01: 0, P02: 2, P03: 0, P04: 0 });
+  assert.deepEqual(rp({ qualRedCard: 'win' }), { P01: 0, P02: 2, P03: 2, P04: 2 });   // xanh được xử thắng; P02 vẫn thắng theo điểm thật (như Achieve)
+});
+
+test('Tuỳ chọn elimRedCard: thẻ đỏ ở bán kết làm liên minh 0 điểm, hoặc chỉ tính ở chung kết', () => {
+  const al = [1, 2, 3, 4].map(s => ({ seed: s, captain: 'C' + s, partner: 'X' + s }));
+  const sf = P.bracket(al, [], {}).toCreate;   // 2 trận bán kết: 1–4, 2–3
+  const g1 = Object.assign({}, sf[0], { num: 1, score: 50, score_blue: 30, red2_status: 'red' });
+  const g2 = Object.assign({}, sf[1], { num: 2, score: 40, score_blue: 20 });
+  assert.equal(P.bracket(al, [g1, g2], {}).rounds[0][0].winner, 4);                         // mặc định: hạt giống 1 bị 0 điểm
+  assert.equal(P.bracket(al, [g1, g2], { elimRedCard: 'finals' }).rounds[0][0].winner, 1);  // chỉ chung kết: bán kết giữ điểm
+  assert.deepEqual(P.gameScores(g1, { elimRedCard: 'finals' }), { red: 50, blue: 30 });
+  assert.deepEqual(P.gameScores(Object.assign({}, g1, { round: 'final' }), { elimRedCard: 'finals' }), { red: 0, blue: 30 });
+});
+
+test('Tuỳ chọn bo3Ties: trận hoà không tính, hoặc hoà 3 lần liền thì hạt giống cao hơn thắng trận đó', () => {
+  const al = [{ seed: 1, captain: 'P01', partner: 'P02' }, { seed: 2, captain: 'P03', partner: 'P04' }];
+  const t = P.bracket(al, [], { finals: 'bo3' }).toCreate[0];
+  const g = (n, a, b) => Object.assign({}, t, { num: n, score: a, score_blue: b });
+  const games = [g(1, 10, 20), g(2, 5, 5), g(3, 5, 5), g(4, 5, 5)];   // xanh (2) thắng 1, rồi hoà 3 lần
+  assert.equal(P.bracket(al, games, { finals: 'bo3' }).champion, null);                     // replay: chưa ai thắng 2
+  const r = P.bracket(al, games, { finals: 'bo3', bo3Ties: 'game' });
+  assert.equal(r.champion, null);                                                           // 1–1, đánh tiếp
+  assert.equal(P.bracket(al, games.concat([g(5, 30, 10)]), { finals: 'bo3', bo3Ties: 'game' }).champion.seed, 1);
+});
+
+test('Achieve không đổi khi thêm tuỳ chọn của ADC Pro', () => {
+  const A = require('../js/achieve.js');
+  const al = [{ seed: 1, captain: 'P01', partner: 'P02' }, { seed: 2, captain: 'P03', partner: 'P04' }];
+  const t = A.bracket(al, [], { finals: 'bo3' }).toCreate[0];
+  const g = n => Object.assign({}, t, { num: n, score: 5, score_blue: 5 });
+  assert.equal(A.bracket(al, [1, 2, 3, 4, 5, 6].map(g), { finals: 'bo3' }).champion.seed, 1);   // 6 trận hoà → hạt giống
+});

@@ -131,7 +131,7 @@
             : '<p class="empty">' + tr('Alliance selection has not started yet.', 'Chưa đến phần chọn liên minh.') + '</p>'));
       }
       if (R().format === 'versus') {
-        var st = Achieve.selection([], (B.event.config || {}).selection), br = Achieve.bracket(st.alliances, B.matches, cfg());
+        var st = Achieve.selection([], (B.event.config || {}).selection), br = R().bracket(st.alliances, B.matches, cfg());
         var em = B.matches.filter(function (m) { return m.round === 'elim' || m.round === 'final'; }).sort(function (a, b) { return (a.round === 'final') - (b.round === 'final') || a.num - b.num; });
         return pane((br.champion ? '<div class="champ">🏆 ' + tr('Tournament Champions', 'Vô địch giải') + ': <b>' + esc(br.champion.captain) + ' + ' + esc(br.champion.partner) + '</b></div>' : '') +
           (st.alliances.length ? '<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start"><div><h3 class="t">' + tr('Alliances', 'Các liên minh') + '</h3>' + Views.alliancesTable(B, st.alliances) + '</div>' +

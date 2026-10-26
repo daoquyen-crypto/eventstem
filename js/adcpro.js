@@ -26,7 +26,12 @@
     soloAttempts: 5,     // 7.4.1: tổng 5 lượt, tự chia giữa 2 loại
     maxRedCards: 3,      // 1.6.4
     finals: 'bo1',       // 7.4.6: 'bo1' = giải vòng loại; 'bo3' = championship / signature (thắng 2 trận)
-    scoreEntry: 'total'  // 'total' = chỉ nhập điểm tổng; 'detail' = nhập điểm thành phần, phần mềm tự cộng (3.1, 4.2, 5.1)
+    scoreEntry: 'total', // 'total' = chỉ nhập điểm tổng; 'detail' = nhập điểm thành phần, phần mềm tự cộng (3.1, 4.2, 5.1)
+    /* Các điểm luật chưa nói rõ: để ban tổ chức chọn (lý do ghi cạnh mỗi tuỳ chọn trong form giải) */
+    qualRedCard: 'actual', // thẻ đỏ ở vòng loại: 'actual' = đối thủ giữ kết quả thật (1.6.3 "actual score"); 'win' = đối thủ được xử thắng như Achieve
+    elimRedCard: 'all',    // thẻ đỏ ở loại trực tiếp: 'all' = mọi trận, cả liên minh 0 điểm; 'finals' = chỉ trận chung kết (1.6.3 chỉ ghi "finals matches")
+    bo3Ties: 'replay'      // chung kết bo3 có trận hoà: 'replay' = trận hoà không tính, đánh tiếp (tối đa 6 trận rồi xét hạt giống, như Achieve);
+                           // 'game' = mỗi trận hoà đánh lại như 7.4.5, hoà 3 lần liền thì hạt giống cao hơn thắng trận đó
   };
   function cfg(c) { var o = {}, k; for (k in DEFAULTS) o[k] = DEFAULTS[k]; for (k in (c || {})) if (c[k] != null && c[k] !== '') o[k] = c[k]; return o; }
   var SLOTS = A.SLOTS;
@@ -100,11 +105,12 @@
   function schedule(teamNumbers, opts) { return A.schedule(teamNumbers, cfg(opts)); }
   /* Mỗi trận, mỗi đội nhận match RP của liên minh mình (thắng 2, hoà 1) và điểm trận của liên minh.
      Thẻ đỏ hoặc vắng mặt: đội đó 0 RP và 0 điểm; đồng đội và đối thủ giữ kết quả thật (1.6.3, 5.4.1). Trận đánh dấu * không tính (7.4.2). */
-  function teamRP(m, s) {
+  function teamRP(m, s, o) {
     var side = sideOf(s), stt = m[s + '_status'];
     var my = side === 'red' ? +m.score || 0 : +m.score_blue || 0, their = side === 'red' ? +m.score_blue || 0 : +m.score || 0;
     if (stt === 'absent' || stt === 'red') return { match: 0, score: 0, zero: true, my: my, their: their };
-    return { match: my > their ? 2 : my === their ? 1 : 0, score: my, my: my, their: their };
+    var other = side === 'red' ? 'blue' : 'red', win = o && o.qualRedCard === 'win' && A.hasRed(m, other) && !A.hasRed(m, side);
+    return { match: win || my > their ? 2 : my === their ? 1 : 0, score: my, my: my, their: their };
   }
   function ranking(teams, matches, opts) {
     var o = cfg(opts), seed = o.seed || '', by = {};
@@ -113,7 +119,7 @@
       if (m.round !== 'qual' || !A.played(m)) return;
       SLOTS.forEach(function (s) {
         var r = by[m[s]]; if (!r || m[s + '_counts'] === false) return;
-        var x = teamRP(m, s);
+        var x = teamRP(m, s, o);
         r.played++; r.rp += x.match; r.pts += x.score; r.scores.push(x.score);
         if (x.zero) r.l++; else if (x.my > x.their) r.w++; else if (x.my < x.their) r.l++; else r.t++;
       });
@@ -162,7 +168,12 @@
 
   /* ---------- Chọn liên minh (7.4.4), nhánh loại trực tiếp (7.4.5, 7.4.6): giống Achieve ---------- */
   function eligible(rank, teams, matches, opts) { return A.eligible(rank, teams, matches, cfg(opts)); }
-  function bracket(alliances, matches, opts) { return A.bracket(alliances, matches, cfg(opts)); }
+  /* Điểm 1 trận loại trực tiếp: thẻ đỏ làm cả liên minh 0 điểm (1.6.3), ở mọi trận hoặc chỉ trận chung kết tuỳ elimRedCard */
+  function gameScores(m, opts) {
+    if (cfg(opts).elimRedCard === 'finals' && m.round !== 'final') return { red: +m.score || 0, blue: +m.score_blue || 0 };
+    return A.gameScores(m);
+  }
+  function bracket(alliances, matches, opts) { return A.bracket(alliances, matches, Object.assign(cfg(opts), { gameScores: gameScores })); }
 
   /* ---------- Giải thưởng, CSV ---------- */
   /* Giải thành tích: Tournament Champions (7.4.6), Solo Match Champion (7.4.1) */
@@ -186,7 +197,7 @@
 
   return {
     DEFAULTS: DEFAULTS, cfg: cfg, SLOTS: SLOTS, schedule: schedule, teamRP: teamRP, ranking: ranking, soloRanking: soloRanking,
-    redCards: A.redCards, eligible: eligible, recommendedAlliances: A.recommendedAlliances, selection: A.selection, bracket: bracket,
+    redCards: A.redCards, eligible: eligible, recommendedAlliances: A.recommendedAlliances, selection: A.selection, bracket: bracket, gameScores: gameScores,
     SHEETS: SHEETS, calc: calc, matchIssues: matchIssues, describe: describe, performanceAwards: performanceAwards, resultRows: resultRows
   };
 });

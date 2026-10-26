@@ -261,19 +261,22 @@
   function gameScores(m) {
     return { red: hasRed(m, 'red') ? 0 : +m.score || 0, blue: hasRed(m, 'blue') ? 0 : +m.score_blue || 0 };
   }
-  function decide(games, hi, lo, bo3) {
-    var wins = {}, ties = 0, done = 0; wins[hi] = 0; wins[lo] = 0;
+  /* o.gameScores: bộ luật khác (ADC Pro) có thể đổi cách tính điểm trận khi có thẻ đỏ.
+     o.bo3Ties = 'game' (ADC Pro): trong chung kết bo3, trận hoà đánh lại như 7.4.5; hoà 3 lần liền thì hạt giống cao hơn thắng trận đó. */
+  function decide(games, hi, lo, bo3, o) {
+    var wins = {}, ties = 0, done = 0, streak = 0, gs = (o && o.gameScores) || gameScores, perGame = bo3 && o && o.bo3Ties === 'game';
+    wins[hi] = 0; wins[lo] = 0;
     for (var i = 0; i < games.length; i++) {
       var g = games[i]; if (!played(g)) return { winner: null, pending: true };
-      var sc = gameScores(g), rs = g.seed, bs = g.seed_blue; done++;
-      if (sc.red === sc.blue) ties++;
-      else wins[sc.red > sc.blue ? rs : bs]++;
+      var sc = gs(g, o), rs = g.seed, bs = g.seed_blue; done++;
+      if (sc.red === sc.blue) { ties++; streak++; if (perGame && streak >= 3) { wins[Math.min(hi, lo)]++; streak = 0; } }
+      else { wins[sc.red > sc.blue ? rs : bs]++; streak = 0; }
       if (!bo3) {
         if (sc.red !== sc.blue) return { winner: sc.red > sc.blue ? rs : bs };
         if (ties >= 3) return { winner: Math.min(hi, lo), bySeed: true };
       } else {
         if (wins[hi] >= 2 || wins[lo] >= 2) return { winner: wins[hi] >= 2 ? hi : lo };
-        if (done >= 6) return { winner: wins[hi] === wins[lo] ? Math.min(hi, lo) : (wins[hi] > wins[lo] ? hi : lo), bySeed: wins[hi] === wins[lo] };
+        if (!perGame && done >= 6) return { winner: wins[hi] === wins[lo] ? Math.min(hi, lo) : (wins[hi] > wins[lo] ? hi : lo), bySeed: wins[hi] === wins[lo] };
       }
     }
     return { winner: null, pending: false, wins: wins, ties: ties };
@@ -301,7 +304,7 @@
           var hi = Math.min(a, b), lo = Math.max(a, b);
           node.hi = hi; node.lo = lo;
           node.games = elim.filter(function (m) { return m.label === label; }).sort(function (x, y) { return x.num - y.num; });
-          var d = decide(node.games, hi, lo, isFinal && o.finals === 'bo3');
+          var d = decide(node.games, hi, lo, isFinal && o.finals === 'bo3', o);
           node.winner = d.winner; node.bySeed = !!d.bySeed;
           if (d.winner == null && !d.pending) {
             var rd = isFinal ? 'final' : 'elim';

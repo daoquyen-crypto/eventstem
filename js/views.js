@@ -97,7 +97,7 @@
       br.rounds.map(function (nodes, i) {
         return '<div><h3 class="t" style="margin-top:0">' + roundName(i + 1, br.rounds.length) + '</h3>' + nodes.map(function (n) {
           if (n.bye && i === 0) return '<div class="card small" style="padding:8px 12px;margin-bottom:8px">' + lab(n.winner) + ' <span class="mut">· ' + tr('bye', 'đi thẳng') + '</span></div>';
-          var games = n.games.filter(function (g) { return g.score != null && g.score_blue != null; }).map(function (g) { var sc = Achieve.gameScores(g); return (g.seed === n.hi ? sc.red + '–' + sc.blue : sc.blue + '–' + sc.red); });
+          var games = n.games.filter(function (g) { return g.score != null && g.score_blue != null; }).map(function (g) { var RR = Rules.of(B.event), sc = RR.gameScores ? RR.gameScores(g, B.event.config) : Achieve.gameScores(g); return (g.seed === n.hi ? sc.red + '–' + sc.blue : sc.blue + '–' + sc.red); });
           var row = function (sd) { return '<div style="' + (n.winner === sd && sd != null ? 'font-weight:700;color:var(--ink)' : 'color:var(--mut)') + '">' + (n.winner === sd && sd != null ? '🏆 ' : '') + lab(sd) + '</div>'; };
           return '<div class="card small" style="padding:8px 12px;margin-bottom:8px" data-hl="' + esc([n.a, n.b].filter(function (x) { return x != null; }).map(function (x) { return A[x].captain + ' ' + A[x].partner; }).join(' ')) + '">' +
             row(n.hi != null ? n.hi : n.a) + row(n.lo != null ? n.lo : n.b) + (games.length ? '<div class="mut" style="margin-top:4px">' + games.join(' · ') + (n.bySeed ? ' · ' + tr('higher seed advances', 'hạt giống cao hơn đi tiếp') : '') + '</div>' : '') + '</div>';

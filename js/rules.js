@@ -32,7 +32,7 @@
     id: 'adcpro-2027', format: 'versus', manual: 'RECF ADC Pro Mission 2026-2027: Off Grid', grades: ['HS', 'UNI'], minTeams: 4, slots: P.SLOTS,
     cfg: P.cfg, schedule: P.schedule, solo: P.soloRanking, redCards: P.redCards,
     ranking: P.ranking, eligible: P.eligible, performanceAwards: P.performanceAwards, resultRows: P.resultRows,
-    solo2: ['Piloting', 'Autonomous'], bracket: P.bracket, rpBonus: false, scoring: P
+    solo2: ['Piloting', 'Autonomous'], bracket: P.bracket, gameScores: P.gameScores, rpBonus: false, scoring: P
   };
   var BY = { 'engage-2026': ENGAGE, 'achieve-2026': ACHIEVE, 'adc-2027': ADC, 'adcpro-2027': ADCPRO };
   /* Chương trình hiển thị trong form tạo giải: [program, ruleset] */

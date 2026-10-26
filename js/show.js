@@ -70,7 +70,7 @@
         (res.stages.length ? Views.roundsView(B, res) : Views.alliancesTable(B, sa.alliances));
     } else if (R().format === 'versus') {
       var st = Achieve.selection([], (ev.config || {}).selection); if (!st.alliances.length) return null;
-      var br = Achieve.bracket(st.alliances, B.matches, cfg()), has = B.matches.some(function (m) { return m.round === 'elim' || m.round === 'final'; });
+      var br = R().bracket(st.alliances, B.matches, cfg()), has = B.matches.some(function (m) { return m.round === 'elim' || m.round === 'final'; });
       html = (br.champion ? champ(tr('Tournament Champions', 'Vô địch giải'), br.champion.captain, br.champion.partner) : '') +
         (has ? Views.bracketView(B, br, st.alliances) : Views.alliancesTable(B, st.alliances));
     } else {

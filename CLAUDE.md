@@ -49,7 +49,8 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
   - Chữ tĩnh viết tiếng Anh trong HTML, bản tiếng Việt đặt trong `data-vi`, `data-vi-ph`, `data-vi-aria`.
   - Chữ do JS sinh ra dùng `tr(en, vi)`.
   - Mọi chữ mới hiển thị cho người dùng phải có đủ cả hai ngôn ngữ.
-- **Theo đúng Game Manual.** Code và chữ trên giao diện ghi số điều luật, ví dụ `(7.4.2)`. Nếu luật không nói rõ, hỏi SEPA thay vì tự đoán.
+- **Theo đúng Game Manual.** Code và chữ trên giao diện ghi số điều luật, ví dụ `(7.4.2)`.
+- **Chỗ nào luật không rõ thì làm thành tuỳ chọn của ban tổ chức** (SEPA đã chốt), không tự đoán một cách duy nhất. Tuỳ chọn lưu trong `event.config` (thêm vào `DEFAULTS` của module luật). Ngay dưới tuỳ chọn trong form giải phải có dòng nhỏ **"Why this option: … / Vì sao có tuỳ chọn: …"**, ghi số điều luật và chỗ chưa rõ. Mặc định chọn cách bám sát chữ trong Game Manual nhất.
 - **Thêm luật mới** (ví dụ Inspire, Aerial Drone):
   - Viết thành một module riêng giống `achieve.js`.
   - Thêm vào `Rules.byId` và `Rules.CHOICES`.
@@ -91,7 +92,7 @@ node tests/e2e_home.js                            # E2E trang chủ: "Giải g�
 - SEPA chưa cài **SMTP** riêng cho email xác nhận của Supabase. Email mặc định bị giới hạn vài thư mỗi giờ.
 - Chưa chạy một giải thật đầy đủ trên Supabase thật. Lần đầu dùng nên theo dõi lỗi.
 - Chưa có luật **Inspire**. Nếu cần, xin SEPA file Game Manual PDF.
-- ADC Pro: điểm thành phần trận Alliance lưu ở `matches.detail = {red, blue}`; kiểm tra chéo tổng pump ≤ 3, fuel ≤ 36 (`ADCPro.matchIssues`). Thẻ đỏ ở vòng loại: đối thủ giữ kết quả thật (1.6.3 ghi "actual score"), khác Achieve. Thẻ đỏ ở mọi trận loại trực tiếp: cả liên minh 0 điểm (dùng lại Achieve; 1.6.3 chỉ ghi "finals matches"). Chung kết bo3 có trận hoà: dùng cách của Achieve. Ba điểm này cần SEPA xác nhận.
+- ADC Pro: điểm thành phần trận Alliance lưu ở `matches.detail = {red, blue}`; kiểm tra chéo tổng pump ≤ 3, fuel ≤ 36 (`ADCPro.matchIssues`). Tuỳ chọn của ban tổ chức (xem `ADCPro.DEFAULTS`): `scoreEntry`, `qualRedCard` (`actual` / `win`, 1.6.3), `elimRedCard` (`all` / `finals`, 1.6.3), `bo3Ties` (`replay` / `game`, 7.4.6). Nhánh đấu gọi qua `R().bracket` / `R().gameScores`, không gọi thẳng `Achieve.bracket`.
 - ADC: chỗ nào Game Manual chưa rõ thì để thành **tuỳ chọn của ban tổ chức** trong `event.config` (xem `ADC.DEFAULTS`): `scoreEntry` (điểm tổng / điểm thành phần), `goals` (số goal, mặc định 4), `stopTimeTiebreak`, `finalTie` (`replay` / `seed`). Danh sách gợi ý giải giám khảo vẫn là của Engage (chưa có ADC Guide to Judging); ô tên giải nhập tự do.
 - `tests/e2e_manage.js` đôi khi hỏng chập chờn ở bước `#pendBadge .pill` (có từ trước khi có ADC; chạy lại thì qua).
 - Giải Achieve 8 đội: lịch vẫn có vài trận một đội phải đánh 2 lượt liền nhau. Không tránh được khi vừa muốn không gặp lại đồng đội vừa có ít đội.

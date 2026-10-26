@@ -253,13 +253,27 @@
         '<option value="detail"' + (c.scoreEntry === 'detail' ? ' selected' : '') + '>' + tr('Score components (per scoring table); total is calculated', 'Nhập điểm thành phần (theo bảng điểm); tự cộng điểm tổng') + '</option></select>' +
         '<small>' + tr('Components follow the scoring tables 3.1, 4.2 and 5.1.', 'Điểm thành phần theo bảng điểm 3.1, 4.2 và 5.1.') + '</small></label>' +
       '<label class="f" data-rs="adc-2027"><span>' + tr('Goals on the alliance field', 'Số goal trên sân Alliance') + '</span><input type="number" id="cGoals" min="1" max="8" value="' + (c.goals || 4) + '">' +
-        '<small>' + tr('Used for the goal bonus (5.1.2). Figure 1.3.1 shows 4.', 'Dùng tính goal bonus (5.1.2). Hình 1.3.1 có 4 goal.') + '</small></label>' +
+        '<small>' + tr('Why this option: the goal bonus (5.1.2) depends on the number of goals, which the manual only shows in figure 1.3.1 (4 goals).', 'Vì sao có tuỳ chọn: goal bonus (5.1.2) phụ thuộc số goal, mà Game Manual chỉ thể hiện qua hình 1.3.1 (4 goal).') + '</small></label>' +
       '<label class="ck" style="grid-column:1/-1" data-rs="adc-2027"><input type="checkbox" id="cStopTb"' + (c.stopTimeTiebreak ? ' checked' : '') + '> ' +
-        tr('Finals: use early stop time in the 2nd tiebreaker (7.4.5 says it "may be considered")', 'Chung kết: xét stop time sớm ở lần tiebreak thứ 2 (7.4.5 ghi "có thể xét")') + '</label>' +
+        tr('Finals: use early stop time in the 2nd tiebreaker', 'Chung kết: xét stop time sớm ở lần tiebreak thứ 2') +
+        '<br><small class="mut">' + tr('Why this option: 7.4.5 says stop time "may be considered", not that it must be.', 'Vì sao có tuỳ chọn: 7.4.5 ghi stop time "có thể được xét", không bắt buộc.') + '</small></label>' +
       '<label class="f" data-rs="adc-2027"><span>' + tr('Finals still tied after comparing earlier rounds', 'Chung kết vẫn hoà sau khi so điểm các vòng trước') + '</span><select id="cFinalTie">' +
         '<option value="replay"' + (c.finalTie !== 'seed' ? ' selected' : '') + '>' + tr('Play another tiebreaker', 'Đánh thêm tiebreak') + '</option>' +
         '<option value="seed"' + (c.finalTie === 'seed' ? ' selected' : '') + '>' + tr('Higher seed wins', 'Hạt giống cao hơn thắng') + '</option></select>' +
-        '<small>' + tr('The game manual does not cover this case.', 'Game Manual không nói trường hợp này.') + '</small></label></div>';
+        '<small>' + tr('Why this option: the game manual does not cover this case.', 'Vì sao có tuỳ chọn: Game Manual không nói trường hợp này.') + '</small></label>' +
+      /* ADC Pro: các điểm luật chưa nói rõ, để ban tổ chức chọn; dòng nhỏ ghi lý do */
+      '<label class="f" data-rs="adcpro-2027"><span>' + tr('Red card in a qualification match: the opposing alliance', 'Thẻ đỏ ở vòng loại: liên minh đối thủ') + '</span><select id="cQualRed">' +
+        '<option value="actual"' + (c.qualRedCard !== 'win' ? ' selected' : '') + '>' + tr('Keeps the real result', 'Giữ kết quả thật') + '</option>' +
+        '<option value="win"' + (c.qualRedCard === 'win' ? ' selected' : '') + '>' + tr('Is given the win (2 RP), like Achieve', 'Được xử thắng (2 RP), như Achieve') + '</option></select>' +
+        '<small>' + tr('Why this option: 1.6.3 says the team without the red card "receives the actual score", but does not say whether the opponents win the match.', 'Vì sao có tuỳ chọn: 1.6.3 ghi đội không bị thẻ "nhận điểm thật của trận", nhưng không nói đối thủ có được xử thắng không.') + '</small></label>' +
+      '<label class="f" data-rs="adcpro-2027"><span>' + tr('Red card in elimination matches: the whole alliance gets 0', 'Thẻ đỏ ở loại trực tiếp: cả liên minh 0 điểm') + '</span><select id="cElimRed">' +
+        '<option value="all"' + (c.elimRedCard !== 'finals' ? ' selected' : '') + '>' + tr('In every elimination match', 'Ở mọi trận loại trực tiếp') + '</option>' +
+        '<option value="finals"' + (c.elimRedCard === 'finals' ? ' selected' : '') + '>' + tr('Only in the finals', 'Chỉ ở chung kết') + '</option></select>' +
+        '<small>' + tr('Why this option: 1.6.3 only says "in finals matches"; it is unclear whether this also covers earlier bracket rounds. With "Only in the finals", earlier rounds keep the alliance score.', 'Vì sao có tuỳ chọn: 1.6.3 chỉ ghi "in finals matches", không rõ có gồm các vòng trước chung kết không. Nếu chọn "Chỉ ở chung kết", các vòng trước liên minh giữ điểm.') + '</small></label>' +
+      '<label class="f" data-rs="adcpro-2027"><span>' + tr('Best-of-3 finals: a tied match', 'Chung kết thắng 2 trong 3: trận hoà') + '</span><select id="cBo3Ties">' +
+        '<option value="replay"' + (c.bo3Ties !== 'game' ? ' selected' : '') + '>' + tr('Does not count, keep playing (like Achieve)', 'Không tính, đánh tiếp (như Achieve)') + '</option>' +
+        '<option value="game"' + (c.bo3Ties === 'game' ? ' selected' : '') + '>' + tr('Replayed as in 7.4.5', 'Đánh lại như 7.4.5') + '</option></select>' +
+        '<small>' + tr('Why this option: 7.4.6 says an alliance must win two finals matches, but does not say what happens when one of them is a tie. "Keep playing": after 6 matches the higher seed wins if still level. "Replayed": after 3 ties in a row the higher seed wins that match.', 'Vì sao có tuỳ chọn: 7.4.6 ghi phải thắng 2 trận chung kết, nhưng không nói trận hoà xử lý thế nào. "Đánh tiếp": sau 6 trận vẫn ngang thì hạt giống cao hơn thắng. "Đánh lại": hoà 3 lần liền thì hạt giống cao hơn thắng trận đó.') + '</small></label></div>';
   }
   function soloHint(RR) {
     return RR.soloPerKind ? tr('RECF ADC: per type, i.e. 3 piloting + 3 autonomous (7.4.1)', 'RECF ADC: cho mỗi loại, tức 3 lượt piloting + 3 lượt autonomous (7.4.1)')
@@ -291,7 +305,8 @@
       location: val('evLoc'), country: val('evCountry'), organizer_name: val('evOrg'), grades: grades.length ? grades : Rules.byId[ch.ruleset].grades,
       config: { matchesPerTeam: num('cMpt', 6), soloAttempts: num('cSolo', d.soloAttempts), fields: num('cFields', 1), start: val('cStart') || '09:00', cycleMin: num('cCycle', d.cycleMin), minGap: num('cGap', 1),
         dropLowest: ch.program === 'ADC' ? true : $id('cDrop').checked, finals: val('cFinals') || 'bo1',
-        scoreEntry: val('cEntry') || 'total', goals: num('cGoals', 4), stopTimeTiebreak: $id('cStopTb').checked, finalTie: val('cFinalTie') || 'replay' }
+        scoreEntry: val('cEntry') || 'total', goals: num('cGoals', 4), stopTimeTiebreak: $id('cStopTb').checked, finalTie: val('cFinalTie') || 'replay',
+        qualRedCard: val('cQualRed') || 'actual', elimRedCard: val('cElimRed') || 'all', bo3Ties: val('cBo3Ties') || 'replay' }
     };
   }
   function renderNew() {
@@ -632,8 +647,9 @@
     var q = qual();
     if (!q.length) return pane('<p class="empty">' + tr('Generate the schedule first.', 'Hãy tạo lịch trận trước.') + ' <a href="#e/' + esc(B.event.id) + '/schedule">' + tr('Schedule', 'Lịch trận') + '</a></p>');
     var done = q.filter(function (m) { return m.score != null && scored(m); }).length, vs = versus();
-    pane('<div class="banner info small">' + (vs && !R().rpBonus ? tr('Enter both alliance scores after each match, confirmed with the mission crews (7.2.5). Win = 2, tie = 1 ranking point (5.5). A red card or absence gives that team 0 points and 0 RP; the partner and the opposing alliance keep the real result (1.6.3, 5.4.1).',
-          'Nhập điểm 2 liên minh sau khi xác nhận với các đội (7.2.5). Thắng = 2, hoà = 1 điểm xếp hạng (5.5). Thẻ đỏ hoặc vắng mặt: đội đó 0 điểm, 0 RP; đồng đội và liên minh đối thủ giữ kết quả thật (1.6.3, 5.4.1).')
+    var qwin = cfgOf(B.event).qualRedCard === 'win';
+    pane('<div class="banner info small">' + (vs && !R().rpBonus ? tr('Enter both alliance scores after each match, confirmed with the mission crews (7.2.5). Win = 2, tie = 1 ranking point (5.5). A red card or absence gives that team 0 points and 0 RP; the partner keeps the real result (1.6.3, 5.4.1). ' + (qwin ? 'Event setting: the opposing alliance of a red-carded team is given the win.' : 'Event setting: the opposing alliance also keeps the real result.'),
+          'Nhập điểm 2 liên minh sau khi xác nhận với các đội (7.2.5). Thắng = 2, hoà = 1 điểm xếp hạng (5.5). Thẻ đỏ hoặc vắng mặt: đội đó 0 điểm, 0 RP; đồng đội giữ kết quả thật (1.6.3, 5.4.1). ' + (qwin ? 'Cài đặt của giải: liên minh đối thủ của đội bị thẻ đỏ được xử thắng.' : 'Cài đặt của giải: liên minh đối thủ cũng giữ kết quả thật.'))
         : vs ? tr('Enter both alliance scores after each match, confirmed with the drive teams (7.2.5), and tick the Autonomous / Endgame ranking points each alliance earned (5.5.1, 5.5.2). Win = 2, tie = 1 match RP. A red card or absence gives that team 0 RP; the partner keeps the real result, and the opposing alliance gets 2 match RP for a red card (1.6.3, 5.4.1).',
           'Nhập điểm 2 liên minh sau khi xác nhận với các đội (7.2.5), và tick điểm xếp hạng Autonomous / Endgame mỗi liên minh đạt được (5.5.1, 5.5.2). Thắng = 2, hoà = 1 match RP. Thẻ đỏ hoặc vắng mặt: đội đó 0 RP, đồng đội giữ kết quả thật; liên minh đối thủ của đội bị thẻ đỏ được 2 match RP (1.6.3, 5.4.1).')
         : rounds() ? tr('Enter the shared alliance score after each match, confirmed with both flight teams (7.2.5). A red card or absence gives that team 0; the partner keeps the score (1.6.3, 5.4.1). Press Enter to save and jump to the next match.',
@@ -745,7 +761,7 @@
   function selOf(e) { var x = (e.config || {}).selection || {}; return { n: +x.n || 0, picks: (x.picks || []).slice(), declined: (x.declined || []).slice(), log: (x.log || []).slice() }; }
   function saveSel(sel) { return S.updateEvent(B.event.id, { config: Object.assign({}, B.event.config, { selection: sel }) }).then(refresh); }
   /* Tạo các trận nhánh đấu còn thiếu (trận đầu, trận đánh lại khi hoà, vòng sau khi đã có đội thắng) */
-  function bracketOf(al) { return rounds() ? ADC.eliminations(al, B.matches, cfgOf(B.event)) : Achieve.bracket(al, B.matches, cfgOf(B.event)); }
+  function bracketOf(al) { return rounds() ? ADC.eliminations(al, B.matches, cfgOf(B.event)) : R().bracket(al, B.matches, cfgOf(B.event)); }
   function syncBracket() {
     var e = B.event, st = Achieve.selection([], selOf(e)), br = bracketOf(st.alliances);
     if (!br.toCreate.length) return Promise.resolve(0);
@@ -790,8 +806,11 @@
       out += '<h3 class="t">' + tr('Elimination matches', 'Các trận loại trực tiếp') + '</h3><div class="banner info small">' + (rd ?
         tr('Matches are played one at a time, starting with the lowest-ranked alliance. After the quarterfinals the top 4 alliances advance, after the semifinals the top 2; alliances tied at the cut-off also advance. A red card gives the whole alliance 0 (1.6.3). A tie for first in the finals is broken by tiebreaker rounds, then by scores from earlier rounds (7.4.5). Next matches are created automatically.' + (c.stopTimeTiebreak ? ' Stop time (seconds left when the alliance stopped) is used in the 2nd tiebreaker.' : ''),
           'Đánh lần lượt từng trận, bắt đầu từ liên minh xếp thấp nhất. Sau tứ kết, 4 liên minh điểm cao nhất đi tiếp; sau bán kết, 2 liên minh; liên minh bằng điểm ở ngưỡng cũng đi tiếp. Thẻ đỏ: cả liên minh 0 điểm (1.6.3). Chung kết hoà hạng nhất thì đánh vòng tiebreak, rồi xét điểm các vòng trước (7.4.5). Trận tiếp theo được tạo tự động.' + (c.stopTimeTiebreak ? ' Lần tiebreak thứ 2 xét stop time (số giây còn lại khi liên minh dừng).' : '')) :
-        tr('A red card in an elimination match gives the whole alliance 0 (1.6.3). A tie is replayed up to 2 times; if the 3rd match also ties, the higher seed advances (7.4.5). ', 'Thẻ đỏ ở vòng loại trực tiếp: cả liên minh 0 điểm (1.6.3). Hoà thì đánh lại tối đa 2 trận; trận thứ 3 vẫn hoà thì hạt giống cao hơn đi tiếp (7.4.5). ') +
-        (c.finals === 'bo3' ? tr('Finals: best of 3.', 'Chung kết: thắng 2 trong 3.') : tr('Finals: a single match.', 'Chung kết: 1 trận.')) + ' ' + tr('Next matches are created automatically.', 'Trận tiếp theo được tạo tự động.')) + '</div>' +
+        (c.elimRedCard === 'finals' ? tr('A red card in the finals gives the whole alliance 0; in earlier rounds the alliance keeps its score (1.6.3, event setting). ', 'Thẻ đỏ ở chung kết: cả liên minh 0 điểm; các vòng trước liên minh giữ điểm (1.6.3, cài đặt của giải). ')
+          : tr('A red card in an elimination match gives the whole alliance 0 (1.6.3). ', 'Thẻ đỏ ở vòng loại trực tiếp: cả liên minh 0 điểm (1.6.3). ')) +
+        tr('A tie is replayed up to 2 times; if the 3rd match also ties, the higher seed advances (7.4.5). ', 'Hoà thì đánh lại tối đa 2 trận; trận thứ 3 vẫn hoà thì hạt giống cao hơn đi tiếp (7.4.5). ') +
+        (c.finals === 'bo3' ? (c.bo3Ties === 'game' ? tr('Finals: best of 3; a tied finals match is replayed, and after 3 ties in a row the higher seed wins it.', 'Chung kết: thắng 2 trong 3; trận hoà đánh lại, hoà 3 lần liền thì hạt giống cao hơn thắng trận đó.')
+          : tr('Finals: best of 3; tied finals matches do not count.', 'Chung kết: thắng 2 trong 3; trận hoà không tính.')) : tr('Finals: a single match.', 'Chung kết: 1 trận.')) + ' ' + tr('Next matches are created automatically.', 'Trận tiếp theo được tạo tự động.')) + '</div>' +
         '<div id="eRows">' + (rd ? scoreRows(em, true, !c.stopTimeTiebreak) : versusRows(em, true)) + '</div><div class="row" style="margin-top:10px"><button class="btn sm danger" id="clrBracket" type="button">' + tr('Delete bracket', 'Xoá nhánh đấu') + '</button></div>';
     }
     pane(out);

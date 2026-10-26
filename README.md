@@ -54,6 +54,7 @@ Lưu ý: `results/mau_2026-2027.csv` là dữ liệu mẫu, nên trang đang hi�
 
 ## Tổ chức giải bằng công cụ EventSTEM
 
+0. **Muốn tập trước?** Vào `https://eventstem.com/manage.html?rehearsal=1` (hoặc nút **Start a rehearsal** ở trang đăng nhập, **🎓 Rehearsal** ở "Giải của tôi"). Tạo giải tập có sẵn đội mẫu, bấm **🎲 Fill random scores** để tập nhanh tới chung kết. Với giải thật đã nhập đội: tab **Overview** → **Rehearse this event**. Dữ liệu tập chỉ nằm trong trình duyệt, không ai khác thấy.
 1. Vào `https://eventstem.com/manage.html` → **Create account** (họ tên, trường, email). Chờ SEPA duyệt, hoặc được duyệt ngay nếu SEPA bật duyệt tự động.
 2. **New event** → điền tên giải, ngày, địa điểm, số trận mỗi đội, số sân.
 3. **Teams**: dán danh sách đội từ Excel, hoặc lấy đội đã đăng ký trên RECF Events theo mã giải. Đánh dấu check-in và kiểm tra robot.

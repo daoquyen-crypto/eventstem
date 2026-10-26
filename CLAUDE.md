@@ -52,6 +52,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
   - Viết thành một module riêng giống `achieve.js`.
   - Thêm vào `Rules.byId` và `Rules.CHOICES`.
   - Dùng lại `Views` và cách hiển thị theo `format` (`coop` / `versus`).
+- **Tập dượt** (`?rehearsal=1` trên `manage.html`, `event.html`, `show.html`): `DemoStore` dùng kho riêng `eventstem-rehearsal-v1` trong localStorage, tự đăng nhập tài khoản tập (ban tổ chức), không bao giờ gọi Supabase. Link nội bộ phải bọc `Rehearsal.url(...)` để giữ tham số. `Rehearsal.seedFrom(B)` chép cài đặt + đội + logo của giải thật (không chép trận, điểm, chọn liên minh).
 - **Logo:** bảng `event_assets` (logo đơn vị + tối đa 8 logo nhà tài trợ), ảnh thu nhỏ trong trình duyệt (`shrinkImage` trong `manage.js`) và lưu dạng data URL ≤ 400 KB; schema chặn mọi thứ không phải `data:image/...`. Không lấy bảng này trong các truy vấn danh sách giải.
 - **Đổi cơ sở dữ liệu:** thêm `alter table … add column if not exists` vào `schema.sql`. Trong mô tả PR ghi rõ "cần chạy lại schema.sql". Cập nhật luôn `DemoStore` (`MATCH_COLS`, `MATCH_DEFAULTS`).
 - Không đưa họ tên, ngày sinh hay liên lạc của học sinh vào kho. Kho để public.
@@ -67,6 +68,7 @@ node tests/e2e_manage.js                          # E2E luồng Engage (chế đ
 node tests/e2e_achieve.js                         # E2E luồng Achieve (chế độ demo)
 node tests/e2e_adc.js                             # E2E luồng ADC (chế độ demo)
 node tests/e2e_show.js                            # E2E logo + màn hình trình chiếu (chế độ demo)
+node tests/e2e_rehearsal.js                       # E2E chế độ tập dượt
 ```
 
 - Các test E2E chặn `js/config.js` để luôn chạy ở chế độ demo, **không ghi dữ liệu thử lên Supabase thật**.

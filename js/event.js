@@ -12,6 +12,8 @@
   try { myTeam = localStorage.getItem('eventstem-myteam') || ''; } catch (x) {}
   var POLL_MS = 20000;
   $id('demoBanner').hidden = S.mode !== 'demo';
+  if (S.rehearsal) { $id('demoBanner').className = 'banner demo rehearsal'; $id('demoBanner').removeAttribute('data-vi');
+    $id('demoBanner').innerHTML = tr('<b>Rehearsal.</b> Practice copy of the public page, only in this browser. Nobody else can see it.', '<b>Tập dượt.</b> Bản tập của trang công khai, chỉ có trong trình duyệt này. Người khác không thấy.'); }
 
   function fail(e) { if (!e || !e.code || e.code === 'unknown') console.error(e); app.innerHTML = '<div class="banner err">' + esc(errText(e)) + '</div>'; }
 
@@ -23,7 +25,7 @@
       var up = list.filter(function (e) { return e.status === 'published' && (!e.date || e.date >= today); }).reverse();
       var done = list.filter(function (e) { return e.status === 'completed' || (e.status === 'published' && e.date && e.date < today); });
       var item = function (e) {
-        return '<a class="ev-item" href="event.html?id=' + esc(e.id) + '"><div style="min-width:0"><div class="t">' + esc(e.name) + '</div><div class="m"><span>' + esc(fmtDate(e.date)) + '</span>' +
+        return '<a class="ev-item" href="' + esc(Rehearsal.url('event.html?id=' + e.id)) + '"><div style="min-width:0"><div class="t">' + esc(e.name) + '</div><div class="m"><span>' + esc(fmtDate(e.date)) + '</span>' +
           (e.location ? '<span>' + esc(e.location) + '</span>' : '') + (e.organizer_name ? '<span>' + esc(e.organizer_name) + '</span>' : '') + '<span>' + esc(e.program === 'Custom' ? tr('Independent', 'Tự tổ chức') : 'RECF ' + e.program) + '</span></div></div>' +
           '<span class="pill s-' + esc(e.status) + '">' + esc(statusName(e.status)) + '</span></a>';
       };

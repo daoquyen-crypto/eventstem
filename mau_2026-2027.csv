@@ -1,0 +1,769 @@
+event_code,event_name,program,season,date,country,partner,verified,team,team_name,organization,team_country,grade,type,value
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,79
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,108
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,69
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,123
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,95
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,123
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,solo1,58
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,solo1,50
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,solo1,54
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,solo2,50
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,solo2,48
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,190
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,205
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,167
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,134
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,154
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,171
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo1,104
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo1,98
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo2,53
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo2,79
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,158
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,162
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,160
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,175
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,168
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,139
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo1,128
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo1,130
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo1,131
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo2,88
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo2,63
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo2,69
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,260
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,228
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,231
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,193
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,208
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,201
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,solo1,185
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,113
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,91
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,69
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,126
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,123
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,67
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,solo1,54
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,solo1,54
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,solo1,74
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,solo2,32
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,solo2,36
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,102
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,140
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,117
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,116
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,147
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,112
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,solo1,87
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,solo1,52
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,solo2,48
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,191
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,181
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,186
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,183
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,216
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,165
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,solo1,126
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,solo1,139
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,solo2,94
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,solo2,84
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,solo2,97
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,201
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,162
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,208
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,145
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,191
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,198
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo1,111
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo1,139
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo1,108
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo2,90
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo2,76
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo2,60
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,alliance,198
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,alliance,216
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,alliance,185
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,alliance,235
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,alliance,209
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,alliance,212
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,solo1,137
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,solo2,104
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,solo2,117
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,solo2,84
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,alliance,197
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,alliance,155
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,alliance,184
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,alliance,194
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,alliance,210
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,alliance,187
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,solo1,114
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,solo1,99
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,solo1,127
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,solo2,83
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,solo2,93
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE110,Đội mẫu Engage 10,Trường mẫu 5,Vietnam,MS,solo2,78
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,alliance,204
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,alliance,178
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,alliance,214
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,alliance,221
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,alliance,190
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,alliance,200
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,solo1,165
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,solo2,95
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,solo2,91
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,alliance,186
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,alliance,237
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,alliance,204
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,alliance,249
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,alliance,205
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,alliance,180
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,solo1,158
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,solo1,170
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,alliance,174
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,alliance,208
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,alliance,224
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,alliance,206
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,alliance,242
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,alliance,210
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,solo1,152
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,solo1,162
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,solo2,101
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,alliance,159
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,alliance,191
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,alliance,178
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,alliance,161
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,alliance,197
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,alliance,185
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,solo1,113
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE114,Đội mẫu Engage 14,Trường mẫu 4,Vietnam,MS,solo2,62
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,award,Excellence Award
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE109,Đội mẫu Engage 9,Trường mẫu 4,Vietnam,ES,award,League Champions
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE112,Đội mẫu Engage 12,Trường mẫu 2,Vietnam,MS,award,Robot Solo Champion
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE113,Đội mẫu Engage 13,Trường mẫu 3,Vietnam,ES,award,Design Award
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE111,Đội mẫu Engage 11,Trường mẫu 1,Vietnam,ES,award,Innovate Award
+MAU-ENG-VN1,Giải mẫu Engage Hà Nội,Engage,2026-2027,2026-10-18,Vietnam,SEPA,yes,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,award,Judges Award
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,176
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,196
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,175
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,209
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,148
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,alliance,200
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,solo1,110
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,solo1,121
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,217
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,202
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,201
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,223
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,260
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,alliance,250
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo1,161
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo1,155
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo2,104
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo2,107
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,solo2,107
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,140
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,126
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,136
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,119
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,126
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,alliance,154
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo1,102
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo1,118
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,solo2,84
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,199
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,184
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,216
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,216
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,214
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,alliance,181
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,solo1,140
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,solo1,160
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,solo1,160
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,solo2,100
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,solo2,104
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,83
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,133
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,80
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,106
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,81
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,alliance,77
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,solo1,77
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE105,Đội mẫu Engage 5,Trường mẫu 5,Vietnam,ES,solo1,55
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,204
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,186
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,229
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,187
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,189
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,alliance,185
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,solo1,123
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,solo2,90
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,solo2,74
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,201
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,196
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,203
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,247
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,238
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,alliance,260
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,solo1,160
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,solo1,166
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,133
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,87
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,79
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,98
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,138
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,alliance,130
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo1,54
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo1,59
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo1,80
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo2,28
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE108,Đội mẫu Engage 8,Trường mẫu 3,Vietnam,MS,solo2,50
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE107,Đội mẫu Engage 7,Trường mẫu 2,Vietnam,ES,award,Excellence Award
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE102,Đội mẫu Engage 2,Trường mẫu 2,Vietnam,MS,award,League Champions
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE104,Đội mẫu Engage 4,Trường mẫu 4,Vietnam,MS,award,Robot Solo Champion
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE106,Đội mẫu Engage 6,Trường mẫu 1,Vietnam,MS,award,Design Award
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE101,Đội mẫu Engage 1,Trường mẫu 1,Vietnam,ES,award,Innovate Award
+MAU-ENG-VN2,Giải mẫu Engage Ninh Bình (chưa xác minh),Engage,2026-2027,2026-11-01,Vietnam,Đối tác mẫu,no,MAU-VNE103,Đội mẫu Engage 3,Trường mẫu 3,Vietnam,ES,award,Judges Award
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE101,Sample Engage AU-1,Sample School 1,Australia,ES,alliance,127
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE101,Sample Engage AU-1,Sample School 1,Australia,ES,alliance,172
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE101,Sample Engage AU-1,Sample School 1,Australia,ES,alliance,144
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE101,Sample Engage AU-1,Sample School 1,Australia,ES,alliance,129
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE101,Sample Engage AU-1,Sample School 1,Australia,ES,alliance,145
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE101,Sample Engage AU-1,Sample School 1,Australia,ES,alliance,158
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE101,Sample Engage AU-1,Sample School 1,Australia,ES,solo1,78
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,alliance,178
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,alliance,179
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,alliance,196
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,alliance,219
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,alliance,219
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,alliance,171
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,solo1,131
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,solo1,143
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,solo1,142
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,solo2,102
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,solo2,106
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,solo2,83
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,alliance,119
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,alliance,172
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,alliance,158
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,alliance,159
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,alliance,185
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,alliance,177
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,solo1,84
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,solo2,66
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,solo2,61
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,alliance,117
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,alliance,54
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,alliance,92
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,alliance,51
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,alliance,57
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,alliance,47
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,solo1,58
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,solo1,37
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,solo1,45
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,solo2,4
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE104,Sample Engage AU-4,Sample School 4,Australia,MS,solo2,35
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,alliance,210
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,alliance,181
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,alliance,166
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,alliance,179
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,alliance,201
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,alliance,173
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,solo1,158
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,solo1,137
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,solo1,161
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,solo2,94
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,alliance,112
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,alliance,157
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,alliance,119
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,alliance,126
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,alliance,126
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,alliance,153
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,solo1,86
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,solo1,69
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,solo1,88
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE106,Sample Engage AU-6,Sample School 1,Australia,MS,solo2,49
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,alliance,209
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,alliance,235
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,alliance,260
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,alliance,248
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,alliance,240
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,alliance,211
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,solo1,162
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,solo2,120
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,solo2,109
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,alliance,235
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,alliance,188
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,alliance,250
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,alliance,221
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,alliance,246
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,alliance,234
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,solo1,159
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,solo1,176
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,solo2,104
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,solo2,121
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,solo2,114
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,alliance,112
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,alliance,135
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,alliance,69
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,alliance,72
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,alliance,91
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,alliance,103
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,solo1,39
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,solo1,62
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE109,Sample Engage AU-9,Sample School 4,Australia,ES,solo2,19
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,alliance,197
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,alliance,216
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,alliance,202
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,alliance,250
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,alliance,189
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,alliance,232
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,solo1,166
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,solo2,116
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,solo2,93
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,solo2,109
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE107,Sample Engage AU-7,Sample School 2,Australia,ES,award,Excellence Award
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE108,Sample Engage AU-8,Sample School 3,Australia,MS,award,League Champions
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE110,Sample Engage AU-10,Sample School 5,Australia,MS,award,Robot Solo Champion
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE102,Sample Engage AU-2,Sample School 2,Australia,MS,award,Design Award
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE105,Sample Engage AU-5,Sample School 5,Australia,ES,award,Innovate Award
+MAU-ENG-AU1,Sample Engage Sydney,Engage,2026-2027,2026-10-10,Australia,Sample Partner AU,yes,MAU-AUE103,Sample Engage AU-3,Sample School 3,Australia,ES,award,Judges Award
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,alliance,230
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,alliance,235
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,alliance,241
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,alliance,181
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,alliance,199
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,alliance,217
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,solo1,158
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,solo1,137
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,solo1,174
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,solo2,84
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,solo2,113
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,solo2,83
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,alliance,214
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,alliance,217
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,alliance,203
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,alliance,230
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,alliance,232
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,alliance,237
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,solo1,181
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,solo2,126
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,solo2,104
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,solo2,93
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,alliance,209
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,alliance,196
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,alliance,194
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,alliance,155
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,alliance,185
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,alliance,147
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,solo1,119
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,solo1,111
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,solo2,71
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,solo2,62
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,solo2,87
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,alliance,184
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,alliance,220
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,alliance,193
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,alliance,227
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,alliance,198
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,alliance,228
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,solo1,133
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,solo1,143
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,solo2,91
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,alliance,70
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,alliance,54
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,alliance,65
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,alliance,111
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,alliance,65
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,alliance,87
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,solo1,34
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE105,Sample Engage US-5,Sample School 5,United States,ES,solo1,65
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,alliance,116
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,alliance,139
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,alliance,144
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,alliance,126
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,alliance,137
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,alliance,120
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,solo1,79
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,solo1,94
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,solo2,68
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,solo2,65
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,solo2,69
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,alliance,116
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,alliance,107
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,alliance,81
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,alliance,92
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,alliance,90
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,alliance,136
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,solo1,48
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,solo1,52
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,solo1,70
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE107,Sample Engage US-7,Sample School 2,United States,ES,solo2,28
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE108,Sample Engage US-8,Sample School 3,United States,MS,alliance,94
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE108,Sample Engage US-8,Sample School 3,United States,MS,alliance,76
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE108,Sample Engage US-8,Sample School 3,United States,MS,alliance,104
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE108,Sample Engage US-8,Sample School 3,United States,MS,alliance,81
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE108,Sample Engage US-8,Sample School 3,United States,MS,alliance,113
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE108,Sample Engage US-8,Sample School 3,United States,MS,alliance,71
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE108,Sample Engage US-8,Sample School 3,United States,MS,solo1,56
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,alliance,111
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,alliance,133
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,alliance,85
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,alliance,120
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,alliance,121
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,alliance,100
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,solo1,63
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,solo1,40
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE109,Sample Engage US-9,Sample School 4,United States,ES,solo1,66
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,alliance,233
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,alliance,169
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,alliance,232
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,alliance,230
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,alliance,173
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,alliance,209
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,solo1,129
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,solo1,140
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,solo1,146
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,solo2,73
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE102,Sample Engage US-2,Sample School 2,United States,MS,award,Excellence Award
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE101,Sample Engage US-1,Sample School 1,United States,ES,award,League Champions
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE104,Sample Engage US-4,Sample School 4,United States,MS,award,Robot Solo Champion
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE110,Sample Engage US-10,Sample School 5,United States,MS,award,Design Award
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE103,Sample Engage US-3,Sample School 3,United States,ES,award,Innovate Award
+MAU-ENG-US1,Sample Engage Texas,Engage,2026-2027,2026-10-03,United States,Sample Partner US,yes,MAU-USE106,Sample Engage US-6,Sample School 1,United States,MS,award,Judges Award
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,alliance,71
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,alliance,99
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,alliance,70
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,alliance,119
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,alliance,84
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,alliance,116
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,solo1,58
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,solo2,33
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,solo2,43
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA101,Đội mẫu Achieve 1,Trường mẫu 1,Vietnam,MS,solo2,50
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,alliance,144
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,alliance,136
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,alliance,131
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,alliance,122
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,alliance,123
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,alliance,144
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,solo1,83
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,solo1,91
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,solo2,53
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA102,Đội mẫu Achieve 2,Trường mẫu 2,Vietnam,HS,solo2,58
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,alliance,79
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,alliance,61
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,alliance,92
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,alliance,106
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,alliance,104
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,alliance,117
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,solo1,53
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,solo1,49
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,solo1,39
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA103,Đội mẫu Achieve 3,Trường mẫu 3,Vietnam,MS,solo2,17
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,alliance,150
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,alliance,162
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,alliance,189
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,alliance,143
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,alliance,149
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,alliance,189
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,solo1,115
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,solo1,118
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,solo1,127
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,solo2,76
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,solo2,86
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,alliance,205
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,alliance,184
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,alliance,181
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,solo1,132
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,alliance,189
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,alliance,191
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,alliance,181
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,solo1,150
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,solo1,132
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,solo1,134
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,alliance,208
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,alliance,203
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,alliance,187
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,alliance,200
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,solo1,126
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,solo1,131
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,alliance,154
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,alliance,171
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,alliance,134
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,alliance,145
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,alliance,169
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,alliance,127
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,solo1,92
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,solo2,77
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA108,Đội mẫu Achieve 8,Trường mẫu 3,Vietnam,HS,solo2,81
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,alliance,130
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,alliance,95
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,alliance,126
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,alliance,89
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,alliance,91
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,alliance,130
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,solo1,76
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,solo1,60
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA109,Đội mẫu Achieve 9,Trường mẫu 4,Vietnam,MS,solo2,37
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,alliance,121
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,alliance,111
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,alliance,103
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,alliance,113
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,alliance,134
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,alliance,125
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,solo1,83
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,solo1,78
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,solo2,51
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA110,Đội mẫu Achieve 10,Trường mẫu 5,Vietnam,HS,solo2,45
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,alliance,177
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,alliance,155
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,alliance,123
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,alliance,173
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,alliance,163
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,alliance,124
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,solo1,96
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA111,Đội mẫu Achieve 11,Trường mẫu 1,Vietnam,MS,solo2,57
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,alliance,79
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,alliance,94
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,alliance,123
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,alliance,127
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,alliance,93
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,alliance,101
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,solo1,66
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,solo2,31
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA112,Đội mẫu Achieve 12,Trường mẫu 2,Vietnam,HS,solo2,34
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,alliance,157
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,alliance,190
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,alliance,210
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,alliance,187
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,alliance,165
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,solo1,135
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,solo2,92
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,solo2,97
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,alliance,188
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,alliance,209
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,alliance,193
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,alliance,171
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,alliance,166
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,alliance,193
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,solo1,127
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,solo1,129
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA105,Đội mẫu Achieve 5,Trường mẫu 5,Vietnam,MS,award,Excellence Award
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA106,Đội mẫu Achieve 6,Trường mẫu 1,Vietnam,HS,award,Tournament Champions
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA107,Đội mẫu Achieve 7,Trường mẫu 2,Vietnam,MS,award,Robot Solo Champion
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA113,Đội mẫu Achieve 13,Trường mẫu 3,Vietnam,MS,award,Design Award
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA114,Đội mẫu Achieve 14,Trường mẫu 4,Vietnam,HS,award,Think Award
+MAU-ACH-VN1,Giải mẫu Achieve Hà Nội,Achieve,2026-2027,2026-10-25,Vietnam,SEPA,yes,MAU-VNA104,Đội mẫu Achieve 4,Trường mẫu 4,Vietnam,HS,award,Judges Award
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,alliance,185
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,alliance,181
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,alliance,156
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,alliance,167
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,alliance,148
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,alliance,171
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,solo1,126
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,solo2,72
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,solo2,73
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,alliance,133
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,alliance,120
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,alliance,105
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,alliance,118
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,alliance,126
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,alliance,93
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,solo1,59
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,solo2,34
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,solo2,49
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA102,Sample Achieve CN-2,Sample School 2,China,HS,solo2,41
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA103,Sample Achieve CN-3,Sample School 3,China,MS,alliance,56
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA103,Sample Achieve CN-3,Sample School 3,China,MS,alliance,56
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA103,Sample Achieve CN-3,Sample School 3,China,MS,alliance,95
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA103,Sample Achieve CN-3,Sample School 3,China,MS,alliance,61
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA103,Sample Achieve CN-3,Sample School 3,China,MS,alliance,44
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA103,Sample Achieve CN-3,Sample School 3,China,MS,alliance,57
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA103,Sample Achieve CN-3,Sample School 3,China,MS,solo1,39
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,alliance,73
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,alliance,73
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,alliance,66
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,alliance,37
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,alliance,95
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,alliance,60
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,solo1,37
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA104,Sample Achieve CN-4,Sample School 4,China,HS,solo2,13
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,alliance,160
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,alliance,125
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,alliance,154
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,alliance,160
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,alliance,142
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,alliance,128
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,solo1,81
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,solo1,93
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,solo1,94
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,solo2,65
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,alliance,130
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,alliance,123
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,alliance,146
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,alliance,145
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,alliance,145
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,alliance,121
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,solo1,75
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA107,Sample Achieve CN-7,Sample School 2,China,MS,alliance,62
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA107,Sample Achieve CN-7,Sample School 2,China,MS,alliance,96
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA107,Sample Achieve CN-7,Sample School 2,China,MS,alliance,78
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA107,Sample Achieve CN-7,Sample School 2,China,MS,alliance,103
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA107,Sample Achieve CN-7,Sample School 2,China,MS,alliance,50
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA107,Sample Achieve CN-7,Sample School 2,China,MS,alliance,56
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA107,Sample Achieve CN-7,Sample School 2,China,MS,solo1,34
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,alliance,201
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,alliance,179
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,alliance,147
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,alliance,205
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,alliance,206
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,alliance,188
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,solo1,127
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,solo1,107
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,solo1,138
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,solo2,91
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,alliance,206
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,alliance,148
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,alliance,150
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,alliance,186
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,alliance,162
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,alliance,145
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,solo1,128
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,solo1,122
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,solo1,115
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,solo2,88
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,alliance,200
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,alliance,202
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,alliance,199
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,alliance,171
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,alliance,190
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,alliance,201
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,solo1,128
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,solo1,126
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,solo2,97
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,solo2,87
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,solo2,106
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA110,Sample Achieve CN-10,Sample School 5,China,HS,award,Excellence Award
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA101,Sample Achieve CN-1,Sample School 1,China,MS,award,Tournament Champions
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA109,Sample Achieve CN-9,Sample School 4,China,MS,award,Robot Solo Champion
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA108,Sample Achieve CN-8,Sample School 3,China,HS,award,Design Award
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA105,Sample Achieve CN-5,Sample School 5,China,MS,award,Think Award
+MAU-ACH-CN1,Sample Achieve Shanghai,Achieve,2026-2027,2026-10-17,China,Sample Partner CN,yes,MAU-CNA106,Sample Achieve CN-6,Sample School 1,China,HS,award,Judges Award
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,alliance,76
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,alliance,46
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,alliance,86
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,alliance,82
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,alliance,78
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,alliance,80
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,solo1,39
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,solo1,25
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,solo2,13
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA101,Sample ADC US-1,Sample School 1,United States,MS,solo2,21
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,alliance,53
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,alliance,86
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,alliance,50
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,alliance,80
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,alliance,77
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,alliance,79
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,solo1,36
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA102,Sample ADC US-2,Sample School 2,United States,HS,solo1,33
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,alliance,114
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,alliance,94
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,alliance,101
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,alliance,94
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,alliance,97
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,alliance,115
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,solo1,67
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,solo1,51
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,solo1,62
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,alliance,124
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,alliance,93
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,alliance,112
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,alliance,111
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,alliance,105
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,alliance,88
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,solo1,59
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,solo1,47
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,solo2,30
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,solo2,30
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,solo2,41
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,alliance,72
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,alliance,77
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,alliance,70
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,alliance,79
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,alliance,72
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,alliance,65
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,solo1,45
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,solo1,41
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,solo1,35
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,solo2,36
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,alliance,72
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,alliance,54
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,alliance,70
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,alliance,64
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,alliance,88
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,alliance,86
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,solo1,33
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,solo1,43
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,solo2,25
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,solo2,33
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA106,Sample ADC US-6,Sample School 1,United States,HS,solo2,32
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,alliance,97
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,alliance,119
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,alliance,102
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,alliance,140
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,alliance,106
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,alliance,140
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,solo1,58
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,solo1,67
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,solo2,39
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,solo2,38
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,alliance,57
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,alliance,68
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,alliance,70
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,alliance,58
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,alliance,69
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,alliance,53
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,solo1,32
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,solo1,29
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,solo1,26
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,solo2,14
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,solo2,20
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA108,Sample ADC US-8,Sample School 3,United States,HS,solo2,10
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,alliance,60
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,alliance,39
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,alliance,38
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,alliance,51
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,alliance,58
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,alliance,52
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,solo1,29
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,solo1,29
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,solo2,20
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA109,Sample ADC US-9,Sample School 4,United States,MS,solo2,21
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,alliance,83
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,alliance,86
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,alliance,99
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,alliance,69
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,alliance,92
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,alliance,101
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,solo1,39
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,solo1,46
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,solo1,52
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,solo2,36
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,solo2,26
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA107,Sample ADC US-7,Sample School 2,United States,MS,award,Excellence Award
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA103,Sample ADC US-3,Sample School 3,United States,MS,award,Teamwork Champions
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA104,Sample ADC US-4,Sample School 4,United States,HS,award,Piloting Skills Champion
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA110,Sample ADC US-10,Sample School 5,United States,HS,award,Design Award
+MAU-ADC-US1,Sample ADC Louisiana,ADC,2026-2027,2026-10-21,United States,Sample Partner US,yes,MAU-USA105,Sample ADC US-5,Sample School 5,United States,MS,award,Judges Award

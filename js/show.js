@@ -108,7 +108,7 @@
   function paintFrame() {
     var e = B.event, a = B.assets || {};
     document.title = e.name + ' · EventSTEM Show';
-    $id('shName').textContent = e.name;
+    $id('shName').innerHTML = (S.rehearsal ? '<span class="show-rh">' + tr('REHEARSAL', 'TẬP DƯỢT') + '</span> ' : '') + esc(e.name);
     $id('shSub').textContent = [fmtDate(e.date), e.location, e.organizer_name].filter(Boolean).join(' · ');
     $id('shOrg').innerHTML = a.organizer ? '<img src="' + esc(a.organizer) + '" alt="' + esc(e.organizer_name || '') + '">' : '';
     $id('shSpons').innerHTML = (a.sponsors || []).map(function (x) { return '<img src="' + esc(x.src) + '" alt="' + esc(x.name || '') + '" title="' + esc(x.name || '') + '">'; }).join('');

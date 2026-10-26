@@ -181,3 +181,6 @@ body.show.idle{cursor:none} body.show.idle .show-ctl{opacity:0;pointer-events:no
 .ev-logo{max-height:56px;max-width:180px;object-fit:contain;background:#fff;border-radius:6px;padding:4px 8px;border:1px solid var(--line)}
 .spons{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}
 .spons img{height:44px;max-width:140px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+/* Tập dượt */
+.banner.rehearsal{background:color-mix(in srgb,var(--warn) 14%,var(--surface));border-color:var(--warn)}
+.show-rh{font-size:.5em;vertical-align:middle;background:#b7791f;color:#fff;border-radius:.3em;padding:.1em .5em;letter-spacing:1px}

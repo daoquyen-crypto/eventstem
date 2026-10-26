@@ -27,7 +27,10 @@
   /* ---------- header ---------- */
   function paintHeader() {
     var w = $id('who');
-    if (me) {
+    if (S.rehearsal) {
+      w.hidden = false;
+      w.innerHTML = '<span class="tag" style="background:var(--warn);color:#fff">' + tr('REHEARSAL', 'TẬP DƯỢT') + '</span> <a href="manage.html" style="color:inherit">' + tr('Exit rehearsal', 'Thoát tập dượt') + '</a>';
+    } else if (me) {
       w.hidden = false;
       w.innerHTML = '<a href="#account" style="color:inherit">' + esc(me.profile.display_name || me.email) + '</a>' + (isSA() ? ' <span class="tag" style="background:var(--signal);color:#fff">SEPA</span>' : '') +
         '<button type="button" id="signOut">' + tr('Sign out', 'Đăng xuất') + '</button>';
@@ -35,6 +38,17 @@
     } else w.hidden = true;
     var d = $id('demoBanner');
     d.hidden = S.mode !== 'demo';
+    if (S.rehearsal) {
+      var inEv = /^#e\//.test(location.hash);
+      d.className = 'banner demo rehearsal';
+      d.innerHTML = tr('<b>Rehearsal.</b> Practice running a tournament: everything stays in this browser, nothing is saved to EventSTEM or shown publicly. The public page and show screen opened from here are practice copies too.',
+        '<b>Tập dượt.</b> Luyện tổ chức giải: mọi thứ chỉ nằm trong trình duyệt này, không lưu lên EventSTEM, không ai khác thấy. Trang công khai và màn hình trình chiếu mở từ đây cũng là bản tập.') +
+        '<div class="row" style="margin-top:6px">' + (inEv ? '<button type="button" class="btn sm" id="rhFill">🎲 ' + tr('Fill random scores', 'Điền điểm ngẫu nhiên') + '</button>' : '') +
+        '<button type="button" class="btn sm danger" id="rhReset">' + tr('Clear all rehearsal data', 'Xoá toàn bộ dữ liệu tập') + '</button></div>';
+      if ($id('rhFill')) $id('rhFill').onclick = fillRandom;
+      $id('rhReset').onclick = function () { if (confirm(tr('Delete all rehearsal events in this browser?', 'Xoá toàn bộ giải tập trong trình duyệt này?'))) S.resetDemo().then(function () { B = null; location.hash = ''; route(); }); };
+      return;
+    }
     if (S.mode === 'demo') d.innerHTML = tr('<b>Demo mode.</b> Data is saved only in this browser. The first account you create becomes the SEPA admin. To go live, connect Supabase (see docs/SUPABASE_SETUP.md).',
       '<b>Chế độ demo.</b> Dữ liệu chỉ lưu trong trình duyệt này. Tài khoản tạo đầu tiên là quản trị SEPA. Để chạy thật, kết nối Supabase (xem docs/SUPABASE_SETUP.md).') +
       ' <button type="button" class="linkbtn" id="resetDemo">' + tr('Reset demo data', 'Xoá dữ liệu demo') + '</button>';
@@ -75,7 +89,10 @@
         '<label class="f"><span>' + tr('Password', 'Mật khẩu') + '</span><input type="password" id="liPw" required autocomplete="current-password"></label>' +
         '<div class="spread"><button class="btn pri" type="submit">' + tr('Sign in', 'Đăng nhập') + '</button>' +
         (S.mode === 'supabase' ? '<button type="button" class="linkbtn" id="forgot">' + tr('Forgot password?', 'Quên mật khẩu?') + '</button>' : '') + '</div></form>') +
-      '</div><p class="small mut">' + tr('Just want to follow a tournament? No account needed: ', 'Chỉ muốn xem giải? Không cần tài khoản: ') + '<a href="event.html">' + tr('see live events', 'xem giải trực tiếp') + '</a>.</p></div>';
+      '</div><div class="card"><b>🎓 ' + tr('Want to practice first?', 'Muốn luyện tập trước?') + '</b><p class="small mut" style="margin:4px 0 8px">' +
+        tr('Rehearse a whole tournament with sample teams: schedule, scoring, finals, awards and the show screen. No account needed, nothing is published.', 'Tập dượt trọn một giải với đội mẫu: lịch, chấm điểm, chung kết, giải thưởng và màn hình trình chiếu. Không cần tài khoản, không công bố gì.') +
+        '</p><a class="btn" href="manage.html?rehearsal=1">' + tr('Start a rehearsal', 'Bắt đầu tập dượt') + '</a></div>' +
+      '<p class="small mut">' + tr('Just want to follow a tournament? No account needed: ', 'Chỉ muốn xem giải? Không cần tài khoản: ') + '<a href="event.html">' + tr('see live events', 'xem giải trực tiếp') + '</a>.</p></div>';
     var f = $id('fLogin');
     if (f) f.onsubmit = function (ev) {
       ev.preventDefault(); var b = f.querySelector('button[type=submit]'); busy(b, true);
@@ -149,12 +166,57 @@
       '<span class="pill s-' + esc(e.status) + '">' + esc(statusName(e.status)) + '</span></a>';
   }
   function renderHome() {
-    app.innerHTML = adminTabs('home') + '<div class="spread" style="margin-bottom:12px"><h2 class="t" style="margin:0">' + tr('My events', 'Giải của tôi') + '</h2><a class="btn acc" href="#new">+ ' + tr('New event', 'Tạo giải') + '</a></div><div id="myList" class="ev-list"><p class="empty">…</p></div>';
+    if (S.rehearsal) return renderRehearsalHome();
+    app.innerHTML = adminTabs('home') + '<div class="spread" style="margin-bottom:12px"><h2 class="t" style="margin:0">' + tr('My events', 'Giải của tôi') + '</h2><div class="row">' +
+      '<a class="btn" href="manage.html?rehearsal=1" target="_blank" rel="noopener">🎓 ' + tr('Rehearsal', 'Tập dượt') + '</a><a class="btn acc" href="#new">+ ' + tr('New event', 'Tạo giải') + '</a></div></div><div id="myList" class="ev-list"><p class="empty">…</p></div>';
     pendingBadge();
     S.listMyEvents().then(function (list) {
       $id('myList').innerHTML = list.length ? list.map(function (e) { return eventItem(e, '#e/' + e.id); }).join('')
         : '<div class="card"><p style="margin:0">' + tr('You have not created any events yet. Start with ', 'Bạn chưa tạo giải nào. Bắt đầu bằng ') + '<a href="#new">' + tr('New event', 'Tạo giải') + '</a>.</p></div>';
     }).catch(fail);
+  }
+
+  /* ---------- Tập dượt ---------- */
+  var SAMPLE = ['Robo Stars', 'Sao Mai', 'Phoenix', 'Thunder', 'Lotus', 'Dragon', 'Galaxy', 'Rocket', 'Comet', 'Falcon', 'Tiger', 'Orbit', 'Nova', 'Bamboo', 'Zenith', 'Atlas', 'Pixel', 'Quantum', 'Spark', 'Voyager', 'Kite', 'Delta', 'Echo', 'Iris'];
+  function renderRehearsalHome() {
+    app.innerHTML = '<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start"><form class="card" id="fPractice"><h3 style="margin-top:0">🎓 ' + tr('New practice event', 'Tạo giải tập') + '</h3>' +
+      '<p class="small mut" style="margin-top:0">' + tr('Creates an event with sample teams so you can try every step. To rehearse a real event with its own team list, open it in the organizer tool and press "Rehearse this event".',
+        'Tạo 1 giải có sẵn đội mẫu để thử mọi bước. Muốn tập với danh sách đội của giải thật, mở giải đó trong công cụ tổ chức và bấm "Tập dượt giải này".') + '</p>' +
+      '<label class="f"><span>' + tr('Program and rules', 'Chương trình và luật') + '</span><select id="prProg">' + Rules.CHOICES.map(function (x) { return '<option value="' + x.key + '">' + esc(tr(x.en, x.vi)) + '</option>'; }).join('') + '</select></label>' +
+      '<label class="f"><span>' + tr('Number of sample teams', 'Số đội mẫu') + '</span><input type="number" id="prTeams" min="4" max="24" value="12"></label>' +
+      '<div class="row" style="margin-top:10px"><button class="btn acc" type="submit">' + tr('Create practice event', 'Tạo giải tập') + '</button><a class="btn" href="#new">' + tr('Blank event', 'Giải trống') + '</a></div></form>' +
+      '<div><h3 class="t" style="margin-top:0">' + tr('Practice events', 'Các giải tập') + '</h3><div id="myList" class="ev-list"><p class="empty">…</p></div></div></div>';
+    S.listMyEvents().then(function (list) {
+      $id('myList').innerHTML = list.length ? list.map(function (e) { return eventItem(e, '#e/' + e.id); }).join('') : '<p class="empty">' + tr('No practice events yet.', 'Chưa có giải tập nào.') + '</p>';
+    }).catch(fail);
+    $id('fPractice').onsubmit = function (ev) {
+      ev.preventDefault();
+      var ch = Rules.CHOICES.find(function (x) { return x.key === val('prProg'); }), RR = Rules.byId[ch.ruleset], n = Math.max(4, Math.min(24, num('prTeams', 12)));
+      var g = RR.grades, pre = ch.program === 'ADC' ? 'DR' : ch.program === 'Achieve' ? 'PA' : 'PE';
+      var teams = SAMPLE.slice(0, n).map(function (nm, i) { return { number: pre + (101 + i) + (ch.program === 'ADC' ? '' : 'A'), name: nm, org: tr('Practice school ', 'Trường tập ') + (i % 4 + 1), grade: g[i % g.length], country: 'Vietnam' }; });
+      S.createEvent({ name: tr('Practice: ', 'Tập dượt: ') + tr(ch.en, ch.vi), program: ch.program, ruleset: ch.ruleset, date: new Date().toISOString().slice(0, 10), status: 'draft', grades: g,
+        location: tr('Practice', 'Tập dượt'), config: { matchesPerTeam: RR.cfg({}).matchesPerTeam, soloAttempts: RR.cfg({}).soloAttempts, fields: 2, start: '09:00', cycleMin: RR.cfg({}).cycleMin, minGap: 1 } })
+        .then(function (e) { return S.upsertTeams(e.id, teams).then(function () { toast(tr('Practice event created', 'Đã tạo giải tập')); go('#e/' + e.id + '/schedule'); }); }).catch(fail);
+    };
+  }
+  /* Điền điểm ngẫu nhiên cho các trận vòng loại chưa chấm và 1 lượt mỗi loại Solo, để tập nhanh tới chung kết */
+  function fillRandom() {
+    if (!B) return;
+    var e = B.event, vs = versus(), per = R().soloPerKind, rnd = function (a, b) { return a + Math.floor(Math.random() * (b - a + 1)); };
+    var open = qual().filter(function (m) { return !(m.score != null && scored(m)); });
+    var done = {}; B.solo.forEach(function (r) { done[r.team + '|' + r.kind] = 1; });
+    var jobs = open.map(function (m) { return function () { return S.updateMatch(m.id, vs ? { score: rnd(10, 80), score_blue: rnd(10, 80), auto_red: Math.random() < 0.3, auto_blue: Math.random() < 0.3 } : { score: rnd(20, 120) }); }; });
+    B.teams.forEach(function (t) {
+      ['driving', 'coding'].forEach(function (k) { if (!done[t.number + '|' + k]) jobs.push(function () { return S.addSolo(e.id, { team: t.number, kind: k, score: rnd(5, 90), stop_time: null }); }); });
+    });
+    if (!jobs.length) return toast(tr('Nothing left to fill.', 'Không còn gì để điền.'));
+    jobs.reduce(function (p, j) { return p.then(j); }, Promise.resolve())
+      .then(function () { toast(open.length + tr(' matches and solo runs filled', ' trận và các lượt Solo đã được điền')); return refresh(); }).catch(fail);
+  }
+  /* Từ giải thật: chép cài đặt + đội + logo sang kho tập dượt rồi mở trong tab mới */
+  function rehearseThis() {
+    var id = Rehearsal.seedFrom(B);
+    window.open('manage.html?rehearsal=1#e/' + id + '/schedule', '_blank', 'noopener');
   }
 
   /* ---------- form giải (tạo mới + tổng quan) ---------- */
@@ -258,8 +320,8 @@
       app.innerHTML = '<div class="spread no-print"><div><a class="small mut" href="#">← ' + tr('My events', 'Giải của tôi') + '</a>' +
         '<h2 class="t" style="margin:4px 0 2px">' + esc(e.name) + '</h2><div class="small mut">' + esc(fmtDate(e.date)) + (e.location ? ' · ' + esc(e.location) : '') +
         ' · <span class="pill s-' + esc(e.status) + '">' + esc(statusName(e.status)) + '</span>' + (e.verified ? ' <span style="color:var(--ok)">✓ ' + tr('Verified by SEPA', 'SEPA đã xác minh') + '</span>' : '') + '</div></div>' +
-        '<div class="row"><a class="btn" href="show.html?id=' + esc(e.id) + '" target="_blank" rel="noopener">' + tr('Show screen ↗', 'Trình chiếu ↗') + '</a>' +
-        '<a class="btn" href="event.html?id=' + esc(e.id) + '" target="_blank" rel="noopener">' + tr('Public page ↗', 'Trang công khai ↗') + '</a></div></div>' +
+        '<div class="row"><a class="btn" href="' + esc(Rehearsal.url('show.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Show screen ↗', 'Trình chiếu ↗') + '</a>' +
+        '<a class="btn" href="' + esc(Rehearsal.url('event.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Public page ↗', 'Trang công khai ↗') + '</a></div></div>' +
         '<div class="tabs" role="tablist" style="margin-top:12px">' + TABS.map(function (t) {
           var lb = t[0] === 'finals' && (Rules.of(e).format === 'versus' || Rules.of(e).eliminations === 'rounds') ? tr('Eliminations', 'Loại trực tiếp') : tr(t[1], t[2]);
           return '<a role="tab" href="#e/' + esc(e.id) + '/' + t[0] + '" aria-selected="' + (t[0] === tab) + '">' + esc(lb) + '</a>'; }).join('') + '</div><div id="pane"></div>';
@@ -294,10 +356,14 @@
       '<button class="btn pri" id="saveStatus" type="button">' + tr('Update', 'Cập nhật') + '</button></div>' +
       '<p class="small mut">' + tr('Draft: only you. Published / Live / Completed: anyone can see teams, schedule, scores and rankings on the public page.', 'Nháp: chỉ bạn thấy. Đã công bố / Đang diễn ra / Đã kết thúc: ai cũng xem được đội, lịch, điểm và xếp hạng ở trang công khai.') + '</p>' +
       (isSA() ? '<label class="ck"><input type="checkbox" id="evVerified"' + (e.verified ? ' checked' : '') + '> <b>' + tr('SEPA: verified, include in global rankings', 'SEPA: đã xác minh, tính vào xếp hạng toàn cầu') + '</b></label>' : '') +
-      '</div><div class="card"><h3 style="margin-top:0">' + tr('Checklist', 'Các bước') + '</h3><ol style="margin:0;padding-left:20px">' + steps.map(function (s) {
+      '</div>' + (S.rehearsal ? '' : '<div class="card"><h3 style="margin-top:0">🎓 ' + tr('Rehearsal', 'Tập dượt') + '</h3><p class="small mut" style="margin-top:0">' +
+        tr('Practice this event before the day: copies its settings, teams and logos into a private rehearsal (no matches or scores). The real event is not changed.', 'Luyện trước ngày thi: chép cài đặt, danh sách đội và logo của giải này sang bản tập riêng (không chép trận và điểm). Giải thật không bị thay đổi.') +
+        '</p><button class="btn" id="rhThis" type="button">' + tr('Rehearse this event ↗', 'Tập dượt giải này ↗') + '</button></div>') +
+      '<div class="card"><h3 style="margin-top:0">' + tr('Checklist', 'Các bước') + '</h3><ol style="margin:0;padding-left:20px">' + steps.map(function (s) {
         return '<li style="margin:4px 0">' + (s[0] ? '✅ ' : '⬜ ') + '<a href="#e/' + esc(e.id) + '/' + s[2] + '">' + esc(s[1]) + '</a>' + (s[3] ? ' <span class="small mut">(' + esc(s[3]) + ')</span>' : '') + '</li>'; }).join('') + '</ol></div></div>' +
       '<form class="card" id="fEv"><h3 style="margin-top:0">' + tr('Event details', 'Thông tin giải') + '</h3>' + eventForm(e) +
       '<div class="spread" style="margin-top:16px"><button class="btn pri" type="submit">' + tr('Save changes', 'Lưu thay đổi') + '</button><button class="btn danger" type="button" id="delEv">' + tr('Delete event', 'Xoá giải') + '</button></div></form></div>');
+    if ($id('rhThis')) $id('rhThis').onclick = rehearseThis;
     $id('saveStatus').onclick = function () {
       var f = { status: val('evStatus') }; if (isSA()) f.verified = $id('evVerified').checked;
       S.updateEvent(e.id, f).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail);
@@ -780,7 +846,7 @@
     var e = B.event, a = B.assets || { organizer: null, sponsors: [] }, sh = (e.config || {}).show || {}, on = sh.slides || {};
     var SL = [['next', tr('Up next & latest results', 'Trận sắp đánh & kết quả mới')], ['rank', tr('Alliance / qualification rankings', 'Xếp hạng Alliance / vòng loại')], ['solo', tr('Solo rankings', 'Xếp hạng Solo')],
       ['elim', tr('Finals / eliminations', 'Chung kết / loại trực tiếp')], ['awards', tr('Awards', 'Giải thưởng')], ['sponsors', tr('Sponsors', 'Nhà tài trợ')]];
-    var url = location.href.replace(/manage\.html.*$/, 'show.html?id=' + e.id);
+    var url = location.href.replace(/manage\.html.*$/, Rehearsal.url('show.html?id=' + e.id));
     pane('<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start"><div>' +
       '<div class="card"><h3 style="margin-top:0">' + tr('Organizer logo', 'Logo đơn vị tổ chức') + '</h3>' +
       '<p class="small mut" style="margin-top:0">' + tr('Shown on the public page and the show screen. PNG with a transparent background works best; the image is resized automatically.', 'Hiện ở trang công khai và màn hình trình chiếu. Nên dùng PNG nền trong suốt; ảnh được tự thu nhỏ.') + '</p>' +
@@ -802,7 +868,7 @@
       '<div class="f"><span>' + tr('Slides', 'Các màn') + '</span>' + SL.map(function (x) { return '<label class="ck"><input type="checkbox" name="slide" value="' + x[0] + '"' + (on[x[0]] !== false ? ' checked' : '') + '> ' + esc(x[1]) + '</label>'; }).join('<br>') + '</div>' +
       '<div class="grid2" style="margin-top:8px"><label class="f"><span>' + tr('Seconds per slide', 'Số giây mỗi màn') + '</span><input type="number" id="shSec" min="4" max="120" value="' + (sh.seconds || 12) + '"></label>' +
       '<label class="f"><span>' + tr('Rows per ranking slide', 'Số dòng mỗi màn xếp hạng') + '</span><input type="number" id="shRows" min="5" max="20" value="' + (sh.rows || 10) + '"></label></div>' +
-      '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">' + tr('Save', 'Lưu') + '</button><a class="btn acc" id="openShow" href="show.html?id=' + esc(e.id) + '" target="_blank" rel="noopener">' + tr('Open show screen ↗', 'Mở màn hình trình chiếu ↗') + '</a></div>' +
+      '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">' + tr('Save', 'Lưu') + '</button><a class="btn acc" id="openShow" href="' + esc(Rehearsal.url('show.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Open show screen ↗', 'Mở màn hình trình chiếu ↗') + '</a></div>' +
       '<p class="small mut">' + tr('Link: ', 'Đường dẫn: ') + '<code style="word-break:break-all">' + esc(url) + '</code></p></form></div>');
 
     var save = function (next) { return S.saveAssets(e.id, next).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail); };

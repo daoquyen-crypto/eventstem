@@ -61,3 +61,4 @@ jobs:
           node tests/e2e_achieve.js
           node tests/e2e_adc.js
           node tests/e2e_show.js
+          node tests/e2e_rehearsal.js

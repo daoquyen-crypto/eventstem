@@ -132,13 +132,23 @@
   function assetsOf(r) { return { organizer: (r && r.organizer) || null, sponsors: (r && r.sponsors) || [] }; }
   /* Giống ràng buộc is_image_data / valid_sponsors trong schema.sql */
   function validImage(t) { return t == null || (/^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(t) && t.length <= 400000); }
-  function DemoStore() {
-    var KEY = 'eventstem-demo-v1', mem = null;
+  function emptyData() { return { users: [], session: null, settings: { id: 1, auto_approve_mode: 'off', auto_approve_domains: [] }, events: [], teams: [], matches: [], solo_runs: [], awards: [], event_assets: [] }; }
+  /* Tập dượt: tự đăng nhập bằng 1 tài khoản ban tổ chức (đã duyệt), không cần đăng ký */
+  var PRACTICE_USER = { id: 'rehearsal-organizer', email: 'rehearsal@eventstem.local', pw: '', display_name: 'Rehearsal', organization: '', country: '', role: 'organizer', status: 'approved', created_at: '2026-01-01T00:00:00Z' };
+  function rehearsalData(d) {
+    d = d || emptyData();
+    if (!d.users.some(function (u) { return u.id === PRACTICE_USER.id; })) d.users.push(JSON.parse(JSON.stringify(PRACTICE_USER)));
+    d.session = PRACTICE_USER.id;
+    return d;
+  }
+  function DemoStore(KEY, rehearsal) {
+    var mem = null;
     function load() {
       if (mem) return mem;
       try { mem = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (x) { mem = null; }
-      if (!mem) mem = { users: [], session: null, settings: { id: 1, auto_approve_mode: 'off', auto_approve_domains: [] }, events: [], teams: [], matches: [], solo_runs: [], awards: [] };
+      if (!mem) mem = emptyData();
       if (!mem.event_assets) mem.event_assets = [];
+      if (rehearsal) rehearsalData(mem);
       return mem;
     }
     function save() { try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (x) {} }
@@ -162,7 +172,7 @@
     function emit() { listeners.forEach(function (cb) { cb(meObj()); }); }
 
     return {
-      mode: 'demo',
+      mode: 'demo', rehearsal: !!rehearsal,
       session: function () { return ok(meObj()); },
       onAuth: function (cb) { listeners.push(cb); },
       /* Demo: tài khoản đầu tiên là SEPA (superadmin) để thử được mọi chức năng; các tài khoản sau theo chế độ duyệt */
@@ -350,5 +360,27 @@
     };
   }
 
-  window.Store = C.supabaseUrl && C.supabaseAnonKey && window.supabase ? SupabaseStore() : DemoStore();
+  /* Chế độ tập dượt (?rehearsal=1): kho riêng trong trình duyệt, không bao giờ ghi lên Supabase, không hiện công khai.
+     Rehearsal.seedFrom(bundle) chép giải thật (cài đặt, đội, logo; không chép trận và điểm) vào kho tập dượt. */
+  var REHEARSAL_KEY = 'eventstem-rehearsal-v1', IS_REHEARSAL = /[?&]rehearsal=1(&|#|$)/.test(location.search);
+  window.Rehearsal = {
+    on: IS_REHEARSAL, KEY: REHEARSAL_KEY,
+    /* thêm ?rehearsal=1 vào đường dẫn nội bộ khi đang tập dượt */
+    url: function (u) { if (!IS_REHEARSAL) return u; var h = u.indexOf('#'), base = h < 0 ? u : u.slice(0, h), hash = h < 0 ? '' : u.slice(h);
+      return base + (base.indexOf('?') < 0 ? '?' : '&') + 'rehearsal=1' + hash; },
+    seedFrom: function (b) {
+      var d; try { d = JSON.parse(localStorage.getItem(REHEARSAL_KEY) || 'null'); } catch (x) { d = null; }
+      d = rehearsalData(d || emptyData());
+      var id = b.event.id, cfg = Object.assign({}, b.event.config); delete cfg.selection;
+      ['events', 'teams', 'matches', 'solo_runs', 'awards', 'event_assets'].forEach(function (t) { d[t] = d[t].filter(function (x) { return (t === 'events' ? x.id : x.event_id) !== id; }); });
+      d.events.push(Object.assign({}, b.event, { owner: PRACTICE_USER.id, status: 'draft', verified: false, config: cfg, name: b.event.name, updated_at: new Date().toISOString() }));
+      (b.teams || []).forEach(function (t) { d.teams.push(Object.assign({}, t, { event_id: id, checked_in: false, inspected: false, excluded: false })); });
+      if (b.assets && (b.assets.organizer || (b.assets.sponsors || []).length)) d.event_assets.push({ event_id: id, organizer: b.assets.organizer || null, sponsors: b.assets.sponsors || [] });
+      localStorage.setItem(REHEARSAL_KEY, JSON.stringify(d));
+      return id;
+    },
+    reset: function () { try { localStorage.removeItem(REHEARSAL_KEY); } catch (x) {} }
+  };
+  window.Store = IS_REHEARSAL ? DemoStore(REHEARSAL_KEY, true)
+    : C.supabaseUrl && C.supabaseAnonKey && window.supabase ? SupabaseStore() : DemoStore('eventstem-demo-v1', false);
 })();

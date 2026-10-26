@@ -32,7 +32,8 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 | `js/engage.js` | Luật **RECF Engage: Tier Takeover** (Game Manual v2.0) |
 | `js/achieve.js` | Luật **RECF Achieve: Pinnacle** (Game Manual v2.0): 2 đấu 2, ranking points, chọn liên minh, nhánh loại trực tiếp |
 | `js/adc.js` | Luật **RECF ADC Mission 2027: Fast Track** (Game Manual v1.1): Alliance hợp tác như Engage, Solo 3 Piloting + 3 Autonomous, chọn liên minh, loại trực tiếp theo vòng (tứ kết → bán kết → chung kết, `eliminations: 'rounds'`) |
-| `js/rules.js` | `Rules.of(event)` chọn bộ luật theo `event.ruleset` (`engage-2026` / `achieve-2026` / `adc-2027`). Giao diện chỉ gọi qua lớp này |
+| `js/adcpro.js` | Luật **RECF ADC Pro Mission 2026-2027: Off Grid** (Game Manual v2.0): 2 đấu 2 như Achieve (dùng lại lịch, chọn liên minh, nhánh đấu), nhưng ranking points chỉ có thắng 2 / hoà 1 (5.5), Solo tổng 5 lượt chia tuỳ ý giữa Piloting và Autonomous, cấp HS + đại học, bảng điểm thành phần 3.1 / 4.2 / 5.1 |
+| `js/rules.js` | `Rules.of(event)` chọn bộ luật theo `event.ruleset` (`engage-2026` / `achieve-2026` / `adc-2027` / `adcpro-2027`). Giao diện chỉ gọi qua lớp này. Cờ trong mỗi bộ luật: `format` (`coop` / `versus`), `eliminations: 'rounds'` (ADC), `soloPerKind` (ADC), `rpBonus` (Achieve: có Autonomous / Endgame RP), `scoring` (module có `SHEETS` / `calc` / `describe` cho nút 🧮: ADC, ADC Pro) |
 | `js/store.js` | Lưu dữ liệu, cùng một giao diện cho `SupabaseStore` và `DemoStore`. Bản demo phải áp đúng các ràng buộc của `schema.sql` |
 | `js/views.js` | Bảng dùng chung cho 2 trang (lịch trận, xếp hạng, nhánh đấu) |
 | `js/geo.js` | Đoán quốc gia người xem (quốc gia đã chọn trước → múi giờ → ngôn ngữ trình duyệt), không gửi gì ra ngoài. Dùng cho dải "Giải gần bạn" ở trang chủ và ô quốc gia mặc định |
@@ -63,12 +64,13 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 ## Kiểm thử (chạy trước mỗi PR)
 
 ```bash
-node --test tests/*.test.js                       # luật Engage + Achieve + ADC
+node --test tests/*.test.js                       # luật Engage + Achieve + ADC + ADC Pro
 PGHOST=... PGPORT=... bash tests/schema_test.sh   # schema + RLS trên Postgres thường (giả lập Supabase bằng tests/supabase_stub.sql)
 python3 -m http.server 8767 &                     # rồi:
 node tests/e2e_manage.js                          # E2E luồng Engage (chế độ demo)
 node tests/e2e_achieve.js                         # E2E luồng Achieve (chế độ demo)
 node tests/e2e_adc.js                             # E2E luồng ADC (chế độ demo)
+node tests/e2e_adc_pro.js                         # E2E luồng ADC Pro, nhập điểm thành phần (chế độ demo)
 node tests/e2e_show.js                            # E2E logo + màn hình trình chiếu (chế độ demo)
 node tests/e2e_rehearsal.js                       # E2E chế độ tập dượt
 node tests/e2e_home.js                            # E2E trang chủ: "Giải gần bạn" theo quốc gia
@@ -88,7 +90,8 @@ node tests/e2e_home.js                            # E2E trang chủ: "Giải g�
 
 - SEPA chưa cài **SMTP** riêng cho email xác nhận của Supabase. Email mặc định bị giới hạn vài thư mỗi giờ.
 - Chưa chạy một giải thật đầy đủ trên Supabase thật. Lần đầu dùng nên theo dõi lỗi.
-- Chưa có luật **Inspire** và **ADC Pro**. Nếu cần, xin SEPA file Game Manual PDF.
+- Chưa có luật **Inspire**. Nếu cần, xin SEPA file Game Manual PDF.
+- ADC Pro: điểm thành phần trận Alliance lưu ở `matches.detail = {red, blue}`; kiểm tra chéo tổng pump ≤ 3, fuel ≤ 36 (`ADCPro.matchIssues`). Thẻ đỏ ở vòng loại: đối thủ giữ kết quả thật (1.6.3 ghi "actual score"), khác Achieve. Thẻ đỏ ở mọi trận loại trực tiếp: cả liên minh 0 điểm (dùng lại Achieve; 1.6.3 chỉ ghi "finals matches"). Chung kết bo3 có trận hoà: dùng cách của Achieve. Ba điểm này cần SEPA xác nhận.
 - ADC: chỗ nào Game Manual chưa rõ thì để thành **tuỳ chọn của ban tổ chức** trong `event.config` (xem `ADC.DEFAULTS`): `scoreEntry` (điểm tổng / điểm thành phần), `goals` (số goal, mặc định 4), `stopTimeTiebreak`, `finalTie` (`replay` / `seed`). Danh sách gợi ý giải giám khảo vẫn là của Engage (chưa có ADC Guide to Judging); ô tên giải nhập tự do.
 - `tests/e2e_manage.js` đôi khi hỏng chập chờn ở bước `#pendBadge .pill` (có từ trước khi có ADC; chạy lại thì qua).
 - Giải Achieve 8 đội: lịch vẫn có vài trận một đội phải đánh 2 lượt liền nhau. Không tránh được khi vừa muốn không gặp lại đồng đội vừa có ít đội.

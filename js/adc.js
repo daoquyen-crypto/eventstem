@@ -39,16 +39,19 @@
      Mỗi mục: [khoá, điểm mỗi lần, số lần tối đa (0 = không giới hạn), tên EN, tên VI]. Hạ cánh là 1 lựa chọn duy nhất. */
   var SHEETS = {
     alliance: {
+      title: ['Alliance match (5.1)', 'Trận Alliance (5.1)'], choice: ['Landing (5.1.6)', 'Hạ cánh (5.1.6)'], goals: true,
       items: [['zone', 1, 0, 'Balls in a scoring zone', 'Bóng trong vùng ghi điểm'], ['bags', 10, 2, 'Bean bags cleared', 'Túi đậu đã gạt'],
         ['paths', 10, 2, 'Completed flight paths (1 per drone)', 'Đường bay hoàn thành (1 mỗi drone)']],
       landing: [['large', 15, 'Drone on the large cube', 'Drone trên khối lớn'], ['small', 20, 'Drone on the small cube', 'Drone trên khối nhỏ']], multiLanding: true
     },
     driving: {
+      title: ['Piloting (3.1)', 'Piloting (3.1)'], choice: ['Landing (3.1.12–3.1.15)', 'Hạ cánh (3.1.12–3.1.15)'],
       items: [['takeoff', 5, 1, 'Take off', 'Cất cánh'], ['p1', 5, 0, 'Phase 1 completed', 'Hoàn thành phase 1'], ['p2', 10, 0, 'Phase 2 completed', 'Hoàn thành phase 2'],
         ['p3', 15, 0, 'Phase 3 completed', 'Hoàn thành phase 3'], ['p4', 10, 0, 'Phase 4 completed', 'Hoàn thành phase 4']],
       landing: [['pad', 5, 'Landing pad', 'Bãi đáp'], ['cube', 10, 'Any cube', 'Trên khối'], ['bull', 15, 'Bullseye', 'Hồng tâm']]
     },
     coding: {
+      title: ['Autonomous flight (4.2)', 'Autonomous (4.2)'], choice: ['Landing (3.1.12–3.1.15)', 'Hạ cánh (3.1.12–3.1.15)'],
       items: [['takeoff', 5, 1, 'Take off', 'Cất cánh'], ['red', 5, 2, 'Under the red arch gate', 'Qua cổng vòm đỏ'], ['blue', 5, 2, 'Under the blue arch gate', 'Qua cổng vòm xanh'],
         ['green', 10, 2, 'Through the green keyhole', 'Qua vòng xanh lá'], ['yellow', 20, 2, 'Through the yellow keyhole', 'Qua vòng vàng'],
         ['cube', 25, 2, 'Through the large cube', 'Xuyên khối lớn'], ['m1', 15, 2, 'Mini keyhole #1 (lowest)', 'Vòng nhỏ #1 (thấp nhất)'],

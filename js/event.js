@@ -102,12 +102,13 @@
     rankings: function () {
       var c = cfg(), vs = R().format === 'versus', adc = !!R().soloPerKind, rc = R().redCards(B.matches);
       pane('<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(340px,1fr));align-items:start"><div><h3 class="t">' + (vs ? tr('Qualification rankings', 'Xếp hạng vòng loại') : tr('Alliance rankings', 'Xếp hạng Alliance')) + '</h3>' +
-        (vs ? Views.rpTable(B, rank(), rc) + '<p class="small mut">' + tr('Average ranking points per match: win 2, tie 1, plus Autonomous and Endgame RP (5.5).', 'Trung bình điểm xếp hạng mỗi trận: thắng 2, hoà 1, cộng Autonomous RP và Endgame RP (5.5).') + '</p>'
+        (vs ? Views.rpTable(B, rank(), rc) + '<p class="small mut">' + (R().rpBonus ? tr('Average ranking points per match: win 2, tie 1, plus Autonomous and Endgame RP (5.5).', 'Trung bình điểm xếp hạng mỗi trận: thắng 2, hoà 1, cộng Autonomous RP và Endgame RP (5.5).')
+          : tr('Average ranking points per match: win 2, tie 1. Ties: average match score, then highest scores (5.5).', 'Trung bình điểm xếp hạng mỗi trận: thắng 2, hoà 1. Bằng điểm: so TB điểm trận, rồi điểm cao nhất (5.5).')) + '</p>'
           : Views.allianceTable(B, rank(), rc) +
           '<p class="small mut">' + (c.dropLowest ? tr('Average after dropping each team\'s lowest score (7.4.2). ', 'Trung bình sau khi bỏ trận thấp nhất của mỗi đội (7.4.2). ') : '') +
             (adc ? tr('Ties: 2nd, then 3rd highest score (7.4.2).', 'Bằng điểm: so điểm cao thứ 2, rồi thứ 3 (7.4.2).') : tr('Ties: 2nd, 3rd, 4th highest score (7.4.4).', 'Bằng điểm: so điểm cao thứ 2, 3, 4 (7.4.4).')) + '</p>') + '</div>' +
         '<div><h3 class="t">' + tr('Solo rankings', 'Xếp hạng Solo') + '</h3>' + Views.soloTable(B, R().solo(B.solo), c.soloAttempts * (adc ? 2 : 1)) +
-        '<p class="small mut">' + (adc ? tr('Best piloting + best autonomous flight score (3.5).', 'Piloting cao nhất + Autonomous cao nhất (3.5).') : tr('Best driving + best coding (3.5).', 'Driving cao nhất + Coding cao nhất (3.5).')) + '</p></div></div>');
+        '<p class="small mut">' + (R().solo2[0] === 'Piloting' ? tr('Best piloting + best autonomous score (3.5).', 'Piloting cao nhất + Autonomous cao nhất (3.5).') : tr('Best driving + best coding (3.5).', 'Driving cao nhất + Coding cao nhất (3.5).')) + '</p></div></div>');
     },
     schedule: function () {
       var q = B.matches.filter(function (m) { return m.round === 'qual'; }).sort(function (a, b) { return a.num - b.num; });

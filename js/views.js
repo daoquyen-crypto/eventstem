@@ -21,14 +21,21 @@
   function pair(m, side) {
     return teamCell(m[side], side, m[side + '_counts']) + stTag(m[side + '_status']) + (m[side + '2'] ? '<br>' + teamCell(m[side + '2'], side, m[side + '2_counts']) + stTag(m[side + '2_status']) : '');
   }
+  /* Điểm thành phần (ADC / ADC Pro) hiện khi rê chuột vào điểm */
+  function scoreTitle(m, side) {
+    var X = B && B.event && Rules.of(B.event).scoring, d = m.detail;
+    if (!X || !d) return '';
+    if (side) d = d[side];
+    return d ? ' title="' + esc(X.describe('alliance', d, I18N.lang !== 'vi')) + '"' : '';
+  }
   function versusTable(list, opts) {
     return '<div class="tbl"><table><thead><tr><th>#</th><th class="hide-sm">' + tr('Time', 'Giờ') + '</th><th>' + tr('Red alliance', 'Liên minh đỏ') + '</th><th class="n">' + tr('Red', 'Đỏ') + '</th><th class="n">' + tr('Blue', 'Xanh') + '</th><th>' + tr('Blue alliance', 'Liên minh xanh') + '</th></tr></thead><tbody>' +
       list.map(function (m) {
         var done = m.score != null && m.score_blue != null, rw = done && m.score > m.score_blue, bw = done && m.score_blue > m.score;
         return '<tr' + (done ? ' class="done"' : '') + ' data-hl="' + esc([m.red, m.red2, m.blue, m.blue2].filter(Boolean).join(' ')) + '"><td class="code">' + matchCode(m, list) + '</td>' +
           '<td class="hide-sm small">' + [m.time ? esc(m.time) : '', m.field ? tr('Field ', 'Sân ') + esc(m.field) : ''].filter(Boolean).join(' · ') + '</td>' +
-          '<td>' + pair(m, 'red') + '</td><td class="n"><span class="big" style="' + (rw ? 'color:var(--red)' : '') + '">' + (m.score == null ? '' : m.score) + '</span> ' + rpTags(m, 'red') + '</td>' +
-          '<td class="n"><span class="big" style="' + (bw ? 'color:var(--blue)' : '') + '">' + (m.score_blue == null ? '' : m.score_blue) + '</span> ' + rpTags(m, 'blue') + '</td><td>' + pair(m, 'blue') + '</td></tr>';
+          '<td>' + pair(m, 'red') + '</td><td class="n"><span class="big"' + scoreTitle(m, 'red') + ' style="' + (rw ? 'color:var(--red)' : '') + '">' + (m.score == null ? '' : m.score) + '</span> ' + rpTags(m, 'red') + '</td>' +
+          '<td class="n"><span class="big"' + scoreTitle(m, 'blue') + ' style="' + (bw ? 'color:var(--blue)' : '') + '">' + (m.score_blue == null ? '' : m.score_blue) + '</span> ' + rpTags(m, 'blue') + '</td><td>' + pair(m, 'blue') + '</td></tr>';
       }).join('') + '</tbody></table></div>';
   }
   function matchTable(list, opts) {
@@ -38,7 +45,7 @@
     return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Time', 'Giờ') + '</th><th>' + tr('Field', 'Sân') + '</th><th>' + tr('Red', 'Đỏ') + '</th><th>' + tr('Blue', 'Xanh') + '</th><th class="n">' + tr('Score', 'Điểm') + '</th></tr></thead><tbody>' +
       list.map(function (m) {
         return '<tr' + (m.score != null ? ' class="done"' : '') + ' data-hl="' + esc(m.red + ' ' + m.blue) + '"><td class="code">' + matchCode(m, list) + '</td><td>' + esc(m.time || '') + '</td><td>' + esc(m.field || '') + '</td>' +
-          '<td>' + teamCell(m.red, 'red', m.red_counts) + stTag(m.red_status) + '</td><td>' + teamCell(m.blue, 'blue', m.blue_counts) + stTag(m.blue_status) + '</td><td class="n big"' + (m.detail && window.ADC ? ' title="' + esc(ADC.describe('alliance', m.detail, I18N.lang !== 'vi')) + '"' : '') + '>' + (m.score == null ? '' : m.score) + '</td></tr>';
+          '<td>' + teamCell(m.red, 'red', m.red_counts) + stTag(m.red_status) + '</td><td>' + teamCell(m.blue, 'blue', m.blue_counts) + stTag(m.blue_status) + '</td><td class="n big"' + scoreTitle(m) + '>' + (m.score == null ? '' : m.score) + '</td></tr>';
       }).join('') + '</tbody></table></div>';
   }
   function stTag(s) { return s === 'absent' ? ' <span class="tag">' + tr('absent', 'vắng') + '</span>' : s === 'red' ? ' <span class="tag" style="background:var(--bad);color:#fff">' + tr('red card', 'thẻ đỏ') + '</span>' : ''; }
@@ -53,10 +60,18 @@
     return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Team', 'Đội') + '</th><th class="n">' + tr('Played', 'Đã đánh') + '</th><th class="n" title="7.4.4">' + tr('Average', 'Trung bình') + '</th><th class="n">' + tr('High', 'Cao nhất') + '</th><th class="n hide-sm" title="7.4.2">' + tr('Dropped', 'Bỏ') + '</th><th class="n hide-sm">' + tr('Red cards', 'Thẻ đỏ') + '</th></tr></thead><tbody>' +
       rk.map(function (r) { return '<tr data-hl="' + esc(r.team) + '"><td class="pos top">' + r.rank + '</td><td>' + teamCell(r.team, 'x') + '</td><td class="n">' + r.played + '</td><td class="n big">' + (r.played ? r.avg.toFixed(1) : '–') + '</td><td class="n">' + (r.played ? r.high : '–') + '</td><td class="n hide-sm mut">' + (r.dropped == null ? '' : r.dropped) + '</td><td class="n hide-sm">' + (rc[r.team] || '') + '</td></tr>'; }).join('') + '</tbody></table></div>';
   }
-  /* Xếp hạng Achieve theo ranking points (5.5) */
+  /* Xếp hạng theo ranking points (5.5): Achieve có cột Autonomous / Endgame RP; ADC Pro có TB điểm trận, cao nhất, cao thứ 2 */
   function rpTable(rk, rc) {
     if (!rk.length) return '<p class="empty">' + tr('No teams yet.', 'Chưa có đội.') + '</p>';
     var f = function (x) { return x.toFixed(2); };
+    if (B && B.event && Rules.of(B.event).rpBonus === false) {
+      return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Team', 'Đội') + '</th><th class="n">' + tr('Played', 'Đã đánh') + '</th><th class="n hide-sm">' + tr('W-L-T', 'T-B-H') + '</th>' +
+        '<th class="n" title="5.5">' + tr('Avg RP', 'TB RP') + '</th><th class="n hide-sm" title="5.5">' + tr('Avg score', 'TB điểm') + '</th><th class="n hide-sm" title="5.5">' + tr('High', 'Cao nhất') + '</th><th class="n hide-sm" title="5.5">' + tr('2nd', 'Thứ 2') + '</th><th class="n hide-sm">' + tr('Red cards', 'Thẻ đỏ') + '</th></tr></thead><tbody>' +
+        rk.map(function (r) {
+          return '<tr data-hl="' + esc(r.team) + '"><td class="pos top">' + r.rank + '</td><td>' + teamCell(r.team, 'x') + '</td><td class="n">' + r.played + '</td><td class="n hide-sm">' + r.w + '-' + r.l + '-' + r.t + '</td>' +
+            '<td class="n big">' + (r.played ? f(r.avg) : '–') + '</td><td class="n hide-sm">' + (r.played ? r.avgScore.toFixed(1) : '') + '</td><td class="n hide-sm">' + (r.played ? r.high : '') + '</td><td class="n hide-sm">' + (r.played > 1 ? r.high2 : '') + '</td><td class="n hide-sm">' + (rc[r.team] || '') + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    }
     return '<div class="tbl"><table><thead><tr><th>#</th><th>' + tr('Team', 'Đội') + '</th><th class="n">' + tr('Played', 'Đã đánh') + '</th><th class="n hide-sm">' + tr('W-L-T', 'T-B-H') + '</th>' +
       '<th class="n" title="5.5">' + tr('Avg RP', 'TB RP') + '</th><th class="n hide-sm" title="5.5.1">Auto</th><th class="n hide-sm" title="5.5.2">Endgame</th><th class="n hide-sm" title="5.5.3">Match</th><th class="n hide-sm">' + tr('Red cards', 'Thẻ đỏ') + '</th></tr></thead><tbody>' +
       rk.map(function (r) {

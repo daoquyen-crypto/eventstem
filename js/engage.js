@@ -263,14 +263,17 @@
   var CSV_COLS = ['event_code', 'event_name', 'program', 'season', 'date', 'country', 'partner', 'verified',
     'team', 'team_name', 'organization', 'team_country', 'grade', 'type', 'value'];
   function csvCell(v) { v = v == null ? '' : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
-  function resultRows(ev, teams, matches, runs, awards) {
+  /* Hàm tạo 1 dòng CSV cho giải ev (dùng chung với js/achieve.js) */
+  function rowMaker(ev, teams) {
     var T = {}; teams.forEach(function (t) { T[t.number] = t; });
-    var base = function (team, type, value) {
+    return function (team, type, value) {
       var t = T[team] || {};
       return [ev.recf_code || ev.code || ('ES-' + String(ev.id || '').slice(0, 8).toUpperCase()), ev.name, ev.program || 'Engage', season(ev.date), ev.date || '', ev.country || '',
         ev.partner || '', ev.verified ? 'yes' : 'no', team, t.name || '', t.org || '', t.country || ev.country || '', t.grade || '', type, value];
     };
-    var rows = [];
+  }
+  function resultRows(ev, teams, matches, runs, awards) {
+    var base = rowMaker(ev, teams), rows = [];
     (runs || []).forEach(function (r) { rows.push(base(r.team, r.kind === 'coding' ? 'solo2' : 'solo1', +r.score || 0)); });
     (matches || []).forEach(function (m) {
       if (m.round !== 'qual' || m.score == null) return;
@@ -303,6 +306,6 @@
     schedule: schedule, teamScore: teamScore, allianceRanking: allianceRanking, soloRanking: soloRanking,
     redCards: redCards, finalsEligible: finalsEligible, finalsMatches: finalsMatches, finalsResult: finalsResult,
     awardConflicts: awardConflicts, performanceAwards: performanceAwards, season: season,
-    resultRows: resultRows, toCSV: toCSV, CSV_COLS: CSV_COLS, parseTeams: parseTeams
+    resultRows: resultRows, rowMaker: rowMaker, toCSV: toCSV, CSV_COLS: CSV_COLS, parseTeams: parseTeams
   };
 });

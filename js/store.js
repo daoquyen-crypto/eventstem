@@ -8,7 +8,14 @@
   var C = window.EVENTSTEM_CONFIG || {};
   var EVENT_COLS = ['name', 'program', 'ruleset', 'config', 'date', 'end_date', 'location', 'country', 'organizer_name', 'recf_code', 'grades', 'status', 'verified'];
   var TEAM_COLS = ['number', 'name', 'org', 'country', 'grade', 'checked_in', 'inspected', 'excluded'];
-  var MATCH_COLS = ['round', 'num', 'field', 'time', 'red', 'blue', 'red_counts', 'blue_counts', 'seed', 'score', 'red_status', 'blue_status', 'stop_time'];
+  var MATCH_COLS = ['round', 'num', 'label', 'field', 'time', 'red', 'red2', 'blue', 'blue2', 'red_counts', 'red2_counts', 'blue_counts', 'blue2_counts',
+    'seed', 'seed_blue', 'score', 'score_blue', 'red_status', 'red2_status', 'blue_status', 'blue2_status', 'auto_red', 'auto_blue', 'end_red', 'end_blue', 'stop_time'];
+  var SLOTS = ['red', 'red2', 'blue', 'blue2'];
+  /* Giá trị mặc định của 1 trận (giống schema.sql) */
+  var MATCH_DEFAULTS = { label: null, field: '1', time: null, red2: null, blue2: null, red_counts: true, red2_counts: true, blue_counts: true, blue2_counts: true,
+    seed: null, seed_blue: null, score: null, score_blue: null, red_status: 'ok', red2_status: 'ok', blue_status: 'ok', blue2_status: 'ok',
+    auto_red: false, auto_blue: false, end_red: false, end_blue: false, stop_time: null };
+  function inMatch(m, n) { return SLOTS.some(function (s) { return m[s] === n; }); }
 
   function pick(o, cols) { var r = {}; cols.forEach(function (k) { if (o && o[k] !== undefined) r[k] = o[k]; }); return r; }
   function fail(code, msg) { var e = new Error(msg || code); e.code = code; throw e; }
@@ -243,7 +250,7 @@
           if (p.number && p.number !== number) {
             if (!/^[A-Z0-9_-]{2,20}$/.test(p.number)) fail('bad_team');
             if (hasTeam(eid, p.number)) fail('team_dup');
-            d.matches.forEach(function (m) { if (m.event_id === eid) { if (m.red === number) m.red = p.number; if (m.blue === number) m.blue = p.number; } });
+            d.matches.forEach(function (m) { if (m.event_id === eid) SLOTS.forEach(function (s) { if (m[s] === number) m[s] = p.number; }); });
             ['solo_runs', 'awards'].forEach(function (k) { d[k].forEach(function (x) { if (x.event_id === eid && x.team === number) x.team = p.number; }); });
           }
           Object.assign(t, p); touch(eid);
@@ -252,7 +259,7 @@
       deleteTeam: function (eid, number) {
         return run(function () {
           need(eid); var d = load();
-          if (d.matches.some(function (m) { return m.event_id === eid && (m.red === number || m.blue === number); })) fail('team_in_use');
+          if (d.matches.some(function (m) { return m.event_id === eid && inMatch(m, number); })) fail('team_in_use');
           d.teams = d.teams.filter(function (t) { return !(t.event_id === eid && t.number === number); });
           ['solo_runs', 'awards'].forEach(function (k) { d[k] = d[k].filter(function (x) { return !(x.event_id === eid && x.team === number); }); });
           touch(eid);
@@ -262,9 +269,9 @@
       replaceMatches: function (eid, round, list) {
         return run(function () {
           need(eid); var d = load();
-          list.forEach(function (m) { if (!hasTeam(eid, m.red) || !hasTeam(eid, m.blue)) fail('team_in_use'); });
+          list.forEach(function (m) { SLOTS.forEach(function (s) { if (m[s] && !hasTeam(eid, m[s])) fail('team_in_use'); }); });
           d.matches = d.matches.filter(function (m) { return !(m.event_id === eid && m.round === round); });
-          list.forEach(function (m) { d.matches.push(Object.assign({ field: '1', time: null, red_counts: true, blue_counts: true, seed: null, score: null, red_status: 'ok', blue_status: 'ok', stop_time: null },
+          list.forEach(function (m) { d.matches.push(Object.assign({}, MATCH_DEFAULTS,
             pick(m, MATCH_COLS), { id: uid(), event_id: eid, round: round, updated_at: now() })); });
           touch(eid);
         });
@@ -273,7 +280,8 @@
         return run(function () {
           need(eid); var d = load();
           if (d.matches.some(function (x) { return x.event_id === eid && x.round === m.round && x.num === m.num; })) fail('match_dup');
-          var r = Object.assign({ field: '1', time: null, red_counts: true, blue_counts: true, seed: null, score: null, red_status: 'ok', blue_status: 'ok', stop_time: null },
+          SLOTS.forEach(function (s) { if (m[s] && !hasTeam(eid, m[s])) fail('team_in_use'); });
+          var r = Object.assign({}, MATCH_DEFAULTS,
             pick(m, MATCH_COLS), { id: uid(), event_id: eid, updated_at: now() });
           d.matches.push(r); touch(eid); return r;
         });
@@ -281,7 +289,7 @@
       updateMatch: function (id, f) {
         return run(function () {
           var m = load().matches.find(function (x) { return x.id === id; }); if (!m) return; need(m.event_id);
-          var p = pick(f, MATCH_COLS); if (p.score != null && p.score < 0) fail('bad_score');
+          var p = pick(f, MATCH_COLS); if ((p.score != null && p.score < 0) || (p.score_blue != null && p.score_blue < 0)) fail('bad_score');
           Object.assign(m, p, { updated_at: now() }); touch(m.event_id);
         });
       },

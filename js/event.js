@@ -46,19 +46,22 @@
     });
   }
   function paint() {
-    var e = B.event;
+    var e = B.event, as = B.assets || { organizer: null, sponsors: [] };
     var pos = window.scrollY;
     app.innerHTML = '<a class="small mut" href="event.html">← ' + tr('All events', 'Tất cả giải') + '</a>' +
-      '<div class="spread" style="margin-top:4px"><div><h2 class="t" style="margin:0 0 2px">' + esc(e.name) + '</h2><div class="small mut">' + esc(fmtDate(e.date)) + (e.end_date && e.end_date !== e.date ? ' – ' + esc(fmtDate(e.end_date)) : '') +
+      '<div class="spread" style="margin-top:4px"><div class="row" style="flex-wrap:nowrap;align-items:center;min-width:0">' + (as.organizer ? '<img class="ev-logo" src="' + esc(as.organizer) + '" alt="' + esc(e.organizer_name || '') + '">' : '') + '<div style="min-width:0"><h2 class="t" style="margin:0 0 2px">' + esc(e.name) + '</h2><div class="small mut">' + esc(fmtDate(e.date)) + (e.end_date && e.end_date !== e.date ? ' – ' + esc(fmtDate(e.end_date)) : '') +
       (e.location ? ' · ' + esc(e.location) : '') + (e.organizer_name ? ' · ' + esc(e.organizer_name) : '') + ' · <span class="pill s-' + esc(e.status) + '">' + esc(statusName(e.status)) + '</span>' +
-      (e.verified ? ' <span style="color:var(--ok)">✓ ' + tr('Verified', 'Đã xác minh') + '</span>' : '') + '</div></div>' +
+      (e.verified ? ' <span style="color:var(--ok)">✓ ' + tr('Verified', 'Đã xác minh') + '</span>' : '') + '</div></div></div>' +
       '<label class="f no-print" style="width:180px"><span>' + tr('Follow a team', 'Theo dõi đội') + '</span><input type="search" id="myTeam" list="tl" value="' + esc(myTeam) + '" placeholder="VN1234A" autocomplete="off"></label>' +
       '<datalist id="tl">' + B.teams.map(function (t) { return '<option value="' + esc(t.number) + '">' + esc(t.name) + '</option>'; }).join('') + '</datalist></div>' +
       '<div id="mine"></div>' +
       '<div class="tabs" role="tablist" style="margin-top:12px">' + TABS.map(function (t) {
         var lb = t[0] === 'finals' && (R().format === 'versus' || R().eliminations === 'rounds') ? tr('Eliminations', 'Loại trực tiếp') : tr(t[1], t[2]);
         return '<a role="tab" href="#' + t[0] + '" aria-selected="' + (t[0] === tab) + '">' + esc(lb) + '</a>'; }).join('') + '</div>' +
-      '<div id="pane"></div><p class="small mut" id="upd"></p>';
+      '<div id="pane"></div>' +
+      (as.sponsors.length ? '<div class="spons" aria-label="' + esc(tr('Sponsors', 'Nhà tài trợ')) + '"><span class="small mut">' + tr('Sponsors', 'Nhà tài trợ') + '</span>' +
+        as.sponsors.map(function (x) { return '<img src="' + esc(x.src) + '" alt="' + esc(x.name || '') + '" title="' + esc(x.name || '') + '">'; }).join('') + '</div>' : '') +
+      '<p class="small mut" id="upd"></p>';
     (PANES[tab] || PANES.rankings)();
     paintMine(); highlight();
     $id('upd').textContent = tr('Updates automatically. Last checked ', 'Tự động cập nhật. Kiểm tra lần cuối ') + new Date().toLocaleTimeString(I18N.loc());

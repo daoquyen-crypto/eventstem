@@ -60,3 +60,4 @@ jobs:
           node tests/e2e_manage.js
           node tests/e2e_achieve.js
           node tests/e2e_adc.js
+          node tests/e2e_show.js

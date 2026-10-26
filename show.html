@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EventSTEM Show</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<meta name="theme-color" content="#1b365d">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="show">
+<!-- Màn hình trình chiếu tại sân: show.html?id=<mã giải>. Phím: ← → chuyển màn, Space tạm dừng, F toàn màn hình. -->
+<header class="show-head">
+  <div class="show-org" id="shOrg"></div>
+  <div class="show-title"><h1 id="shName">EventSTEM</h1><div id="shSub" class="show-sub"></div></div>
+  <div class="show-clock"><b id="shClock"></b><span id="shPage"></span></div>
+</header>
+<main class="show-main" id="shMain"><p class="empty" data-vi="Đang tải…">Loading…</p></main>
+<footer class="show-foot">
+  <div class="show-spons" id="shSpons"></div>
+  <div class="show-brand"><img src="assets/logo-mark-white.svg" alt="" width="22" height="22"> eventstem.com</div>
+</footer>
+<div class="show-ctl" id="shCtl" role="toolbar" aria-label="Show controls" data-vi-aria="Điều khiển trình chiếu">
+  <button type="button" data-a="prev" aria-label="Previous" data-vi-aria="Màn trước">◀</button>
+  <button type="button" data-a="pause" id="shPause" aria-label="Pause" data-vi-aria="Tạm dừng">❚❚</button>
+  <button type="button" data-a="next" aria-label="Next" data-vi-aria="Màn sau">▶</button>
+  <button type="button" data-a="full" aria-label="Full screen" data-vi-aria="Toàn màn hình">⛶</button>
+  <div class="lang" role="group" aria-label="Language / Ngôn ngữ"><button type="button" data-l="en" lang="en" aria-pressed="true">EN</button><button type="button" data-l="vi" lang="vi" aria-pressed="false">VI</button></div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/vendor/supabase-2.117.3.js"></script>
+<script src="js/engage.js"></script>
+<script src="js/achieve.js"></script>
+<script src="js/adc.js"></script>
+<script src="js/rules.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/store.js"></script>
+<script src="js/views.js"></script>
+<script src="js/show.js"></script>
+</body>
+</html>

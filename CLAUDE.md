@@ -28,6 +28,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 | `index.html` | Trang chủ, 1 file chứa cả CSS và JS: lịch giải RECF và xếp hạng toàn cầu. Bảng xếp hạng gộp `results.json` với các giải đã được SEPA xác minh từ Supabase (`toolResults()`, `mergeTool()`) |
 | `manage.html` + `js/manage.js` | Công cụ ban tổ chức: đăng nhập, tạo giải, đội, lịch, chấm điểm, Solo, xếp hạng, chung kết / loại trực tiếp, giải thưởng, xuất CSV; SEPA duyệt tài khoản |
 | `event.html` + `js/event.js` | Trang xem trực tiếp, tự kiểm tra cập nhật mỗi 20 giây |
+| `show.html` + `js/show.js` | Màn hình trình chiếu tại sân: các màn tự chuyển (trận sắp đánh, xếp hạng, Solo, loại trực tiếp, giải thưởng, nhà tài trợ), tự cập nhật mỗi 15 giây. Cài đặt ở `event.config.show`; ghi đè bằng `&s=10`, `&only=rank,solo` |
 | `js/engage.js` | Luật **RECF Engage: Tier Takeover** (Game Manual v2.0) |
 | `js/achieve.js` | Luật **RECF Achieve: Pinnacle** (Game Manual v2.0): 2 đấu 2, ranking points, chọn liên minh, nhánh loại trực tiếp |
 | `js/adc.js` | Luật **RECF ADC Mission 2027: Fast Track** (Game Manual v1.1): Alliance hợp tác như Engage, Solo 3 Piloting + 3 Autonomous, chọn liên minh, loại trực tiếp theo vòng (tứ kết → bán kết → chung kết, `eliminations: 'rounds'`) |
@@ -51,6 +52,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
   - Viết thành một module riêng giống `achieve.js`.
   - Thêm vào `Rules.byId` và `Rules.CHOICES`.
   - Dùng lại `Views` và cách hiển thị theo `format` (`coop` / `versus`).
+- **Logo:** bảng `event_assets` (logo đơn vị + tối đa 8 logo nhà tài trợ), ảnh thu nhỏ trong trình duyệt (`shrinkImage` trong `manage.js`) và lưu dạng data URL ≤ 400 KB; schema chặn mọi thứ không phải `data:image/...`. Không lấy bảng này trong các truy vấn danh sách giải.
 - **Đổi cơ sở dữ liệu:** thêm `alter table … add column if not exists` vào `schema.sql`. Trong mô tả PR ghi rõ "cần chạy lại schema.sql". Cập nhật luôn `DemoStore` (`MATCH_COLS`, `MATCH_DEFAULTS`).
 - Không đưa họ tên, ngày sinh hay liên lạc của học sinh vào kho. Kho để public.
 - Không ghép logo hay thương hiệu RECF/VEX vào nhận diện EventSTEM.
@@ -64,6 +66,7 @@ python3 -m http.server 8767 &                     # rồi:
 node tests/e2e_manage.js                          # E2E luồng Engage (chế độ demo)
 node tests/e2e_achieve.js                         # E2E luồng Achieve (chế độ demo)
 node tests/e2e_adc.js                             # E2E luồng ADC (chế độ demo)
+node tests/e2e_show.js                            # E2E logo + màn hình trình chiếu (chế độ demo)
 ```
 
 - Các test E2E chặn `js/config.js` để luôn chạy ở chế độ demo, **không ghi dữ liệu thử lên Supabase thật**.
@@ -85,4 +88,4 @@ node tests/e2e_adc.js                             # E2E luồng ADC (chế độ
 - `tests/e2e_manage.js` đôi khi hỏng chập chờn ở bước `#pendBadge .pill` (có từ trước khi có ADC; chạy lại thì qua).
 - Giải Achieve 8 đội: lịch vẫn có vài trận một đội phải đánh 2 lượt liền nhau. Không tránh được khi vừa muốn không gặp lại đồng đội vừa có ít đội.
 - `docs/HUONG_DAN_TRIEN_KHAI.md` vẫn viết theo Cloudflare Pages, trong khi trang đang chạy GitHub Pages.
-- Chưa có: nhiều trọng tài cùng chấm một giải (hiện chỉ tài khoản tạo giải và SEPA được sửa), giải nhiều buổi (league, 7.4.5 / 7.4.7), màn hình chiếu tại sân.
+- Chưa có: nhiều trọng tài cùng chấm một giải (hiện chỉ tài khoản tạo giải và SEPA được sửa), giải nhiều buổi (league, 7.4.5 / 7.4.7).

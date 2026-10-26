@@ -5,7 +5,7 @@
   var S = window.Store, E = window.Engage;
   var me = null, B = null, app = $id('app');
   var TABS = [['overview', 'Overview', 'Tổng quan'], ['teams', 'Teams', 'Đội'], ['schedule', 'Schedule', 'Lịch trận'], ['scoring', 'Scoring', 'Chấm điểm'],
-    ['solo', 'Solo', 'Solo'], ['rankings', 'Rankings', 'Xếp hạng'], ['finals', 'Finals', 'Chung kết'], ['awards', 'Awards', 'Giải thưởng'], ['export', 'Export', 'Xuất kết quả']];
+    ['solo', 'Solo', 'Solo'], ['rankings', 'Rankings', 'Xếp hạng'], ['finals', 'Finals', 'Chung kết'], ['awards', 'Awards', 'Giải thưởng'], ['show', 'Logo & show', 'Logo & trình chiếu'], ['export', 'Export', 'Xuất kết quả']];
 
   function isSA() { return me && me.profile.role === 'superadmin' && me.profile.status === 'approved'; }
   function go(h) { if (location.hash === h) route(); else location.hash = h; }
@@ -258,7 +258,8 @@
       app.innerHTML = '<div class="spread no-print"><div><a class="small mut" href="#">← ' + tr('My events', 'Giải của tôi') + '</a>' +
         '<h2 class="t" style="margin:4px 0 2px">' + esc(e.name) + '</h2><div class="small mut">' + esc(fmtDate(e.date)) + (e.location ? ' · ' + esc(e.location) : '') +
         ' · <span class="pill s-' + esc(e.status) + '">' + esc(statusName(e.status)) + '</span>' + (e.verified ? ' <span style="color:var(--ok)">✓ ' + tr('Verified by SEPA', 'SEPA đã xác minh') + '</span>' : '') + '</div></div>' +
-        '<a class="btn" href="event.html?id=' + esc(e.id) + '" target="_blank" rel="noopener">' + tr('Public page ↗', 'Trang công khai ↗') + '</a></div>' +
+        '<div class="row"><a class="btn" href="show.html?id=' + esc(e.id) + '" target="_blank" rel="noopener">' + tr('Show screen ↗', 'Trình chiếu ↗') + '</a>' +
+        '<a class="btn" href="event.html?id=' + esc(e.id) + '" target="_blank" rel="noopener">' + tr('Public page ↗', 'Trang công khai ↗') + '</a></div></div>' +
         '<div class="tabs" role="tablist" style="margin-top:12px">' + TABS.map(function (t) {
           var lb = t[0] === 'finals' && (Rules.of(e).format === 'versus' || Rules.of(e).eliminations === 'rounds') ? tr('Eliminations', 'Loại trực tiếp') : tr(t[1], t[2]);
           return '<a role="tab" href="#e/' + esc(e.id) + '/' + t[0] + '" aria-selected="' + (t[0] === tab) + '">' + esc(lb) + '</a>'; }).join('') + '</div><div id="pane"></div>';
@@ -747,6 +748,93 @@
       var b = ev.target.closest('[data-del]'); if (!b || !confirm(tr('Delete this award?', 'Xoá giải thưởng này?'))) return;
       S.deleteAward(b.dataset.del).then(refresh).catch(fail);
     });
+  };
+
+  /* ---------- Logo + màn hình trình chiếu ---------- */
+  /* Thu nhỏ ảnh trong trình duyệt trước khi lưu (giữ nền trong suốt nếu được); kết quả là data URL < 400 KB (schema.sql is_image_data) */
+  function shrinkImage(file, maxW, maxH) {
+    return new Promise(function (ok, no) {
+      if (!/^image\//.test(file.type)) return no({ code: 'bad_image' });
+      var rd = new FileReader();
+      rd.onerror = function () { no({ code: 'bad_image' }); };
+      rd.onload = function () {
+        var img = new Image();
+        img.onerror = function () { no({ code: 'bad_image' }); };
+        img.onload = function () {
+          var w = img.naturalWidth || maxW, h = img.naturalHeight || maxH;
+          for (var k = Math.min(1, maxW / w, maxH / h); k > 0.05; k *= 0.75) {
+            var cv = document.createElement('canvas'); cv.width = Math.max(1, Math.round(w * k)); cv.height = Math.max(1, Math.round(h * k));
+            cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+            var url = cv.toDataURL('image/webp', 0.9);
+            if (!/^data:image\/webp/.test(url)) url = cv.toDataURL('image/png');
+            if (url.length <= 380000) return ok(url);
+          }
+          no({ code: 'bad_image' });
+        };
+        img.src = rd.result;
+      };
+      rd.readAsDataURL(file);
+    });
+  }
+  PANES.show = function () {
+    var e = B.event, a = B.assets || { organizer: null, sponsors: [] }, sh = (e.config || {}).show || {}, on = sh.slides || {};
+    var SL = [['next', tr('Up next & latest results', 'Trận sắp đánh & kết quả mới')], ['rank', tr('Alliance / qualification rankings', 'Xếp hạng Alliance / vòng loại')], ['solo', tr('Solo rankings', 'Xếp hạng Solo')],
+      ['elim', tr('Finals / eliminations', 'Chung kết / loại trực tiếp')], ['awards', tr('Awards', 'Giải thưởng')], ['sponsors', tr('Sponsors', 'Nhà tài trợ')]];
+    var url = location.href.replace(/manage\.html.*$/, 'show.html?id=' + e.id);
+    pane('<div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start"><div>' +
+      '<div class="card"><h3 style="margin-top:0">' + tr('Organizer logo', 'Logo đơn vị tổ chức') + '</h3>' +
+      '<p class="small mut" style="margin-top:0">' + tr('Shown on the public page and the show screen. PNG with a transparent background works best; the image is resized automatically.', 'Hiện ở trang công khai và màn hình trình chiếu. Nên dùng PNG nền trong suốt; ảnh được tự thu nhỏ.') + '</p>' +
+      (a.organizer ? '<div class="row"><img class="ev-logo" id="orgLogo" src="' + esc(a.organizer) + '" alt=""><button class="btn sm danger" id="orgDel" type="button">' + tr('Remove', 'Xoá') + '</button></div>' : '') +
+      '<label class="f" style="margin-top:8px"><span>' + (a.organizer ? tr('Replace logo', 'Đổi logo') : tr('Upload logo', 'Tải logo lên')) + '</span><input type="file" id="orgFile" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"></label></div>' +
+      '<div class="card"><h3 style="margin-top:0">' + tr('Sponsor logos', 'Logo nhà tài trợ') + ' (' + a.sponsors.length + '/8)</h3>' +
+      '<p class="small mut" style="margin-top:0">' + tr('Shown along the bottom of the show screen, on a "Thank you" slide, and at the bottom of the public page.', 'Hiện ở chân màn hình trình chiếu, ở màn "Cảm ơn nhà tài trợ" và cuối trang công khai.') + '</p>' +
+      (a.sponsors.length ? '<div id="spList">' + a.sponsors.map(function (x, i) {
+        return '<div class="row" style="margin-bottom:8px" data-i="' + i + '"><img class="ev-logo" src="' + esc(x.src) + '" alt="">' +
+          '<input type="text" data-name maxlength="80" value="' + esc(x.name || '') + '" placeholder="' + esc(tr('Sponsor name (optional)', 'Tên nhà tài trợ (không bắt buộc)')) + '" style="flex:1;min-width:140px">' +
+          '<button class="btn sm" data-up type="button"' + (i ? '' : ' disabled') + ' aria-label="' + esc(tr('Move up', 'Lên trên')) + '">↑</button>' +
+          '<button class="btn sm danger" data-del type="button" aria-label="' + esc(tr('Remove', 'Xoá')) + '">✕</button></div>'; }).join('') + '</div>' : '') +
+      (a.sponsors.length < 8 ? '<label class="f"><span>' + tr('Add sponsor logos (you can pick several files)', 'Thêm logo nhà tài trợ (chọn được nhiều file)') + '</span><input type="file" id="spFile" multiple accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"></label>' : '') +
+      '</div></div>' +
+      '<form class="card" id="fShow"><h3 style="margin-top:0">' + tr('Show screen', 'Màn hình trình chiếu') + '</h3>' +
+      '<p class="small mut" style="margin-top:0">' + tr('Open the show screen on the computer connected to the projector or TV, then press F for full screen. Slides change automatically and scores update by themselves. Keys: ← → change slide, Space pauses.',
+        'Mở màn hình trình chiếu trên máy nối với máy chiếu hoặc TV, rồi bấm F để toàn màn hình. Các màn tự chuyển, điểm tự cập nhật. Phím: ← → chuyển màn, Space tạm dừng.') + '</p>' +
+      (e.status === 'draft' ? '<p class="banner err small">' + tr('This event is still a draft: the show screen only works in a browser where you are signed in. Publish the event to show it on any computer.', 'Giải đang ở dạng nháp: màn hình trình chiếu chỉ chạy trên trình duyệt đã đăng nhập tài khoản này. Công bố giải để chiếu được trên mọi máy.') + '</p>' : '') +
+      '<div class="f"><span>' + tr('Slides', 'Các màn') + '</span>' + SL.map(function (x) { return '<label class="ck"><input type="checkbox" name="slide" value="' + x[0] + '"' + (on[x[0]] !== false ? ' checked' : '') + '> ' + esc(x[1]) + '</label>'; }).join('<br>') + '</div>' +
+      '<div class="grid2" style="margin-top:8px"><label class="f"><span>' + tr('Seconds per slide', 'Số giây mỗi màn') + '</span><input type="number" id="shSec" min="4" max="120" value="' + (sh.seconds || 12) + '"></label>' +
+      '<label class="f"><span>' + tr('Rows per ranking slide', 'Số dòng mỗi màn xếp hạng') + '</span><input type="number" id="shRows" min="5" max="20" value="' + (sh.rows || 10) + '"></label></div>' +
+      '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">' + tr('Save', 'Lưu') + '</button><a class="btn acc" id="openShow" href="show.html?id=' + esc(e.id) + '" target="_blank" rel="noopener">' + tr('Open show screen ↗', 'Mở màn hình trình chiếu ↗') + '</a></div>' +
+      '<p class="small mut">' + tr('Link: ', 'Đường dẫn: ') + '<code style="word-break:break-all">' + esc(url) + '</code></p></form></div>');
+
+    var save = function (next) { return S.saveAssets(e.id, next).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail); };
+    $id('orgFile').onchange = function () {
+      var f = this.files[0]; if (!f) return;
+      shrinkImage(f, 600, 240).then(function (src) { return save({ organizer: src, sponsors: a.sponsors }); }).catch(fail);
+    };
+    if ($id('orgDel')) $id('orgDel').onclick = function () { save({ organizer: null, sponsors: a.sponsors }); };
+    if ($id('spFile')) $id('spFile').onchange = function () {
+      var files = Array.prototype.slice.call(this.files, 0, 8 - a.sponsors.length);
+      Promise.all(files.map(function (f) { return shrinkImage(f, 480, 200).then(function (src) { return { src: src, name: f.name.replace(/\.[a-z0-9]+$/i, '').slice(0, 80) }; }); }))
+        .then(function (add) { return save({ organizer: a.organizer, sponsors: a.sponsors.concat(add) }); }).catch(fail);
+    };
+    var list = $id('spList');
+    if (list) {
+      list.addEventListener('click', function (ev) {
+        var row = ev.target.closest('[data-i]'); if (!row) return; var i = +row.dataset.i, sp = a.sponsors.slice();
+        if (ev.target.closest('[data-del]')) { sp.splice(i, 1); save({ organizer: a.organizer, sponsors: sp }); }
+        else if (ev.target.closest('[data-up]') && i > 0) { var t = sp[i - 1]; sp[i - 1] = sp[i]; sp[i] = t; save({ organizer: a.organizer, sponsors: sp }); }
+      });
+      list.addEventListener('change', function (ev) {
+        if (!ev.target.matches('[data-name]')) return;
+        var i = +ev.target.closest('[data-i]').dataset.i, sp = a.sponsors.map(function (x) { return Object.assign({}, x); });
+        sp[i].name = ev.target.value.trim().slice(0, 80); save({ organizer: a.organizer, sponsors: sp });
+      });
+    }
+    $id('fShow').onsubmit = function (ev) {
+      ev.preventDefault();
+      var slides = {}; document.querySelectorAll('input[name=slide]').forEach(function (x) { slides[x.value] = x.checked; });
+      var show = { seconds: Math.max(4, Math.min(120, num('shSec', 12))), rows: Math.max(5, Math.min(20, num('shRows', 10))), slides: slides };
+      S.updateEvent(e.id, { config: Object.assign({}, e.config, { show: show }) }).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail);
+    };
   };
 
   PANES.export = function () {

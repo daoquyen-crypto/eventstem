@@ -26,6 +26,7 @@
     var m = (err.message || '') + ' ' + (err.details || ''), e = new Error(err.message || String(err));
     e.code = /awards_one_judged/.test(m) ? 'judged_dup'
       : /lượt solo|hết \d+ lượt/.test(m) ? 'solo_limit'
+      : /is_image_data|valid_sponsors|event_assets_.*check/.test(m) ? 'bad_image'
       : /matches_event_id_round_num_key|duplicate key.*matches/.test(m) ? 'match_dup'
       : /teams_pkey|duplicate key.*teams/.test(m) ? 'team_dup'
       : /foreign key/.test(m) ? 'team_in_use'
@@ -85,8 +86,13 @@
           q(sb.from('teams').select('*').eq('event_id', id).order('number')),
           q(sb.from('matches').select('*').eq('event_id', id).order('round').order('num')),
           q(sb.from('solo_runs').select('*').eq('event_id', id).order('created_at')),
-          q(sb.from('awards').select('*').eq('event_id', id))
-        ]).then(function (r) { return r[0] ? { event: r[0], teams: r[1], matches: r[2], solo: r[3], awards: r[4] } : null; });
+          q(sb.from('awards').select('*').eq('event_id', id)),
+          q(sb.from('event_assets').select('*').eq('event_id', id).maybeSingle())
+        ]).then(function (r) { return r[0] ? { event: r[0], teams: r[1], matches: r[2], solo: r[3], awards: r[4], assets: assetsOf(r[5]) } : null; });
+      },
+      /* Logo đơn vị tổ chức + nhà tài trợ (bảng event_assets) */
+      saveAssets: function (eid, a) {
+        return q(sb.from('event_assets').upsert({ event_id: eid, organizer: a.organizer || null, sponsors: a.sponsors || [] }).select().single()).then(assetsOf);
       },
       /* Lấy trọn dữ liệu nhiều giải 1 lần (cho xếp hạng toàn cầu) */
       getEventsFull: function (ids) {
@@ -123,15 +129,21 @@
 
   /* ================= Demo (localStorage) =================
      Làm theo đúng các ràng buộc của schema.sql để hành vi giống bản thật. */
+  function assetsOf(r) { return { organizer: (r && r.organizer) || null, sponsors: (r && r.sponsors) || [] }; }
+  /* Giống ràng buộc is_image_data / valid_sponsors trong schema.sql */
+  function validImage(t) { return t == null || (/^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(t) && t.length <= 400000); }
   function DemoStore() {
     var KEY = 'eventstem-demo-v1', mem = null;
     function load() {
       if (mem) return mem;
       try { mem = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (x) { mem = null; }
       if (!mem) mem = { users: [], session: null, settings: { id: 1, auto_approve_mode: 'off', auto_approve_domains: [] }, events: [], teams: [], matches: [], solo_runs: [], awards: [] };
+      if (!mem.event_assets) mem.event_assets = [];
       return mem;
     }
     function save() { try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (x) {} }
+    /* Tab khác (vd. màn hình trình chiếu) vừa ghi dữ liệu: đọc lại từ localStorage ở lần sau */
+    window.addEventListener('storage', function (ev) { if (ev.key === KEY) mem = null; });
     function uid() { return (crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now() + '-' + Math.random().toString(16).slice(2)); }
     function now() { return new Date().toISOString(); }
     function clone(x) { return JSON.parse(JSON.stringify(x)); }
@@ -200,7 +212,17 @@
           var d = load(), e = ev(id); if (!e || !canView(e)) return null;
           var f = function (t) { return d[t].filter(function (x) { return x.event_id === id; }); };
           return { event: e, teams: f('teams').sort(function (a, b) { return a.number.localeCompare(b.number); }),
-            matches: f('matches').sort(function (a, b) { return a.round.localeCompare(b.round) || a.num - b.num; }), solo: f('solo_runs'), awards: f('awards') };
+            matches: f('matches').sort(function (a, b) { return a.round.localeCompare(b.round) || a.num - b.num; }), solo: f('solo_runs'), awards: f('awards'),
+            assets: assetsOf(d.event_assets.find(function (x) { return x.event_id === id; })) };
+        });
+      },
+      saveAssets: function (eid, a) {
+        return run(function () {
+          need(eid); var d = load(), sp = a.sponsors || [];
+          if (!validImage(a.organizer || null) || sp.length > 8 || sp.some(function (x) { return !x || !x.src || !validImage(x.src) || String(x.name || '').length > 80; })) fail('bad_image');
+          d.event_assets = d.event_assets.filter(function (x) { return x.event_id !== eid; });
+          var r = { event_id: eid, organizer: a.organizer || null, sponsors: sp };
+          d.event_assets.push(r); touch(eid); return assetsOf(r);
         });
       },
       getEventsFull: function (ids) {
@@ -226,7 +248,7 @@
       deleteEvent: function (id) {
         return run(function () {
           need(id); var d = load();
-          ['teams', 'matches', 'solo_runs', 'awards'].forEach(function (t) { d[t] = d[t].filter(function (x) { return x.event_id !== id; }); });
+          ['teams', 'matches', 'solo_runs', 'awards', 'event_assets'].forEach(function (t) { d[t] = d[t].filter(function (x) { return x.event_id !== id; }); });
           d.events = d.events.filter(function (e) { return e.id !== id; });
         });
       },

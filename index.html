@@ -55,6 +55,8 @@ button{font:inherit;color:inherit}
 .brandrow{display:flex;align-items:center;gap:12px}
 .mark{width:clamp(38px,6vw,52px);height:auto;flex:none}
 .brand p{margin:6px 0 0;opacity:.78;font-size:13.5px;max-width:52ch}
+.brand .sup{display:inline-flex;align-items:center;gap:6px;margin:8px 0 0;opacity:1;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--signal)}
+.brand .sup::before{content:"";width:18px;height:2px;background:currentColor}
 .tally{display:flex;gap:22px;flex-wrap:wrap}
 .tally div{display:flex;flex-direction:column}
 .tally b{font-family:var(--f-disp);font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
@@ -132,6 +134,7 @@ select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;backgroun
 @media (max-width:760px){
   .band .wrap{padding-block:14px 8px;gap:10px 18px;align-items:center}
   .brand p{display:none}
+  .brand .sup{display:inline-flex;font-size:11px}
   .tally{gap:16px}
   .tally b{font-size:22px}
   .tally small{font-size:9.5px;letter-spacing:.8px}
@@ -234,7 +237,7 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 </head>
 <body>
 <header class="band"><div class="wrap">
-  <div class="brand"><div class="brandrow"><img class="mark" src="assets/logo-mark-white.svg" alt="" width="52" height="52"><h1>Event<span>STEM</span></h1></div><p data-vi="Lịch thi đấu, đội đăng ký và bảng xếp hạng toàn cầu các giải RECF Engage · Achieve · Inspire · Aerial Drone.">Schedules, registered teams and global rankings for RECF Engage · Achieve · Inspire · Aerial Drone events.</p></div>
+  <div class="brand"><div class="brandrow"><img class="mark" src="assets/logo-mark-white.svg" alt="" width="52" height="52"><h1>Event<span>STEM</span></h1></div><p class="sup" data-vi="Đồng hành cùng các giải robot &amp; drone RECF">Supporting RECF robotics &amp; drone events</p><p data-vi="Lịch thi đấu, đội đăng ký và bảng xếp hạng toàn cầu các giải RECF Engage · Achieve · Inspire · Aerial Drone.">Schedules, registered teams and global rankings for RECF Engage · Achieve · Inspire · Aerial Drone events.</p></div>
   <div class="tally" id="tally"></div>
 </div>
 <div class="wrap navrow"><nav class="views" aria-label="Main" data-vi-aria="Mục chính"><a href="#giai" id="navEvents" aria-current="page" data-vi="Giải đấu">Events</a><a href="#xephang" id="navRank" data-vi="Xếp hạng toàn cầu">Global rankings</a><a href="event.html" data-vi="Giải trực tiếp">Live events</a><a href="manage.html" data-vi="Tổ chức giải">Organize</a></nav>
@@ -367,8 +370,8 @@ function paintEvents(){
   $('country').value=st.country;
   paintNear(countries);
   var src='<a href="'+esc(D.source)+'" target="_blank" rel="noopener">recfevents.org</a>', at=esc(new Date(D.fetched).toLocaleString(loc()));
-  $('foot').innerHTML=tr('Data from '+src+' (public pages), fetched '+at+'. EventSTEM is a SEPA project, not an official RECF site. Rankings are based on results submitted by Event Partners.',
-    'Dữ liệu lấy từ '+src+' (trang công khai) lúc '+at+'. EventSTEM là dự án của SEPA, không phải trang chính thức của RECF. Kết quả xếp hạng do Event Partner gửi.');
+  $('foot').innerHTML=tr('Data from '+src+' (public pages), fetched '+at+'. Developed by the STEM Education Promotion Alliance (SEPA). EventSTEM supports RECF events but is not an official RECF site. Rankings are based on results submitted by Event Partners.',
+    'Dữ liệu lấy từ '+src+' (trang công khai) lúc '+at+'. Phát triển bởi STEM Education Promotion Alliance (SEPA). EventSTEM hỗ trợ các giải RECF nhưng không phải trang chính thức của RECF. Kết quả xếp hạng do Event Partner gửi.');
 }
 
 /* "Gần bạn": quốc gia người xem chọn lần trước, hoặc đoán từ múi giờ / ngôn ngữ trình duyệt (js/geo.js).

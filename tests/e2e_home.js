@@ -17,6 +17,8 @@ const assert = (c, m) => { if (!c) throw new Error('ASSERT: ' + m); console.log(
   assert(await head(p) === 'Events in Australia', 'Sydney visitor sees "Events in Australia"');
   assert(!(await p.locator('#viewEvents').innerText()).includes('Events in Vietnam'), 'no fixed Vietnam section');
   assert(/Schedules, scores and rankings for robotics tournaments worldwide/.test(await p.getAttribute('meta[property="og:description"]', 'content')), 'share description is English-only, worldwide');
+  assert(await p.locator('.brand .sup').innerText() !== '' && /Supporting RECF robotics & drone events/i.test(await p.locator('.brand .sup').innerText()), 'tagline under the logo: supporting RECF events');
+  assert(/Developed by the STEM Education Promotion Alliance \(SEPA\)/.test(await p.locator('#foot').innerText()) && /not an official RECF site/.test(await p.locator('#foot').innerText()), 'footer credits SEPA and keeps the not-official note');
   if (process.env.SHOTS) await p.screenshot({ path: process.env.SHOTS + '/home-au.png' });
 
   p = await open({ timezoneId: 'America/Chicago', locale: 'en-US' });

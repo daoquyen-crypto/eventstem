@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://eventstem.com/">
 <meta property="og:site_name" content="EventSTEM">
 <meta property="og:title" content="EventSTEM: Every robotics match, live.">
-<meta property="og:description" content="Schedules, scores and rankings for robotics tournaments. Mọi trận đấu robot, trực tiếp.">
+<meta property="og:description" content="Schedules, scores and rankings for robotics tournaments worldwide.">
 <meta property="og:url" content="https://eventstem.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://eventstem.com/assets/og-image.png">
@@ -60,8 +60,8 @@ button{font:inherit;color:inherit}
 .tally b{font-family:var(--f-disp);font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
 .tally small{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;opacity:.7}
 
-/* vietnam strip */
-.vn{padding-block:18px 4px}
+/* giải gần bạn */
+.near{padding-block:18px 4px}
 .sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 10px}
 .sec-h h2{font-family:var(--f-disp);font-size:22px;letter-spacing:.6px;text-transform:uppercase;margin:0}
 .sec-h a,.linkbtn{font-size:13px;color:var(--mut);background:none;border:0;cursor:pointer;text-decoration:underline;padding:0}
@@ -196,9 +196,9 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 </header>
 
 <div id="viewEvents">
-<section class="wrap vn" id="vnSec" hidden>
-  <div class="sec-h"><h2 data-vi="Giải tại Việt Nam">Events in Vietnam</h2><button class="linkbtn" id="vnAll" type="button" data-vi="Xem tất cả">See all</button></div>
-  <div class="strip" id="vnStrip"></div>
+<section class="wrap near" id="nearSec" hidden>
+  <div class="sec-h"><h2 id="nearH"></h2><button class="linkbtn" id="nearAll" type="button" data-vi="Xem tất cả">See all</button></div>
+  <div class="strip" id="nearStrip"></div>
 </section>
 
 <div class="filters"><div class="wrap">
@@ -242,7 +242,7 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
           <tr><td class="code">event_code</td><td>ENG20261234</td><td data-vi="Mã giải trên RECF Events">Event code on RECF Events</td></tr>
           <tr><td class="code">program</td><td>Engage</td><td>Engage, Achieve, Inspire, ADC, ADC Pro</td></tr>
           <tr><td class="code">team / team_name</td><td>VN1234A / Sao Mai</td><td data-vi="Mã đội và tên đội">Team number and team name</td></tr>
-          <tr><td class="code">team_country</td><td>Vietnam</td><td data-vi="Tên quốc gia tiếng Anh">Country name in English</td></tr>
+          <tr><td class="code">team_country</td><td>United States</td><td data-vi="Tên quốc gia tiếng Anh">Country name in English</td></tr>
           <tr><td class="code">grade</td><td>ES</td><td data-vi="ES tiểu học · MS THCS · HS THPT · UNI đại học">ES elementary · MS middle school · HS high school · UNI university</td></tr>
           <tr><td class="code">type</td><td>solo1</td><td>solo1 Driving/Piloting · solo2 Coding/Autonomous · alliance · award</td></tr>
           <tr><td class="code">value</td><td>85</td><td data-vi="Điểm, hoặc tên giải thưởng nếu type là award">Score, or the award name if type is award</td></tr>
@@ -257,6 +257,7 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shTitle"></aside>
 
+<script src="js/geo.js"></script>
 <script>
 var TODAY = new Date().toISOString().slice(0,10);
 /* Ngôn ngữ: tiếng Anh mặc định; ?lang=vi hoặc nút EN/VI, lựa chọn được nhớ trong trình duyệt. */
@@ -303,6 +304,7 @@ fetch('events.json?t='+Math.floor(Date.now()/300000)).then(function(r){return r.
   .catch(function(){$('list').innerHTML='<p class="empty">'+tr('Could not load event data. Reload the page to try again.','Không tải được dữ liệu sự kiện. Tải lại trang để thử lại.')+'</p>';});
 
 function init(){ bind(); paintEvents(); render(); route(); }
+function countryCount(){var c={};EV.forEach(function(e){c[e.country]=(c[e.country]||0)+1;});return c;}
 function paintEvents(){
   var up=EV.filter(function(e){return !isPast(e);});
   var teams=new Set(); EV.forEach(function(e){(e.teams||[]).forEach(function(t){teams.add(t[0]);});});
@@ -315,23 +317,34 @@ function paintEvents(){
   $('country').innerHTML='<option value="">'+tr('All countries','Tất cả quốc gia')+'</option>'+Object.keys(countries).sort(function(a,b){return countries[b]-countries[a];})
     .map(function(c){return '<option value="'+esc(c)+'">'+esc(cname(c))+' ('+countries[c]+')</option>';}).join('');
   $('country').value=st.country;
-  var vn=EV.filter(function(e){return e.country==='Vietnam';}).sort(function(a,b){return isPast(a)-isPast(b)||(isPast(a)?(b.start||'').localeCompare(a.start||''):(a.start||'').localeCompare(b.start||''));});
-  if(vn.length){$('vnSec').hidden=false;$('vnStrip').innerHTML=vn.map(function(e){var s=status(e);
-    return '<button type="button" class="mini" data-id="'+e.id+'" style="--c:'+col(e.program)+'"><span class="prog">'+esc(PNAME[e.program])+'</span><span class="t">'+esc(e.title)+'</span><span class="m">'+fmtRange(e)+' · '+esc(e.city)+'</span><span class="pill '+s[1]+'" style="justify-self:start;align-self:flex-start">'+s[0]+'</span></button>';}).join('');}
+  paintNear(countries);
   var src='<a href="'+esc(D.source)+'" target="_blank" rel="noopener">recfevents.org</a>', at=esc(new Date(D.fetched).toLocaleString(loc()));
   $('foot').innerHTML=tr('Data from '+src+' (public pages), fetched '+at+'. EventSTEM is a SEPA project, not an official RECF site. Rankings are based on results submitted by Event Partners.',
     'Dữ liệu lấy từ '+src+' (trang công khai) lúc '+at+'. EventSTEM là dự án của SEPA, không phải trang chính thức của RECF. Kết quả xếp hạng do Event Partner gửi.');
 }
 
+/* "Giải gần bạn": quốc gia người xem chọn lần trước, hoặc đoán từ múi giờ / ngôn ngữ trình duyệt (js/geo.js).
+   Nước đó chưa có giải thì hiện các giải sắp diễn ra trên toàn thế giới. */
+var NEAR='';
+function paintNear(countries){
+  NEAR=(window.Geo?Geo.countries():[]).find(function(c){return countries[c];})||'';
+  var byDate=function(a,b){return isPast(a)-isPast(b)||(isPast(a)?(b.start||'').localeCompare(a.start||''):(a.start||'').localeCompare(b.start||''));};
+  var list=NEAR?EV.filter(function(e){return e.country===NEAR;}).sort(byDate):EV.filter(function(e){return !isPast(e);}).sort(byDate).slice(0,16);
+  $('nearSec').hidden=!list.length;
+  $('nearH').textContent=NEAR?tr('Events in ','Giải tại ')+cname(NEAR):tr('Coming up worldwide','Sắp diễn ra trên thế giới');
+  $('nearStrip').innerHTML=list.map(function(e){var s=status(e);
+    return '<button type="button" class="mini" data-id="'+e.id+'" style="--c:'+col(e.program)+'"><span class="prog">'+esc(PNAME[e.program])+'</span><span class="t">'+esc(e.title)+'</span><span class="m">'+fmtRange(e)+' · '+esc(e.city)+(NEAR?'':', '+esc(cname(e.country)))+'</span><span class="pill '+s[1]+'" style="justify-self:start;align-self:flex-start">'+s[0]+'</span></button>';}).join('');
+}
+
 function bind(){
   $('q').addEventListener('input',function(){st.q=this.value.trim().toLowerCase();st.limit=50;render();});
-  $('country').addEventListener('change',function(){st.country=this.value;st.limit=50;render();});
+  $('country').addEventListener('change',function(){st.country=this.value;st.limit=50;if(this.value&&window.Geo){Geo.remember(this.value);paintNear(countryCount());}render();});
   $('progChips').addEventListener('click',function(ev){var b=ev.target.closest('.chip');if(!b)return;var p=b.dataset.p;
     if(st.prog.has(p))st.prog.delete(p);else st.prog.add(p);b.setAttribute('aria-pressed',st.prog.has(p));st.limit=50;render();});
   $('when').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;st.when=b.dataset.v;
     this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});st.limit=50;render();});
   $('more').addEventListener('click',function(){st.limit+=50;render();});
-  $('vnAll').addEventListener('click',function(){st.country='Vietnam';$('country').value='Vietnam';render();$('list').scrollIntoView({behavior:'smooth'});});
+  $('nearAll').addEventListener('click',function(){st.country=NEAR;$('country').value=NEAR;if(!NEAR){st.when='up';$('when').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.v==='up');});}render();$('list').scrollIntoView({behavior:'smooth'});});
   document.addEventListener('click',function(ev){var b=ev.target.closest('[data-id]');if(b){openEvent(+b.dataset.id);return;}var t=ev.target.closest('[data-team]');if(t)openTeam(t.dataset.team);});
   $('scrim').addEventListener('click',closeEvent);
   document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeEvent();});

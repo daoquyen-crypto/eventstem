@@ -1,0 +1,50 @@
+name: Cập nhật dữ liệu giải RECF
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "results/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-events
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cài thư viện
+        run: pip install -r requirements.txt
+
+      - name: Lấy dữ liệu giải từ recfevents.org
+        if: github.event_name != 'push'
+        run: python scripts/crawler.py events.new.json && mv events.new.json events.json
+
+      - name: Dựng results.json từ results/*.csv
+        run: python scripts/build_results.py results.json
+
+      - name: Commit và push nếu có thay đổi
+        run: |
+          git config user.name "eventstem-bot"
+          git config user.email "eventstem-bot@users.noreply.github.com"
+          git add events.json results.json
+          if git diff --cached --quiet; then
+            echo "Không có thay đổi."
+            exit 0
+          fi
+          git commit -m "Cập nhật dữ liệu $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

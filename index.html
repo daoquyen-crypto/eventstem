@@ -132,8 +132,8 @@ td.n{font-variant-numeric:tabular-nums;text-align:right}
 footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px solid var(--line)}
 
 /* view nav */
-.views{display:flex;gap:4px;margin-top:4px}
-.views a{color:var(--navy-ink);opacity:.72;text-decoration:none;font-weight:600;padding:10px 14px 12px;border-bottom:3px solid transparent;font-size:15px}
+.views{display:flex;flex-wrap:wrap;gap:0 4px;margin-top:4px}
+.views a{color:var(--navy-ink);opacity:.72;text-decoration:none;font-weight:600;padding:10px 12px 12px;border-bottom:3px solid transparent;font-size:15px;white-space:nowrap}
 .views a[aria-current="page"]{opacity:1;border-bottom-color:var(--signal)}
 .views a:hover{opacity:1}
 .navrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -178,7 +178,7 @@ footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px 
   <div class="brand"><h1>Event<span>STEM</span></h1><p data-vi="Lịch thi đấu, đội đăng ký và bảng xếp hạng toàn cầu các giải RECF Engage · Achieve · Inspire · Aerial Drone.">Schedules, registered teams and global rankings for RECF Engage · Achieve · Inspire · Aerial Drone events.</p></div>
   <div class="tally" id="tally"></div>
 </div>
-<div class="wrap navrow"><nav class="views" aria-label="Main" data-vi-aria="Mục chính"><a href="#giai" id="navEvents" aria-current="page" data-vi="Giải đấu">Events</a><a href="#xephang" id="navRank" data-vi="Xếp hạng toàn cầu">Global rankings</a></nav>
+<div class="wrap navrow"><nav class="views" aria-label="Main" data-vi-aria="Mục chính"><a href="#giai" id="navEvents" aria-current="page" data-vi="Giải đấu">Events</a><a href="#xephang" id="navRank" data-vi="Xếp hạng toàn cầu">Global rankings</a><a href="event.html" data-vi="Giải trực tiếp">Live events</a><a href="manage.html" data-vi="Tổ chức giải">Organize</a></nav>
   <div class="lang" id="lang" role="group" aria-label="Language / Ngôn ngữ"><button type="button" data-l="en" lang="en" aria-pressed="true">EN</button><button type="button" data-l="vi" lang="vi" aria-pressed="false">VI</button></div></div>
 </header>
 
@@ -418,8 +418,24 @@ function topN(a,n){return a.slice().sort(function(x,y){return y-x;}).slice(0,n);
 
 function loadRank(){
   $('rkTable').innerHTML='<p class="empty">'+tr('Loading rankings…','Đang tải bảng xếp hạng…')+'</p>';
-  fetch('results.json?t='+Math.floor(Date.now()/300000)).then(function(r){return r.json();}).then(function(d){RS=d;initRank();})
+  fetch('results.json?t='+Math.floor(Date.now()/300000)).then(function(r){return r.json();})
+    .then(function(d){return toolResults().then(function(t){mergeTool(d,t);return d;},function(){return d;});}).then(function(d){RS=d;initRank();})
     .catch(function(){$('rkTable').innerHTML='<p class="empty">'+tr('No results data yet. Rankings will appear once Event Partners submit scores.','Chưa có dữ liệu kết quả. Bảng xếp hạng sẽ hiện khi Event Partner gửi điểm.')+'</p>';});
+}
+/* Giải tổ chức bằng công cụ EventSTEM (manage.html) và đã được SEPA xác minh: lấy trực tiếp, đổi về cùng dạng với results.json. */
+function loadScript(src){return new Promise(function(ok,no){var s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s);});}
+function toolResults(){
+  return loadScript('js/config.js').then(function(){var c=window.EVENTSTEM_CONFIG||{};
+    return (c.supabaseUrl&&c.supabaseAnonKey?loadScript('js/vendor/supabase-2.117.3.js'):Promise.resolve()).then(function(){return loadScript('js/engage.js');}).then(function(){return loadScript('js/store.js');});})
+  .then(function(){return Store.listPublicEvents();})
+  .then(function(list){list=list.filter(function(e){return e.verified&&RPROGS.indexOf(e.program)>=0;});
+    return Store.getEventsFull(list.map(function(e){return e.id;})).then(function(full){return list.map(function(e,i){return Engage.resultRows(e,full[i].teams,full[i].matches,full[i].solo,full[i].awards);});});});
+}
+function mergeTool(d,evRows){
+  evRows.forEach(function(rows){if(!rows.length)return;var r0=rows[0],code=r0[0];
+    d.events=d.events.filter(function(e){return e.code!==code;});d.records=d.records.filter(function(r){return r[0]!==code;});   // dữ liệu trực tiếp thay cho CSV cùng mã
+    d.events.push({code:code,name:r0[1],program:r0[2],season:r0[3]||'2026-2027',date:r0[4],country:r0[5],partner:r0[6],verified:true,sample:false});
+    rows.forEach(function(r){d.records.push([code,String(r[8]).toUpperCase(),r[9],r[10],r[11]||r0[5],r[12],r[13],r[13]==='award'?r[14]:+r[14]]);});});
 }
 function initRank(){
   RS.ev={}; RS.events.forEach(function(e){RS.ev[e.code]=e;});

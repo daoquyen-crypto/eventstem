@@ -22,7 +22,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* header */
 .band{background:var(--navy);color:var(--navy-ink)}
 .band .wrap{padding-block:16px 0;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between}
-.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand .mark{width:40px;height:40px;flex:none}
 .brand h1{font-family:var(--f-disp);font-weight:700;font-size:34px;line-height:1;margin:0;letter-spacing:.5px;text-transform:uppercase}
 .brand h1 span{color:var(--signal)}
 .brand small{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;opacity:.75}
@@ -112,6 +113,7 @@ select.st{width:auto;padding:5px 6px;font-size:13px}
 footer{color:var(--mut);font-size:12.5px;padding-block:20px 32px;border-top:1px solid var(--line)}
 @media (max-width:760px){
   .brand h1{font-size:28px}
+  .brand .mark{width:32px;height:32px}
   td,th{padding:6px 7px}
   .hide-sm{display:none}
   select.st{max-width:96px}

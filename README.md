@@ -31,6 +31,7 @@ Trang tĩnh tại **[eventstem.com](https://eventstem.com)**. Trang tổng hợp
 | `.github/workflows/update-events.yml` | Chạy tự động mỗi 6 tiếng, khi có thay đổi trong `results/`, hoặc khi bấm chạy tay |
 | `docs/HUONG_DAN_TRIEN_KHAI.md` | Hướng dẫn triển khai chi tiết |
 | `docs/SUPABASE_SETUP.md` | Hướng dẫn bật công cụ tổ chức giải |
+| `docs/BRAND.md`, `assets/` | Logo, tagline, màu, ảnh chia sẻ |
 | `CNAME`, `robots.txt`, `sitemap.xml` | Cấu hình tên miền và SEO |
 | `requirements.txt` | Thư viện Python cho các script |
 

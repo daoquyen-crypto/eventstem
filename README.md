@@ -4,6 +4,7 @@ Trang tĩnh tại **[eventstem.com](https://eventstem.com)**. Trang tổng hợp
 
 - Dữ liệu giải được tự động lấy từ recfevents.org mỗi 6 tiếng.
 - Trang chạy bằng GitHub Pages, từ nhánh `main`, thư mục gốc.
+- Trang có 2 ngôn ngữ: **tiếng Anh (mặc định)** và tiếng Việt. Người xem chuyển bằng nút **EN / VI** ở đầu trang, lựa chọn được nhớ trong trình duyệt. Có thể gửi link thẳng bản tiếng Việt: `https://eventstem.com/?lang=vi`.
 
 ## Cấu trúc thư mục
 

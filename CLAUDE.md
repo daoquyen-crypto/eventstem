@@ -91,8 +91,8 @@ node tests/e2e_home.js                            # E2E trang chủ: "Gần bạ
 
 ## Việc còn dang dở
 
-- SEPA chưa cài **SMTP** riêng cho email xác nhận của Supabase. Email mặc định bị giới hạn vài thư mỗi giờ.
-- Thông báo email (Apps Script) mới thử trên Postgres local với `pg_net` giả và bản demo; chưa thử gửi thật qua Supabase + Google. Lần đầu cài nên bấm **Send test email** và xem **Recent sends**.
+- Đã xong (10/2026): SEPA cài **SMTP** Gmail cho email xác nhận của Supabase, và **thông báo email** qua Apps Script; SEPA đã thử thật, chạy tốt.
+
 - Chưa chạy một giải thật đầy đủ trên Supabase thật. Lần đầu dùng nên theo dõi lỗi.
 - Chưa có luật **Inspire**. Nếu cần, xin SEPA file Game Manual PDF.
 - ADC Pro: điểm thành phần trận Alliance lưu ở `matches.detail = {red, blue}`; kiểm tra chéo tổng pump ≤ 3, fuel ≤ 36 (`ADCPro.matchIssues`). Tuỳ chọn của ban tổ chức (xem `ADCPro.DEFAULTS`): `scoreEntry`, `qualRedCard` (`actual` / `win`, 1.6.3), `elimRedCard` (`all` / `finals`, 1.6.3), `bo3Ties` (`replay` / `game`, 7.4.6). Nhánh đấu gọi qua `R().bracket` / `R().gameScores`, không gọi thẳng `Achieve.bracket`.

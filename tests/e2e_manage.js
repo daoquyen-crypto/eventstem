@@ -135,6 +135,28 @@ const assert = (c, m) => { if (!c) throw new Error('ASSERT: ' + m); console.log(
   await p.click('button[data-s=approved]:not([data-r])'); await p.waitForTimeout(200);
   assert(!(await p.locator('#adm').innerText()).includes('Pending'), 'user approved');
   await p.click('a:has-text("Approval settings")'); await p.check('input[value=domains]'); await p.fill('#aDom', 'edu.vn\n@hanoi.edu.vn'); await p.click('#fSet button'); await p.waitForTimeout(200);
+  // Thông báo email (Apps Script của SEPA)
+  assert(/Not set up/.test(await p.locator('#nState').innerText()), 'email notifications: not set up yet');
+  await p.click('#nCopy'); await p.waitForFunction(() => !document.querySelector('#nCode').hidden);
+  const code1 = await p.inputValue('#nCode'), key1 = (code1.match(/var SECRET = '([0-9a-f]{48})';/) || [])[1];
+  assert(key1 && code1.includes("SECRET === '__SECRET__'") && /function doPost/.test(code1), 'mailer code copied with a new 48-character secret key');
+  await p.fill('#nUrl', 'https://example.com/hook'); await p.click('#fNotify button[type=submit]');
+  await p.waitForFunction(() => /Apps Script web app link/.test(document.querySelector('#toast').innerText));
+  assert(true, 'non-Apps-Script link rejected');
+  await p.fill('#nTo', 'abc'); await p.fill('#nUrl', 'https://script.google.com/macros/s/AKfycbx_Test-1/exec'); await p.click('#fNotify button[type=submit]');
+  await p.waitForFunction(() => /Not a valid email/.test(document.querySelector('#toast').innerText));
+  await p.fill('#nTo', 'bgk@sepa.org.vn\nhotro@sepa.org.vn'); await p.uncheck('#nUsers'); await p.click('#fNotify button[type=submit]');
+  await p.waitForFunction(() => /^On$/.test(document.querySelector('#nState').innerText));
+  await p.click('a:has-text("Accounts")'); await p.click('a:has-text("Approval settings")'); await p.waitForSelector('#fNotify');
+  assert(await p.inputValue('#nUrl') === 'https://script.google.com/macros/s/AKfycbx_Test-1/exec' && await p.inputValue('#nTo') === 'bgk@sepa.org.vn\nhotro@sepa.org.vn' && !(await p.isChecked('#nUsers')), 'notification settings saved');
+  await p.click('#nCopy'); await p.waitForFunction(() => !document.querySelector('#nCode').hidden);
+  assert((await p.inputValue('#nCode')).includes("var SECRET = '" + key1 + "';"), 'secret key stays the same when copying again');
+  await p.click('#nTest'); await p.waitForFunction(() => /demo mode/.test(document.querySelector('#toast').innerText));
+  assert(true, 'test email explains demo mode');
+  await shot('notify');
+  await p.setViewportSize({ width: 375, height: 812 });
+  assert(!(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth)), 'notification settings fit a phone');
+  await p.setViewportSize({ width: 1280, height: 800 });
   await p.click('#signOut'); await p.waitForSelector('#fLogin');
   await p.click('text=Create account');
   await p.fill('#suName', 'C'); await p.fill('#suOrg', 'C'); await p.fill('#suEmail', 'c@hanoi.edu.vn'); await p.fill('#suPw', 'secret3');

@@ -59,6 +59,8 @@
       bad_email: ['Please enter a valid email.', 'Email không hợp lệ.'],
       self_demote: ['You cannot remove your own admin rights.', 'Không thể tự bỏ quyền quản trị của chính mình.'],
       demo_only: ['Not available in demo mode.', 'Không dùng được ở chế độ demo.'],
+      bad_notify_url: ['The link must be a Google Apps Script web app link (https://script.google.com/macros/s/…/exec).', 'Link phải là link web app của Google Apps Script (https://script.google.com/macros/s/…/exec).'],
+      notify_no_url: ['Paste the Apps Script link and save first.', 'Hãy dán link Apps Script và bấm Lưu trước.'],
       network: ['Network error. Check your connection and try again.', 'Lỗi mạng. Kiểm tra kết nối rồi thử lại.']
     }[e && e.code];
     return m ? tr(m[0], m[1]) : tr('Something went wrong: ', 'Có lỗi: ') + ((e && e.message) || e);

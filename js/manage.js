@@ -1048,6 +1048,7 @@
         var doms = $id('aDom').value.split(/[\s,;]+/).map(function (d) { return d.trim().toLowerCase().replace(/^@/, ''); }).filter(Boolean);
         S.saveSettings({ auto_approve_mode: mode, auto_approve_domains: doms }).then(function () { toast(tr('Saved', 'Đã lưu')); }).catch(fail);
       };
+      notifyCard(s);
     }).catch(fail);
     if (tab === 'events') S.listAllEvents().then(function (list) {
       $id('adm').innerHTML = '<p class="small mut">' + tr('Verified events count towards the global rankings on the home page.', 'Giải đã xác minh được tính vào xếp hạng toàn cầu ở trang chủ.') + '</p>' +
@@ -1059,6 +1060,77 @@
         S.updateEvent(c.dataset.v, { verified: c.checked }).then(function () { toast(tr('Saved', 'Đã lưu')); if (B && B.event.id === c.dataset.v) B = null; }).catch(fail);
       };
     }).catch(fail);
+  }
+
+  /* Thông báo email qua Google Apps Script của SEPA (scripts/notify-mailer.gs; schema.sql: notify_send).
+     "Chép mã" tạo khoá bí mật nếu chưa có, lưu ngay, rồi chép mã script đã điền sẵn khoá. */
+  function notifyCard(s) {
+    var on = !!s.notify_url;
+    var box = document.createElement('form'); box.className = 'card'; box.id = 'fNotify'; box.style.maxWidth = '640px'; box.style.marginTop = '16px';
+    box.innerHTML = '<h3 style="margin-top:0">' + tr('Email notifications', 'Thông báo email') + ' <span class="pill ' + (on ? 's-approved' : 's-pending') + '" id="nState">' + (on ? tr('On', 'Đang bật') : tr('Not set up', 'Chưa cài')) + '</span></h3>' +
+      '<p class="small mut" style="margin-top:0">' + tr('Emails are sent from SEPA\'s own Google account: SEPA gets an email when someone signs up, and people get an email when their account is approved or rejected.',
+        'Email gửi từ chính tài khoản Google của SEPA: SEPA nhận email khi có người đăng ký, người đăng ký nhận email khi tài khoản được duyệt hoặc bị từ chối.') + '</p>' +
+      '<details' + (on ? '' : ' open') + '><summary><b>' + tr('How to set up (once, about 5 minutes)', 'Cách cài (1 lần, khoảng 5 phút)') + '</b></summary><ol class="small" style="padding-left:18px">' +
+        '<li>' + tr('Click <b>Copy mailer code</b> below.', 'Bấm <b>Chép mã gửi email</b> ở dưới.') + '</li>' +
+        '<li>' + tr('Open <a href="https://script.google.com/home/projects/create" target="_blank" rel="noopener">script.google.com</a> signed in with the SEPA Google account. A new project opens: delete what is there, paste, then press <b>Save</b> (💾).',
+          'Mở <a href="https://script.google.com/home/projects/create" target="_blank" rel="noopener">script.google.com</a> bằng tài khoản Google của SEPA. Một dự án mới mở ra: xoá hết chữ có sẵn, dán mã vào, rồi bấm <b>Save</b> (💾).') + '</li>' +
+        '<li>' + tr('Click <b>Deploy → New deployment</b>, click ⚙ and choose <b>Web app</b>. Set <b>Execute as: Me</b> and <b>Who has access: Anyone</b>, then <b>Deploy</b>. Click <b>Authorize access</b>, pick the SEPA account, <b>Advanced → Go to … (unsafe) → Allow</b>.',
+          'Bấm <b>Deploy → New deployment</b>, bấm ⚙ chọn <b>Web app</b>. Chọn <b>Execute as: Me</b> và <b>Who has access: Anyone</b>, rồi bấm <b>Deploy</b>. Bấm <b>Authorize access</b>, chọn tài khoản SEPA, bấm <b>Advanced → Go to … (unsafe) → Allow</b>.') + '</li>' +
+        '<li>' + tr('Copy the <b>Web app URL</b>, paste it below, click <b>Save</b>, then <b>Send test email</b>.', 'Chép <b>Web app URL</b>, dán vào ô dưới, bấm <b>Lưu</b>, rồi bấm <b>Gửi email thử</b>.') + '</li></ol></details>' +
+      '<div class="row" style="margin:8px 0"><button class="btn" type="button" id="nCopy">' + tr('Copy mailer code', 'Chép mã gửi email') + '</button>' +
+        '<button class="btn sm" type="button" id="nNewKey">' + tr('New secret key', 'Tạo khoá bí mật mới') + '</button></div>' +
+      '<textarea id="nCode" readonly hidden style="width:100%;min-height:120px;font-family:var(--f-mono);font-size:12px"></textarea>' +
+      '<label class="f"><span>' + tr('Apps Script link (Web app URL)', 'Link Apps Script (Web app URL)') + '</span><input type="text" inputmode="url" id="nUrl" placeholder="https://script.google.com/macros/s/…/exec" value="' + esc(s.notify_url || '') + '"></label>' +
+      '<label class="f" style="margin-top:8px"><span>' + tr('Send new-account alerts to (one email per line; empty = every SEPA admin)', 'Gửi báo tài khoản mới tới (mỗi dòng 1 email; để trống = mọi tài khoản quản trị SEPA)') + '</span>' +
+        '<textarea id="nTo" style="min-height:60px">' + esc((s.notify_emails || []).join('\n')) + '</textarea></label>' +
+      '<label class="ck" style="margin:8px 0"><input type="checkbox" id="nUsers"' + (s.notify_users !== false ? ' checked' : '') + '> ' + tr('Email people when their account is approved or rejected', 'Gửi email cho người đăng ký khi tài khoản được duyệt hoặc bị từ chối') + '</label>' +
+      '<div class="row"><button class="btn pri" type="submit">' + tr('Save', 'Lưu') + '</button><button class="btn" type="button" id="nTest">' + tr('Send test email', 'Gửi email thử') + '</button></div>' +
+      '<div id="nLog" class="small" style="margin-top:10px"></div>';
+    $id('adm').appendChild(box);
+    var secret = s.notify_secret || '';
+    var newKey = function () { var a = new Uint8Array(24); crypto.getRandomValues(a); return Array.prototype.map.call(a, function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); };
+    var copyCode = function () {
+      return fetch('scripts/notify-mailer.gs').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); }).then(function (code) {
+        code = code.replace("var SECRET = '__SECRET__';", "var SECRET = '" + secret + "';");
+        var ta = $id('nCode'); ta.value = code; ta.hidden = false; ta.select();
+        return (navigator.clipboard ? navigator.clipboard.writeText(code) : Promise.reject()).catch(function () { document.execCommand('copy'); })
+          .then(function () { toast(tr('Code copied. Paste it into Apps Script.', 'Đã chép mã. Dán vào Apps Script.')); });
+      });
+    };
+    var ensureKey = function (force) {
+      if (secret && !force) return Promise.resolve();
+      secret = newKey();
+      return S.saveSettings({ notify_secret: secret });
+    };
+    $id('nCopy').onclick = function () { ensureKey(false).then(copyCode).catch(fail); };
+    $id('nNewKey').onclick = function () {
+      if (!confirm(tr('Make a new secret key? Emails stop until you paste the new code into Apps Script and deploy again (Deploy → Manage deployments → ✏ → New version).',
+        'Tạo khoá bí mật mới? Email sẽ ngừng gửi cho đến khi bạn dán mã mới vào Apps Script và triển khai lại (Deploy → Manage deployments → ✏ → New version).'))) return;
+      ensureKey(true).then(copyCode).catch(fail);
+    };
+    box.onsubmit = function (ev) {
+      ev.preventDefault();
+      var url = $id('nUrl').value.trim(), to = $id('nTo').value.split(/[\s,;]+/).map(function (x) { return x.trim().toLowerCase(); }).filter(Boolean);
+      var bad = to.filter(function (x) { return !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x); });
+      if (bad.length) { toast(tr('Not a valid email: ', 'Email không hợp lệ: ') + bad.join(', '), true); return; }
+      ensureKey(false).then(function () { return S.saveSettings({ notify_url: url, notify_emails: to, notify_users: $id('nUsers').checked }); })
+        .then(function () { toast(tr('Saved', 'Đã lưu')); var st = $id('nState'); st.className = 'pill ' + (url ? 's-approved' : 's-pending'); st.textContent = url ? tr('On', 'Đang bật') : tr('Not set up', 'Chưa cài'); })
+        .catch(fail);
+    };
+    $id('nTest').onclick = function () {
+      S.notifyTest().then(function () { toast(tr('Test email sent. Check the inbox in a minute (and the Spam folder).', 'Đã gửi email thử. Xem hộp thư sau khoảng 1 phút (cả thư mục Spam).')); setTimeout(showLog, 4000); }).catch(fail);
+    };
+    var showLog = function () {
+      S.notifyLog().then(function (rows) {
+        if (!rows || !rows.length) { $id('nLog').innerHTML = ''; return; }
+        $id('nLog').innerHTML = '<b>' + tr('Recent sends', 'Các lần gửi gần đây') + '</b><br>' + rows.map(function (r) {
+          var good = r.status_code >= 200 && r.status_code < 400;
+          return esc(new Date(r.created).toLocaleString(I18N.loc())) + ' · ' + (good ? '<span class="s-approved">' + tr('Delivered to Apps Script', 'Đã chuyển tới Apps Script') + '</span>'
+            : '<span class="s-rejected">' + tr('Error', 'Lỗi') + ' ' + esc(r.status_code || '') + ' ' + esc(r.error || '') + '</span>');
+        }).join('<br>');
+      }).catch(function () {});
+    };
+    showLog();
   }
 
   /* ---------- khởi động ---------- */

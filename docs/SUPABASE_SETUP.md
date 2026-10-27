@@ -88,6 +88,34 @@ Tab **Approval settings** có 3 chế độ:
 
 Tài khoản bị từ chối không tạo được giải và không sửa được giải đã có.
 
+## Thông báo email
+
+Khi đã cài, hệ thống tự gửi email:
+
+| Khi nào | Ai nhận |
+|---|---|
+| Có người mới đăng ký | SEPA (mọi tài khoản quản trị SEPA, hoặc danh sách email SEPA tự đặt) |
+| Tài khoản được duyệt hoặc bị từ chối | Người đăng ký (tắt được) |
+
+Email được gửi từ **chính tài khoản Google của SEPA** bằng Google Apps Script, miễn phí. Gmail thường gửi được 100 email/ngày, Google Workspace 1.500 email/ngày.
+
+**Cài 1 lần (khoảng 5 phút):**
+1. Nếu PR có ghi *"cần chạy lại schema.sql"*, làm theo mục **Khi có bản cập nhật cơ sở dữ liệu** ở trên trước.
+2. Đăng nhập `manage.html` bằng tài khoản SEPA → tab **Approval settings** → khung **Email notifications** → bấm **Copy mailer code**.
+3. Mở [script.google.com](https://script.google.com/home/projects/create) bằng tài khoản Google của SEPA. Dự án mới mở ra: xoá hết chữ có sẵn, dán mã vào, bấm **Save** (💾).
+4. Bấm **Deploy → New deployment** → bấm ⚙ → chọn **Web app**:
+   - **Execute as:** Me
+   - **Who has access:** Anyone
+   - Bấm **Deploy** → **Authorize access** → chọn tài khoản SEPA → **Advanced** → **Go to … (unsafe)** → **Allow**. Google cảnh báo vì đây là script tự viết, không phải ứng dụng đã được Google kiểm duyệt.
+5. Chép **Web app URL** (dạng `https://script.google.com/macros/s/…/exec`) → dán vào ô **Apps Script link** → **Save** → **Send test email**.
+6. Sau khoảng 1 phút, xem hộp thư (cả thư mục Spam). Dòng **Recent sends** dưới nút cho biết Supabase đã gọi tới Apps Script được hay chưa.
+
+**Khi cần đổi mã** (có bản cập nhật script, hoặc bấm **New secret key**): bấm **Copy mailer code** → dán đè vào Apps Script → **Save** → **Deploy → Manage deployments** → ✏ → **Version: New version** → **Deploy**. Link giữ nguyên, không cần dán lại.
+
+**Không nhận được email?**
+- **Recent sends** báo lỗi: kiểm tra link đã dán đúng chưa, và **Who has access** phải là **Anyone**.
+- **Recent sends** báo "Đã chuyển tới Apps Script" nhưng không có email: mở Apps Script → **Executions** để xem lỗi. Thường là chưa bấm **Allow**, hoặc khoá bí mật không khớp (bấm **Copy mailer code** rồi dán lại).
+
 ## Xếp hạng toàn cầu
 
 Chỉ giải **RECF Engage** được SEPA tick **Verified** mới được tính vào bảng **Xếp hạng toàn cầu** trên trang chủ. Có hai chỗ để tick:

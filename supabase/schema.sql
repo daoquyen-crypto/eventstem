@@ -317,12 +317,86 @@ begin
   end loop;
 end $$;
 
+-- ---------- Thông báo email ----------
+-- Supabase gọi một Google Apps Script (scripts/notify-mailer.gs) chạy bằng tài khoản Google của SEPA; script gửi email từ hộp thư đó.
+--   signup    có tài khoản mới đăng ký        → gửi cho SEPA (notify_emails, để trống = mọi superadmin)
+--   decision  tài khoản được duyệt / từ chối  → gửi cho người đăng ký (nếu notify_users)
+--   test      SEPA bấm "Gửi email thử"        → gửi cho SEPA
+-- Chưa điền notify_url thì không gửi gì. Lỗi gửi không bao giờ làm hỏng việc đăng ký / duyệt.
+alter table public.app_settings add column if not exists notify_url    text    not null default '';
+alter table public.app_settings add column if not exists notify_secret text    not null default '';
+alter table public.app_settings add column if not exists notify_emails text[]  not null default '{}';
+alter table public.app_settings add column if not exists notify_users  boolean not null default true;
+alter table public.app_settings drop constraint if exists app_settings_notify_url_check;
+alter table public.app_settings add constraint app_settings_notify_url_check
+  check (notify_url = '' or notify_url ~ '^https://script\.google\.com/macros/s/[A-Za-z0-9_-]+/exec$');
+-- pg_net gửi HTTP từ trong cơ sở dữ liệu (Supabase có sẵn). Postgres thường không có thì bỏ qua.
+do $$ begin create extension if not exists pg_net; exception when others then raise notice 'pg_net không có: bỏ qua thông báo email'; end $$;
+
+create or replace function public.notify_admins() returns text[]
+language sql stable security definer set search_path = public as $$
+  select case when cardinality(s.notify_emails) > 0 then s.notify_emails
+    else coalesce((select array_agg(email order by created_at) from profiles where role = 'superadmin' and status = 'approved'), '{}') end
+  from app_settings s where s.id = 1;
+$$;
+create or replace function public.notify_send(kind text, recipients text[], data jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+declare s app_settings;
+begin
+  select * into s from app_settings where id = 1;
+  if s.notify_url = '' or cardinality(recipients) = 0 then return; end if;
+  perform net.http_post(url := s.notify_url,
+    body := jsonb_build_object('secret', s.notify_secret, 'kind', kind, 'to', to_jsonb(recipients), 'data', data),
+    headers := '{"Content-Type": "application/json"}'::jsonb, timeout_milliseconds := 10000);
+exception when others then
+  raise warning 'notify_send % lỗi: %', kind, sqlerrm;
+end $$;
+revoke execute on function public.notify_send(text, text[], jsonb) from public, anon, authenticated;
+revoke execute on function public.notify_admins() from public, anon, authenticated;
+
+create or replace function public.profile_notify() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare
+  s app_settings;
+  info jsonb := jsonb_build_object('email', new.email, 'name', new.display_name, 'organization', new.organization, 'country', new.country, 'status', new.status);
+begin
+  select * into s from app_settings where id = 1;
+  if tg_op = 'INSERT' then
+    perform notify_send('signup', notify_admins(), info);
+    if new.status = 'approved' and s.notify_users then perform notify_send('decision', array[new.email], info); end if;
+  elsif new.status is distinct from old.status and new.status in ('approved', 'rejected') and s.notify_users then
+    perform notify_send('decision', array[new.email], info);
+  end if;
+  return new;
+end $$;
+drop trigger if exists profile_notify on public.profiles;
+create trigger profile_notify after insert or update of status on public.profiles
+  for each row execute function public.profile_notify();
+
+-- SEPA bấm "Gửi email thử"
+create or replace function public.notify_test() returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not is_superadmin() then raise exception 'Chỉ SEPA (superadmin) được gửi thử' using errcode = '42501'; end if;
+  if (select notify_url from app_settings where id = 1) = '' then raise exception 'Chưa điền link Apps Script' using errcode = '22023'; end if;
+  perform notify_send('test', notify_admins(), jsonb_build_object('email', (select email from profiles where id = auth.uid())));
+end $$;
+-- Kết quả các lần gọi gần nhất (pg_net giữ khoảng 6 tiếng), để SEPA biết email có gửi được không
+create or replace function public.notify_log() returns table (created timestamptz, status_code int, error text)
+language plpgsql security definer set search_path = public as $$
+begin
+  if not is_superadmin() then raise exception 'Chỉ SEPA (superadmin)' using errcode = '42501'; end if;
+  return query execute 'select created, status_code, coalesce(error_msg, '''') from net._http_response order by created desc limit 5';
+exception when undefined_table or invalid_schema_name then return;
+end $$;
+
 grant usage on schema public to anon, authenticated;
 grant select on public.events, public.teams, public.matches, public.solo_runs, public.awards, public.event_assets to anon, authenticated;
 grant insert, update, delete on public.events, public.teams, public.matches, public.solo_runs, public.awards, public.event_assets to authenticated;
 grant select on public.profiles, public.app_settings to authenticated;
 grant update on public.app_settings to authenticated;
 grant execute on function public.admin_set_user(uuid, text, text) to authenticated;
+grant execute on function public.notify_test(), public.notify_log() to authenticated;
 
 -- ---------- Sau khi chạy file này ----------
 -- 1. Đăng ký tài khoản SEPA trên trang manage.html.

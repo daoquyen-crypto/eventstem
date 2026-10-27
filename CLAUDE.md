@@ -40,6 +40,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 | `js/geo.js` | Đoán quốc gia người xem (quốc gia đã chọn trước → múi giờ → ngôn ngữ trình duyệt), không gửi gì ra ngoài. Dùng cho dải "Giải gần bạn" ở trang chủ và ô quốc gia mặc định |
 | `js/i18n.js`, `css/app.css` | Ngôn ngữ và giao diện chung của `manage.html` và `event.html` |
 | `js/vendor/supabase-2.117.3.js` | supabase-js đóng gói sẵn (MIT); không dùng CDN |
+| `scripts/notify-mailer.gs` | Google Apps Script gửi email thông báo bằng tài khoản Google của SEPA. Supabase gọi qua `pg_net` (`notify_send` trong `schema.sql`): `signup` → SEPA (`notify_emails`, trống = mọi superadmin), `decision` duyệt / từ chối → người đăng ký (nếu `notify_users`), `test`. Khoá bí mật `notify_secret` chỉ superadmin đọc được; tab Approval settings chép mã đã điền sẵn khoá (`notifyCard()` trong `manage.js`). `notify_url` chỉ nhận link `script.google.com/macros/s/…/exec`. Hướng dẫn cài: `docs/SUPABASE_SETUP.md` |
 | `supabase/schema.sql` | Bảng, RLS, trigger duyệt tài khoản, ràng buộc luật. **Phải chạy lại an toàn nhiều lần** (`if not exists`, `drop … if exists`) |
 | `scripts/crawler.py`, `scripts/build_results.py` | Lấy dữ liệu RECF; gộp CSV kết quả |
 | `docs/` | `SUPABASE_SETUP.md` (cài đặt), `BRAND.md` (logo, tagline, màu), `HUONG_DAN_TRIEN_KHAI.md` (cũ, viết theo Cloudflare Pages) |
@@ -66,7 +67,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 ## Kiểm thử (chạy trước mỗi PR)
 
 ```bash
-node --test tests/*.test.js                       # luật Engage + Achieve + ADC + ADC Pro, Spotlight Partners
+node --test tests/*.test.js                       # luật Engage + Achieve + ADC + ADC Pro, Spotlight Partners, script gửi email
 PGHOST=... PGPORT=... bash tests/schema_test.sh   # schema + RLS trên Postgres thường (giả lập Supabase bằng tests/supabase_stub.sql)
 python3 -m http.server 8767 &                     # rồi:
 node tests/e2e_manage.js                          # E2E luồng Engage (chế độ demo)
@@ -91,6 +92,7 @@ node tests/e2e_home.js                            # E2E trang chủ: "Gần bạ
 ## Việc còn dang dở
 
 - SEPA chưa cài **SMTP** riêng cho email xác nhận của Supabase. Email mặc định bị giới hạn vài thư mỗi giờ.
+- Thông báo email (Apps Script) mới thử trên Postgres local với `pg_net` giả và bản demo; chưa thử gửi thật qua Supabase + Google. Lần đầu cài nên bấm **Send test email** và xem **Recent sends**.
 - Chưa chạy một giải thật đầy đủ trên Supabase thật. Lần đầu dùng nên theo dõi lỗi.
 - Chưa có luật **Inspire**. Nếu cần, xin SEPA file Game Manual PDF.
 - ADC Pro: điểm thành phần trận Alliance lưu ở `matches.detail = {red, blue}`; kiểm tra chéo tổng pump ≤ 3, fuel ≤ 36 (`ADCPro.matchIssues`). Tuỳ chọn của ban tổ chức (xem `ADCPro.DEFAULTS`): `scoreEntry`, `qualRedCard` (`actual` / `win`, 1.6.3), `elimRedCard` (`all` / `finals`, 1.6.3), `bo3Ties` (`replay` / `game`, 7.4.6). Nhánh đấu gọi qua `R().bracket` / `R().gameScores`, không gọi thẳng `Achieve.bracket`.

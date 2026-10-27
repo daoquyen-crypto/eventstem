@@ -99,4 +99,36 @@ check "logo: tài khoản khác không sửa được" '^0$' "$(as $DOM "with u 
 check "tài khoản bị từ chối mất quyền sửa" '^0$' "$(as $SEPA "select admin_set_user('$ORG','rejected')" >/dev/null; as $ORG "with u as (update teams set name='x' where event_id='$EV' returning 1) select count(*) from u")"
 check "xoá giải xoá cả dữ liệu con" '^0\|0$' "$(as $SEPA "delete from events where id in ('$EV','$EVA')" >/dev/null; su "select (select count(*) from teams)||'|'||(select count(*) from matches)")"
 
+# ---------- Thông báo email (pg_net giả ghi vào net.calls) ----------
+check "chưa điền link Apps Script thì không gửi gì" '^0$' "$(su "select count(*) from net.calls")"
+check "organizer không đọc được khoá bí mật" '^$' "$(as $DOM "select notify_secret from app_settings")"
+check "organizer không gửi thử được" 'Chỉ SEPA' "$(as $DOM "select notify_test()")"
+check "link lạ (không phải Apps Script) bị chặn" 'violates check' "$(as $SEPA "update app_settings set notify_url='https://evil.example/x'")"
+check "gửi thử khi chưa có link báo lỗi rõ" 'Chưa điền link' "$(as $SEPA "select notify_test()")"
+URL=https://script.google.com/macros/s/AKfy_test-123/exec
+as $SEPA "update app_settings set auto_approve_mode='off', notify_url='$URL', notify_secret='s3cret'" >/dev/null
+su "insert into auth.users(email,raw_user_meta_data) values ('moi@truong-c.edu.vn','{\"display_name\":\"Thầy C\",\"organization\":\"Trường C\"}')"
+check "đăng ký mới → báo SEPA (cả superadmin)" '^signup\|s3cret\|\["daoquyen@sepa.org.vn"\]\|Thầy C\|Trường C\|pending$' "$(su "select body->>'kind'||'|'||(body->>'secret')||'|'||(body->'to')::text||'|'||(body#>>'{data,name}')||'|'||(body#>>'{data,organization}')||'|'||(body#>>'{data,status}') from net.calls order by id desc limit 1")"
+check "gửi đúng link Apps Script" "^$URL\$" "$(su "select url from net.calls order by id desc limit 1")"
+NEWC=$(su "select id from profiles where email='moi@truong-c.edu.vn'")
+as $SEPA "select admin_set_user('$NEWC','approved')" >/dev/null
+check "được duyệt → báo cho người đăng ký" '^decision\|\["moi@truong-c.edu.vn"\]\|approved$' "$(su "select body->>'kind'||'|'||(body->'to')::text||'|'||(body#>>'{data,status}') from net.calls order by id desc limit 1")"
+N=$(su "select count(*) from net.calls")
+as $SEPA "select admin_set_user('$NEWC','approved','superadmin')" >/dev/null
+check "chỉ đổi quyền (không đổi trạng thái) thì không gửi lại" "^$N\$" "$(su "select count(*) from net.calls")"
+as $SEPA "update app_settings set notify_emails='{bgk@sepa.org.vn,hotro@sepa.org.vn}', notify_users=false" >/dev/null
+su "insert into auth.users(email) values ('khac@gmail.com')"
+check "danh sách người nhận do SEPA đặt" '^\["bgk@sepa.org.vn", "hotro@sepa.org.vn"\]$' "$(su "select (body->'to')::text from net.calls order by id desc limit 1")"
+N=$(su "select count(*) from net.calls")
+as $SEPA "select admin_set_user((select id from profiles where email='khac@gmail.com'),'rejected')" >/dev/null
+check "tắt báo người đăng ký thì không gửi khi từ chối" "^$N\$" "$(su "select count(*) from net.calls")"
+as $SEPA "select notify_test()" >/dev/null
+check "SEPA gửi email thử" '^test\|bgk@sepa.org.vn$' "$(su "select body->>'kind'||'|'||(body->'to'->>0) from net.calls order by id desc limit 1")"
+su "insert into net._http_response(id,status_code) values (1,302)"
+check "SEPA xem kết quả gửi gần nhất" '^302$' "$(as $SEPA "select status_code from notify_log()")"
+check "organizer không xem được kết quả gửi" 'Chỉ SEPA' "$(as $DOM "select * from notify_log()")"
+check "người dùng không gọi thẳng notify_send" 'permission denied' "$(as $SEPA "select notify_send('test','{x@y.z}','{}')")"
+su "create or replace function net.http_post(url text, body jsonb default '{}', params jsonb default '{}', headers jsonb default '{}', timeout_milliseconds int default 5000) returns bigint language sql as \$\$ select 1/0 \$\$"
+check "gửi email lỗi vẫn đăng ký được" '^pending$' "$(su "insert into auth.users(email) values ('loi@gmail.com')" >/dev/null 2>&1; su "select status from profiles where email='loi@gmail.com'")"
+
 echo "pass=$pass fail=$fail"; [ $fail -eq 0 ]

@@ -17,6 +17,8 @@
     auto_red: false, auto_blue: false, end_red: false, end_blue: false, stop_time: null, detail: null };
   function inMatch(m, n) { return SLOTS.some(function (s) { return m[s] === n; }); }
 
+  var SETTING_COLS = ['auto_approve_mode', 'auto_approve_domains', 'notify_url', 'notify_secret', 'notify_emails', 'notify_users'];
+  var NOTIFY_URL = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/;
   function pick(o, cols) { var r = {}; cols.forEach(function (k) { if (o && o[k] !== undefined) r[k] = o[k]; }); return r; }
   function fail(code, msg) { var e = new Error(msg || code); e.code = code; throw e; }
 
@@ -27,6 +29,8 @@
     e.code = /awards_one_judged/.test(m) ? 'judged_dup'
       : /lượt solo|hết \d+ lượt/.test(m) ? 'solo_limit'
       : /is_image_data|valid_sponsors|event_assets_.*check/.test(m) ? 'bad_image'
+      : /app_settings_notify_url_check/.test(m) ? 'bad_notify_url'
+      : /Chưa điền link Apps Script/.test(m) ? 'notify_no_url'
       : /matches_event_id_round_num_key|duplicate key.*matches/.test(m) ? 'match_dup'
       : /teams_pkey|duplicate key.*teams/.test(m) ? 'team_dup'
       : /foreign key/.test(m) ? 'team_in_use'
@@ -75,7 +79,10 @@
       listUsers: function () { return q(sb.from('profiles').select('*').order('created_at', { ascending: false })); },
       setUser: function (uid, status, role) { return q(sb.rpc('admin_set_user', { uid: uid, new_status: status, new_role: role || null })); },
       getSettings: function () { return q(sb.from('app_settings').select('*').eq('id', 1).maybeSingle()); },
-      saveSettings: function (s) { return q(sb.from('app_settings').update(pick(s, ['auto_approve_mode', 'auto_approve_domains'])).eq('id', 1)); },
+      saveSettings: function (s) { return q(sb.from('app_settings').update(pick(s, SETTING_COLS)).eq('id', 1)); },
+      /* Thông báo email (schema.sql: notify_test, notify_log) */
+      notifyTest: function () { return q(sb.rpc('notify_test')); },
+      notifyLog: function () { return q(sb.rpc('notify_log')); },
 
       listPublicEvents: function () { return q(sb.from('events').select('*').neq('status', 'draft').order('date', { ascending: false })); },
       listMyEvents: function () { return q(sb.from('events').select('*').eq('owner', me.id).order('created_at', { ascending: false })); },
@@ -132,7 +139,7 @@
   function assetsOf(r) { return { organizer: (r && r.organizer) || null, sponsors: (r && r.sponsors) || [] }; }
   /* Giống ràng buộc is_image_data / valid_sponsors trong schema.sql */
   function validImage(t) { return t == null || (/^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(t) && t.length <= 400000); }
-  function emptyData() { return { users: [], session: null, settings: { id: 1, auto_approve_mode: 'off', auto_approve_domains: [] }, events: [], teams: [], matches: [], solo_runs: [], awards: [], event_assets: [] }; }
+  function emptyData() { return { users: [], session: null, settings: { id: 1, auto_approve_mode: 'off', auto_approve_domains: [], notify_url: '', notify_secret: '', notify_emails: [], notify_users: true }, events: [], teams: [], matches: [], solo_runs: [], awards: [], event_assets: [] }; }
   /* Tập dượt: tự đăng nhập bằng 1 tài khoản ban tổ chức (đã duyệt), không cần đăng ký */
   var PRACTICE_USER = { id: 'rehearsal-organizer', email: 'rehearsal@eventstem.local', pw: '', display_name: 'Rehearsal', organization: '', country: '', role: 'organizer', status: 'approved', created_at: '2026-01-01T00:00:00Z' };
   function rehearsalData(d) {
@@ -212,7 +219,16 @@
         });
       },
       getSettings: function () { return run(function () { return isSA() ? load().settings : null; }); },
-      saveSettings: function (s) { return run(function () { if (!isSA()) fail('forbidden'); Object.assign(load().settings, pick(s, ['auto_approve_mode', 'auto_approve_domains'])); }); },
+      saveSettings: function (s) {
+        return run(function () {
+          if (!isSA()) fail('forbidden');
+          if (s.notify_url && !NOTIFY_URL.test(s.notify_url)) fail('bad_notify_url');   // giống ràng buộc app_settings_notify_url_check
+          Object.assign(load().settings, pick(s, SETTING_COLS));
+        });
+      },
+      /* Demo không gửi email thật */
+      notifyTest: function () { return run(function () { if (!isSA()) fail('forbidden'); if (!load().settings.notify_url) fail('notify_no_url'); fail('demo_only'); }); },
+      notifyLog: function () { return ok([]); },
 
       listPublicEvents: function () { return run(function () { return load().events.filter(function (e) { return e.status !== 'draft'; }).sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }); }); },
       listMyEvents: function () { return run(function () { var u = cur(); return u ? load().events.filter(function (e) { return e.owner === u.id; }).reverse() : []; }); },

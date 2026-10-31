@@ -29,6 +29,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 | `manage.html` + `js/manage.js` | Công cụ ban tổ chức: đăng nhập, tạo giải, đội, lịch, chấm điểm, Solo, xếp hạng, chung kết / loại trực tiếp, giải thưởng, xuất CSV; SEPA duyệt tài khoản |
 | `event.html` + `js/event.js` | Trang xem trực tiếp, tự kiểm tra cập nhật mỗi 20 giây |
 | `show.html` + `js/show.js` | Màn hình trình chiếu tại sân, tự cập nhật mỗi 15 giây. Các slide: `next`, `sched` (lịch các trận còn lại), `rank`, `solo`, `elim`, `awards`, `events` (giải RECF sắp tới trong nước + lân cận, từ `events.json`), `sponsors`. Chọn màn bằng `&screen=`: `all` (luân phiên các slide bật trong `event.config.show`), `matches`, `standings`, `events`, `sponsors`, hoặc `overlay` (lớp phủ livestream cho OBS: nền trong suốt, `&bg=green` / `&bg=dark`, `&field=2`). Đổi màn được ngay trên thanh điều khiển. Ghi đè khác: `&s=10`, `&only=rank,solo`, `&spot=seq` / `rand` / `nasa,google`. Chân màn hình luôn có dải logo **Spotlight Partners** chạy liên tục (`paintSpot()`; chỉ dựng lại khi cài đặt đổi) |
+| `timer.html` + `js/timer.js` + `js/timing.js` | **Đồng hồ trọng tài**: đếm ngược cỡ lớn, phần tự hành → điều khiển, tiếng bíp (Web Audio), giữ màn hình sáng. Bảng giờ = `{name, mode: match/auto/driver, auto, driver, between: go/wait, lead, sound}`. Bảng có sẵn (`Timing.BUILTIN`): **Achieve Driving** 0:15 tự hành + 1:45 điều khiển, **Achieve Coding** 2:00 tự hành. Ban tổ chức đặt bảng của giải + bảng mặc định ở tab Logo & trình chiếu (`event.config.timer = {presets, def}`, `timerCard()` trong `manage.js`). Trọng tài chỉnh nhanh / lưu bảng mới ngay trên đồng hồ, chỉ lưu trên máy đó (localStorage `eventstem-timer-v1`). Mở không cần `?id=`; `&preset=` chọn bảng. Phím: Space, R, N, F. Logic đếm (`js/timing.js`) tính theo giờ thật, chạy được trong node |
 | `js/partners.js` | Danh sách Spotlight Partners (ảnh ở `assets/partners/<id>.png`) và bộ phát logo kế tiếp. Ban tổ chức chọn trong tab Logo & trình chiếu, lưu ở `event.config.show.spotlight = {mode, pick}`: `seq` lần lượt, `rand` ngẫu nhiên (mỗi vòng đủ mặt, không lặp liền nhau), `pick` tuỳ chọn (chỉ các đối tác đã tích, theo thứ tự đã xếp) |
 | `js/engage.js` | Luật **RECF Engage: Tier Takeover** (Game Manual v2.0) |
 | `js/achieve.js` | Luật **RECF Achieve: Pinnacle** (Game Manual v2.0): 2 đấu 2, ranking points, chọn liên minh, nhánh loại trực tiếp |
@@ -67,7 +68,7 @@ Người dùng chính là SEPA (`daoquyen@sepa.org.vn`), không phải lập tr�
 ## Kiểm thử (chạy trước mỗi PR)
 
 ```bash
-node --test tests/*.test.js                       # luật Engage + Achieve + ADC + ADC Pro, Spotlight Partners, script gửi email
+node --test tests/*.test.js                       # luật Engage + Achieve + ADC + ADC Pro, Spotlight Partners, đồng hồ trọng tài, script gửi email
 PGHOST=... PGPORT=... bash tests/schema_test.sh   # schema + RLS trên Postgres thường (giả lập Supabase bằng tests/supabase_stub.sql)
 python3 -m http.server 8767 &                     # rồi:
 node tests/e2e_manage.js                          # E2E luồng Engage (chế độ demo)
@@ -77,6 +78,7 @@ node tests/e2e_adc_pro.js                         # E2E luồng ADC Pro, nhập 
 node tests/e2e_show.js                            # E2E logo + màn hình trình chiếu (chế độ demo)
 node tests/e2e_rehearsal.js                       # E2E chế độ tập dượt
 node tests/e2e_home.js                            # E2E trang chủ: "Gần bạn" theo quốc gia, xem theo tháng
+node tests/e2e_timer.js                           # E2E đồng hồ trọng tài + cài bảng giờ của giải
 ```
 
 - Các test E2E chặn `js/config.js` để luôn chạy ở chế độ demo, **không ghi dữ liệu thử lên Supabase thật**.

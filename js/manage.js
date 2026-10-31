@@ -336,6 +336,7 @@
         '<h2 class="t" style="margin:4px 0 2px">' + esc(e.name) + '</h2><div class="small mut">' + esc(fmtDate(e.date)) + (e.location ? ' · ' + esc(e.location) : '') +
         ' · <span class="pill s-' + esc(e.status) + '">' + esc(statusName(e.status)) + '</span>' + (e.verified ? ' <span style="color:var(--ok)">✓ ' + tr('Verified by SEPA', 'SEPA đã xác minh') + '</span>' : '') + '</div></div>' +
         '<div class="row"><a class="btn" href="' + esc(Rehearsal.url('show.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Show screen ↗', 'Trình chiếu ↗') + '</a>' +
+        '<a class="btn" href="' + esc(Rehearsal.url('timer.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Referee timer ↗', 'Đồng hồ trọng tài ↗') + '</a>' +
         '<a class="btn" href="' + esc(Rehearsal.url('event.html?id=' + e.id)) + '" target="_blank" rel="noopener">' + tr('Public page ↗', 'Trang công khai ↗') + '</a></div></div>' +
         '<div class="tabs" role="tablist" style="margin-top:12px">' + TABS.map(function (t) {
           var lb = t[0] === 'finals' && (Rules.of(e).format === 'versus' || Rules.of(e).eliminations === 'rounds') ? tr('Eliminations', 'Loại trực tiếp') : tr(t[1], t[2]);
@@ -933,7 +934,9 @@
       (fields > 1 ? '<p class="small mut">' + tr('Several fields: add ', 'Nhiều sân: thêm ') + '<code>&amp;field=2</code>' + tr(' to show only field 2.', ' để chỉ hiện sân 2.') + '</p>' : '') +
       '<div class="row" style="margin-top:8px"><button class="btn sm pri" id="ovCopy" type="button">' + tr('Copy link', 'Chép link') + '</button>' +
         '<a class="btn sm" href="' + esc(scrUrl('overlay', '&bg=dark')) + '" target="_blank" rel="noopener">' + tr('Preview ↗', 'Xem thử ↗') + '</a>' +
-        '<a class="btn sm" href="' + esc(scrUrl('overlay', '&bg=green')) + '" target="_blank" rel="noopener">' + tr('Green background ↗', 'Nền xanh ↗') + '</a></div></div></div></div>');
+        '<a class="btn sm" href="' + esc(scrUrl('overlay', '&bg=green')) + '" target="_blank" rel="noopener">' + tr('Green background ↗', 'Nền xanh ↗') + '</a></div></div>' +
+      '<form class="card" id="fTimers"></form></div></div>');
+    timerCard(e);
     $id('ovCopy').onclick = function () {
       var inp = $id('ovUrl'); inp.select();
       (navigator.clipboard ? navigator.clipboard.writeText(inp.value) : Promise.reject()).catch(function () { document.execCommand('copy'); }).then(function () { toast(tr('Link copied', 'Đã chép link')); });
@@ -992,6 +995,74 @@
       S.updateEvent(e.id, { config: Object.assign({}, e.config, { show: show }) }).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail);
     };
   };
+
+  /* Đồng hồ trọng tài (timer.html, js/timing.js): ban tổ chức đặt các bảng giờ của giải và bảng mặc định.
+     Lưu ở event.config.timer = {presets: [{id, name, mode, auto, driver, between, lead, sound}], def: id}; chưa lưu thì dùng bảng có sẵn (Timing.BUILTIN).
+     Trọng tài vẫn chỉnh nhanh được ngay trên đồng hồ (chỉ lưu trên máy của họ). */
+  function timerCard(e) {
+    var T = window.Timing, tps = T.presetsOf(e.config), def = T.defaultOf(e.config, tps), custom = !!((e.config || {}).timer || {}).presets;
+    var form = $id('fTimers'), url = function (pid) { return Rehearsal.url('timer.html?id=' + e.id + (pid ? '&preset=' + encodeURIComponent(pid) : '')); };
+    var MODES = [['match', tr('Autonomous, then driver control', 'Tự hành rồi điều khiển')], ['auto', tr('Autonomous only (coding)', 'Chỉ tự hành (coding)')], ['driver', tr('Driver control only', 'Chỉ điều khiển')]];
+    var draw = function () {
+      form.innerHTML = '<h3 style="margin-top:0">' + tr('Referee timer', 'Đồng hồ trọng tài') + '</h3>' +
+        '<p class="small mut" style="margin-top:0">' + tr('A big countdown for the referee: autonomous and driver control periods, with beeps. Open it on a laptop, tablet or phone at the field, or put it on a TV. Set the timers for this event here; the referee picks one and can still adjust it on their own device.',
+          'Đồng hồ đếm ngược cỡ lớn cho trọng tài: phần tự hành và phần điều khiển, có tiếng bíp. Mở trên máy tính, máy tính bảng hoặc điện thoại ở sân, hoặc chiếu lên TV. Đặt các bảng giờ của giải ở đây; trọng tài chọn bảng và vẫn chỉnh nhanh được trên máy của mình.') + '</p>' +
+        '<div id="tpList">' + tps.map(function (p, i) {
+          return '<fieldset class="card" data-i="' + i + '" style="margin:0 0 10px;padding:10px 12px"><div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">' +
+            '<label class="f"><span>' + tr('Timer name', 'Tên bảng') + '</span><input type="text" data-k="name" maxlength="60" value="' + esc(p.name) + '"></label>' +
+            '<label class="f"><span>' + tr('Format', 'Hình thức') + '</span><select data-k="mode">' + MODES.map(function (m) { return '<option value="' + m[0] + '"' + (p.mode === m[0] ? ' selected' : '') + '>' + esc(m[1]) + '</option>'; }).join('') + '</select></label>' +
+            (p.mode !== 'driver' ? '<label class="f"><span>' + tr('Autonomous (m:ss)', 'Tự hành (phút:giây)') + '</span><input type="text" data-k="auto" inputmode="numeric" value="' + T.fmt(p.auto) + '"></label>' : '') +
+            (p.mode !== 'auto' ? '<label class="f"><span>' + tr('Driver control (m:ss)', 'Điều khiển (phút:giây)') + '</span><input type="text" data-k="driver" inputmode="numeric" value="' + T.fmt(p.driver) + '"></label>' : '') +
+            (p.mode === 'match' ? '<label class="f"><span>' + tr('Between the two periods', 'Giữa 2 phần') + '</span><select data-k="between"><option value="go"' + (p.between === 'go' ? ' selected' : '') + '>' + tr('Continue straight on', 'Chạy liền') + '</option>' +
+              '<option value="wait"' + (p.between === 'wait' ? ' selected' : '') + '>' + tr('Wait for the referee', 'Chờ trọng tài bấm') + '</option></select></label>' : '') +
+            '<label class="f"><span>' + tr('Get-ready countdown', 'Đếm ngược chuẩn bị') + '</span><select data-k="lead">' + [0, 3, 5, 10].map(function (n) { return '<option value="' + n + '"' + (p.lead === n ? ' selected' : '') + '>' + (n ? n + tr(' s', ' giây') : tr('None', 'Không')) + '</option>'; }).join('') + '</select></label></div>' +
+            '<div class="row" style="margin-top:6px"><label class="ck"><input type="radio" name="tpDef" value="' + i + '"' + (p.id === def ? ' checked' : '') + '> ' + tr('Default', 'Mặc định') + '</label>' +
+            '<label class="ck"><input type="checkbox" data-k="sound"' + (p.sound ? ' checked' : '') + '> ' + tr('Beeps', 'Tiếng bíp') + '</label>' +
+            '<a class="btn sm" href="' + esc(url(p.id)) + '" target="_blank" rel="noopener" style="margin-left:auto">' + tr('Open ↗', 'Mở ↗') + '</a>' +
+            (tps.length > 1 ? '<button class="btn sm danger" type="button" data-del aria-label="' + esc(tr('Remove', 'Xoá')) + '">✕</button>' : '') + '</div></fieldset>';
+        }).join('') + '</div>' +
+        '<p class="small mut" id="tpErr" role="alert" style="margin:0"></p>' +
+        '<div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="tpAdd"' + (tps.length >= T.MAX_PRESETS ? ' disabled' : '') + '>+ ' + tr('Add timer', 'Thêm bảng giờ') + '</button>' +
+          (custom ? '<button class="btn sm" type="button" id="tpStd">' + tr('Back to the standard timers', 'Về bảng giờ có sẵn') + '</button>' : '') + '</div>' +
+        '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">' + tr('Save', 'Lưu') + '</button>' +
+          '<a class="btn acc" id="openTimer" href="' + esc(url()) + '" target="_blank" rel="noopener">' + tr('Open referee timer ↗', 'Mở đồng hồ trọng tài ↗') + '</a></div>' +
+        '<p class="small mut">' + tr('Standard timers: Achieve Driving (0:15 autonomous + 1:45 driver control) and Achieve Coding (2:00 autonomous). Keys on the timer: Space start / pause, R reset, N skip period, F full screen.',
+          'Bảng có sẵn: Achieve Driving (0:15 tự hành + 1:45 điều khiển) và Achieve Coding (2:00 tự hành). Phím trên đồng hồ: Space bắt đầu / tạm dừng, R về đầu, N bỏ qua phần này, F toàn màn hình.') + '</p>';
+    };
+    /* Đọc form vào tps; trả về lỗi đầu tiên (nếu có) */
+    var collect = function () {
+      var err = '', r = document.querySelector('input[name=tpDef]:checked');
+      form.querySelectorAll('[data-i]').forEach(function (fs) {
+        var p = tps[+fs.dataset.i], g = function (k) { var el = fs.querySelector('[data-k=' + k + ']'); return el ? (el.type === 'checkbox' ? el.checked : el.value) : null; };
+        p.name = g('name'); p.mode = g('mode'); p.lead = +g('lead'); p.sound = g('sound');
+        if (g('between') != null) p.between = g('between');
+        ['auto', 'driver'].forEach(function (k) { var v = g(k); if (v == null) return; var s = T.parseTime(v); if (!(s > 0)) err = err || tr('Check the times of "', 'Kiểm tra thời gian của "') + p.name + tr('": use m:ss, e.g. 1:45.', '": ghi phút:giây, ví dụ 1:45.'); else p[k] = s; });
+      });
+      if (r) def = tps[+r.value] && tps[+r.value].id;
+      return err;
+    };
+    form.addEventListener('change', function (ev) { if (ev.target.dataset.k === 'mode') { collect(); var i = +ev.target.closest('[data-i]').dataset.i; tps[i] = T.normalize(Object.assign({}, tps[i], { auto: tps[i].auto || 15, driver: tps[i].driver || 105 })); draw(); } });
+    form.addEventListener('click', function (ev) {
+      if (ev.target.closest('[data-del]')) { collect(); var i = +ev.target.closest('[data-i]').dataset.i, gone = tps.splice(i, 1)[0]; if (gone.id === def) def = tps[0].id; draw(); }
+      else if (ev.target.id === 'tpAdd') { collect(); tps.push(T.normalize({ id: 'timer-' + Date.now().toString(36), name: tr('New timer', 'Bảng mới'), mode: 'match', auto: 15, driver: 105 })); draw(); }
+      else if (ev.target.id === 'tpStd') {
+        if (!confirm(tr('Remove this event\'s timers and use the standard ones?', 'Bỏ các bảng giờ của giải và dùng bảng có sẵn?'))) return;
+        var c = Object.assign({}, e.config); delete c.timer;
+        S.updateEvent(e.id, { config: c }).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail);
+      }
+    });
+    form.onsubmit = function (ev) {
+      ev.preventDefault();
+      var err = collect(); $id('tpErr').textContent = err; if (err) return;
+      var seen = {}, out = tps.map(function (p) {
+        var x = T.normalize(Object.assign({}, p, { id: p.id && !/^timer-/.test(p.id) ? p.id : T.slug(p.name) })), id0 = x.id, n = 2;
+        while (seen[x.id]) x.id = id0 + '-' + n++;
+        seen[x.id] = true; if (p.id === def) def = x.id; return x;
+      });
+      S.updateEvent(e.id, { config: Object.assign({}, e.config, { timer: { presets: out, def: def } }) }).then(function () { toast(tr('Saved', 'Đã lưu')); return refresh(); }).catch(fail);
+    };
+    draw();
+  }
 
   PANES.export = function () {
     var e = B.event, rows = R().resultRows(e, B.teams, B.matches, B.solo, B.awards);

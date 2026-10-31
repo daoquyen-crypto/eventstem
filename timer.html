@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EventSTEM Timer</title>
+<meta name="description" content="Match timer for robotics referees: autonomous and driver control periods, with sound.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1b365d">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="timer">
+<!-- Đồng hồ trọng tài: timer.html (dùng bảng có sẵn) hoặc timer.html?id=<mã giải> (dùng bảng giờ ban tổ chức đã lưu), &preset=<id> chọn bảng.
+     Phím: Space bắt đầu / tạm dừng, R về đầu, N bỏ qua phần đang chạy, F toàn màn hình. -->
+<header class="tm-head">
+  <div class="tm-org" id="tmOrg"></div>
+  <div class="tm-title"><h1 id="tmName">EventSTEM</h1><div class="tm-sub" data-vi="Đồng hồ trọng tài">Referee timer</div></div>
+  <label class="tm-pick"><span class="sr" data-vi="Bảng giờ">Timer</span><select id="tmPreset" aria-label="Timer" data-vi-aria="Bảng giờ"></select></label>
+  <div class="lang" role="group" aria-label="Language / Ngôn ngữ"><button type="button" data-l="en" lang="en" aria-pressed="true">EN</button><button type="button" data-l="vi" lang="vi" aria-pressed="false">VI</button></div>
+  <button type="button" class="tm-icon" id="tmFull" aria-label="Full screen" data-vi-aria="Toàn màn hình">⛶</button>
+</header>
+<main class="tm-main" id="tmMain" data-kind="auto" data-status="ready">
+  <div class="tm-phase" id="tmPhase" aria-live="polite"></div>
+  <div class="tm-time" id="tmTime" role="timer" aria-live="off">0:00</div>
+  <div class="tm-bar"><i id="tmBar"></i></div>
+  <ol class="tm-steps" id="tmSteps"></ol>
+  <div class="tm-btns">
+    <button type="button" class="btn tm-go" id="tmGo" data-vi="Bắt đầu">Start</button>
+    <button type="button" class="btn" id="tmSkip" data-vi="Bỏ qua phần này">Skip period</button>
+    <button type="button" class="btn" id="tmReset" data-vi="Về đầu">Reset</button>
+  </div>
+  <p class="tm-keys" data-vi="Phím: Space bắt đầu / tạm dừng · R về đầu · N bỏ qua phần này · F toàn màn hình">Keys: Space start / pause · R reset · N skip period · F full screen</p>
+</main>
+<details class="tm-adj" id="tmAdj">
+  <summary data-vi="Tuỳ chỉnh bảng giờ">Adjust timer</summary>
+  <form id="fTimer" class="tm-form"></form>
+</details>
+
+<script src="js/config.js"></script>
+<script src="js/vendor/supabase-2.117.3.js"></script>
+<script src="js/engage.js"></script>
+<script src="js/achieve.js"></script>
+<script src="js/adc.js"></script>
+<script src="js/adcpro.js"></script>
+<script src="js/rules.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/store.js"></script>
+<script src="js/timing.js"></script>
+<script src="js/timer.js"></script>
+</body>
+</html>

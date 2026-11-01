@@ -103,7 +103,25 @@ const assert = (c, m) => { if (!c) throw new Error('ASSERT: ' + m); console.log(
   await v.goto(BASE + '/timer.html?id=' + evId + '&preset=achieve-coding'); await v.waitForFunction(() => window.EventSTEMTimer && EventSTEMTimer.state());
   assert((await state(v)).preset === 'achieve-coding', '&preset= picks a timer');
 
+  // Mục "Đồng hồ trọng tài" trên menu chính của mọi trang, và chọn giải ngay trên đồng hồ
+  await p.click('a[role=tab]:has-text("Overview")'); await p.selectOption('#evStatus', 'live'); await p.click('#saveStatus'); await p.waitForTimeout(300);
+  for (const f of ['index.html', 'event.html', 'manage.html']) {
+    await v.goto(BASE + '/' + f); await v.waitForSelector('nav.views a[href="timer.html"]');
+    assert(true, f + ': Referee timer in the main menu');
+    await v.setViewportSize({ width: 375, height: 812 });
+    assert(!(await v.evaluate(() => document.documentElement.scrollWidth > innerWidth)), f + ': menu still fits a phone');
+    await v.setViewportSize({ width: 1280, height: 800 });
+  }
+  await v.click('nav.views a[href="timer.html"]'); await v.waitForFunction(() => window.EventSTEMTimer && EventSTEMTimer.state());
+  await v.waitForSelector('#tmEvent option[value="' + evId + '"]', { state: 'attached' });
+  assert((await state(v)).preset !== 'driving-skills', 'timer from the menu starts without an event');
+  await v.selectOption('#tmEvent', evId);
+  await v.waitForFunction(() => /id=/.test(location.search) && window.EventSTEMTimer && EventSTEMTimer.state() && EventSTEMTimer.list().indexOf('driving-skills') >= 0);   // máy này đã chọn Achieve Coding cho giải này lần trước nên giữ bảng đó
+  assert(await v.locator('#tmName').innerText() === 'Timer Cup', 'picking the event on the timer loads its timers');
+  await shot(v, 'timer-event');
+
   // Về bảng có sẵn
+  await p.click('a[role=tab]:has-text("Logo & show")'); await p.waitForSelector('#tpStd');
   await p.click('#tpStd'); await p.waitForFunction(() => !document.querySelector('#tpStd') && document.querySelectorAll('#fTimers [data-i]').length === 2);
   assert(true, 'back to the standard timers');
 

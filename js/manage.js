@@ -168,6 +168,7 @@
   function renderHome() {
     if (S.rehearsal) return renderRehearsalHome();
     app.innerHTML = adminTabs('home') + '<div class="spread" style="margin-bottom:12px"><h2 class="t" style="margin:0">' + tr('My events', 'Giải của tôi') + '</h2><div class="row">' +
+      '<a class="btn" href="timer.html" target="_blank" rel="noopener">⏱ ' + tr('Referee timer', 'Đồng hồ trọng tài') + '</a>' +
       '<a class="btn" href="manage.html?rehearsal=1" target="_blank" rel="noopener">🎓 ' + tr('Rehearsal', 'Tập dượt') + '</a><a class="btn acc" href="#new">+ ' + tr('New event', 'Tạo giải') + '</a></div></div><div id="myList" class="ev-list"><p class="empty">…</p></div>';
     pendingBadge();
     S.listMyEvents().then(function (list) {

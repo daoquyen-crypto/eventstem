@@ -19,8 +19,10 @@
 <!-- Đồng hồ trọng tài: timer.html (dùng bảng có sẵn) hoặc timer.html?id=<mã giải> (dùng bảng giờ ban tổ chức đã lưu), &preset=<id> chọn bảng.
      Phím: Space bắt đầu / tạm dừng, R về đầu, N bỏ qua phần đang chạy, F toàn màn hình. -->
 <header class="tm-head">
+  <a class="tm-home" href="index.html" aria-label="EventSTEM home" data-vi-aria="Trang chủ EventSTEM"><img src="assets/logo-mark-white.svg" alt="" width="30" height="30"></a>
   <div class="tm-org" id="tmOrg"></div>
   <div class="tm-title"><h1 id="tmName">EventSTEM</h1><div class="tm-sub" data-vi="Đồng hồ trọng tài">Referee timer</div></div>
+  <label class="tm-pick" id="tmEvW" hidden><span class="sr" data-vi="Giải">Event</span><select id="tmEvent" aria-label="Event" data-vi-aria="Giải"></select></label>
   <label class="tm-pick"><span class="sr" data-vi="Bảng giờ">Timer</span><select id="tmPreset" aria-label="Timer" data-vi-aria="Bảng giờ"></select></label>
   <div class="lang" role="group" aria-label="Language / Ngôn ngữ"><button type="button" data-l="en" lang="en" aria-pressed="true">EN</button><button type="button" data-l="vi" lang="vi" aria-pressed="false">VI</button></div>
   <button type="button" class="tm-icon" id="tmFull" aria-label="Full screen" data-vi-aria="Toàn màn hình">⛶</button>

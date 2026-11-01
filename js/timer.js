@@ -186,6 +186,28 @@
   document.addEventListener('visibilitychange', function () { if (!document.hidden && st && st.status === 'run') keepAwake(true); });
   setInterval(function () { if (st) loop(); }, 100);
 
+  /* Chọn giải: giải đang diễn ra / đã công bố (và giải đang mở). Đổi giải thì tải lại trang với ?id= để dùng bảng giờ của giải đó. */
+  var evList = [];
+  function paintEvents() {
+    if (!evList.length) { $id('tmEvW').hidden = true; return; }
+    $id('tmEvW').hidden = false;
+    $id('tmEvent').innerHTML = '<option value="">' + esc(tr('No event (standard timers)', 'Không chọn giải (bảng có sẵn)')) + '</option>' + evList.map(function (e) {
+      return '<option value="' + esc(e.id) + '"' + (e.id === id ? ' selected' : '') + '>' + esc((e.status === 'live' ? '● ' : '') + e.name + (e.date ? ' · ' + fmtDate(e.date) : '')) + '</option>'; }).join('');
+  }
+  S.listPublicEvents().then(function (list) {
+    evList = (list || []).filter(function (e) { return e.status === 'live' || e.status === 'published' || e.id === id; })
+      .sort(function (a, b) { return (b.status === 'live') - (a.status === 'live') || String(a.date || '').localeCompare(String(b.date || '')); }).slice(0, 40);
+    if (id && EB && !evList.some(function (e) { return e.id === id; })) evList.unshift(EB.event);
+    paintEvents();
+  }).catch(function () {});
+  I18N.onChange(paintEvents);
+  $id('tmEvent').addEventListener('change', function () {
+    if (st && st.status === 'run') { this.value = id || ''; return; }
+    var q = new URLSearchParams(location.search); q.delete('preset');
+    if (this.value) q.set('id', this.value); else q.delete('id');
+    location.search = q.toString();
+  });
+
   if (!id) init(null);
   else S.getEvent(id).then(function (b) {
     EB = b;
